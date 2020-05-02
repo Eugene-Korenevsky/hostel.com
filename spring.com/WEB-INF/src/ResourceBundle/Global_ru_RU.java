@@ -1,0 +1,64 @@
+package ResourceBundle;
+
+import java.util.ListResourceBundle;
+
+public class Global_ru_RU extends ListResourceBundle {
+    protected Object[][] getContents(){
+        return new Object[][]{
+            {"login.button", "Логин"},    
+            {"login.welcome", "Добро пожаловать"},
+            {"login.wrong", "Неверный пароль или электронная почта"},
+            {"login.form.name", "Имя :"},
+            {"login.form.surname", "Фамилия :"},
+            {"login.form.password", "Пароль :"},
+            {"login.form.email", "Email :"},
+            {"register.wrong", "Клиент с данной почтой уже зарегестрирован"},
+            {"register.welcome", "Вы успешно зарегестрировались"},
+            {"register.button", "Регистрация"},
+            {"cabinet.button", "Кабинет"},
+            {"room.button", "Номера"},
+            {"order.button", "Заявки"},
+            {"reserve.button", "Зарезервированные номера"},
+            {"date.arrive", "Дата прибытия"},
+            {"date.leave", "Дата выезда"},
+            {"more.button", "Подробнее"},
+            {"make.order.button", "Отправить заявку"},
+            {"my.orders.button", "Мои заявки"},
+            {"my.reserve.button", "Мои зарезервированные номера"},
+            {"cancel.order.button", "Отменить заявку"},
+            {"cancel.reserve.button", "Отменить резерв"},
+            {"confirm.order.button", "Подтвердить заявку"},
+            {"message.nodates.input", "Внесите даты в поля"},
+            {"message.un.correct.dates", "Неправильно введены даты"},
+            {"message.is.already.reserved", "К большому сожалению этот номер уже занят в эти даты"},
+            {"message.order.cost", "Стоимость пребывания : "},
+            {"change.room.button", "Изменить"},
+            {"change.room.parameters", "Изменяемые параметры номера"},
+            {"room.class.message", "Класс номера"},
+            {"room.sits", "Количесвто мест в номере"},
+            {"room.price", "Цена за ночь"},
+            {"room.number", "Номер комнаты"},
+            {"create.room.parameters", "Параметры номера"},
+            {"create.room.button", "Создать номер"},
+            {"add.room.button", "Добавить номер"},
+            {"delete.room.button", "Удалить номер"},
+            {"price.from", "Цена от :"},
+            {"price.to", "Цена до :"},
+            {"timeIn.wrong", "Введите время прибытия :"},
+            {"timeOut.wrong", "Введите время отъезда :"},
+            {"search.button", "Поиск"},
+            {"timeIn","Время прибытия"},
+            {"timeOut","Время выезда"},
+            {"message.put.values.in.fields","Внесите данные в поля"},
+            {"message.wrong.dates"," Введите данные"},
+            {"message.un.correct.data","Неправильно введены данные"},
+            {"message.write.your.name","Напишите ваше имя"},
+            {"message.write.your.surname","Напишите вашу фамилию"},
+            {"message.write.your.password","Напишите ваш пароль"},
+            {"message.wrong.email","Некорректный email"},
+            {"main.page","Главная"},
+            {"first.page.text","Добро пожаловать на наш сайт. У нас вы сможете найти номера для своего пребывания в центре"
+            		+ " вселенной по доступным ценам и с комфортом."}
+        };
+    }
+}
