@@ -19,10 +19,6 @@ public class Description implements Serializable {
         return id;
     }
 
-    public synchronized void setId(long id) {
-        this.id = id;
-    }
-
     @NotNull
     @Column(name = "NAME")
     private String description;

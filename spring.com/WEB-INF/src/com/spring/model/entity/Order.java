@@ -14,10 +14,6 @@ public class Order implements Serializable {
     @Column(name = "ID")
     private long id;
 
-    public synchronized void setId(long id) {
-        this.id = id;
-    }
-
     public synchronized long getId() {
         return id;
     }
