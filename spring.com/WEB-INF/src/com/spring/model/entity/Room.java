@@ -3,6 +3,7 @@ package com.spring.model.entity;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -71,7 +72,7 @@ public class Room implements Serializable {
     @JoinTable(name = "room_description",
             joinColumns = @JoinColumn(name = "ROOM_ID", referencedColumnName = "ID"),
             inverseJoinColumns = @JoinColumn(name = "DESCRIPTION_ID", referencedColumnName = "ID"))
-    private  Set<Description> descriptions;
+    private  Set<Description> descriptions = new HashSet<>();
 
     public  Set<Description> getDescriptions() {
         return descriptions;
