@@ -15,7 +15,7 @@ public class Description implements Serializable {
     @Column(name = "ID")
     private long id;
 
-    public synchronized long getId() {
+    public long getId() {
         return id;
     }
 
@@ -23,21 +23,19 @@ public class Description implements Serializable {
     @Column(name = "NAME")
     private String description;
 
-    public synchronized void setDescription(String description) {
+    public  void setDescription(String description) {
         this.description = description;
     }
 
-    public synchronized String getDescription() {
+    public  String getDescription() {
         return description;
     }
 
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "descriptions")
+    @ManyToMany(mappedBy = "descriptions")
     private Set<Room> rooms = new HashSet<>();
 
-    public synchronized void setRooms(Set<Room> rooms) {
-        synchronized (this.rooms) {
+    public  void setRooms(Set<Room> rooms) {
             this.rooms = rooms;
-        }
     }
 
     public Set<Room> getRooms() {
@@ -45,8 +43,6 @@ public class Description implements Serializable {
     }
 
     public void addRoom(Room room){
-        synchronized (rooms){
             rooms.add(room);
-        }
     }
 }

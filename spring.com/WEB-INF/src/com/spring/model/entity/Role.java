@@ -13,7 +13,7 @@ import java.io.Serializable;
         @Column(name = "ID")
         private long id;
 
-        public synchronized long getId() {
+        public  long getId() {
             return id;
         }
 
@@ -21,11 +21,11 @@ import java.io.Serializable;
         @Column(name = "NAME")
         private String role;
 
-        public synchronized String getRole() {
+        public  String getRole() {
             return role;
         }
 
-        public synchronized void setRole(String role) {
+        public  void setRole(String role) {
             this.role = role;
         }
 }

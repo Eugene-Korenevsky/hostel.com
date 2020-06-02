@@ -13,7 +13,7 @@ public class User implements Serializable {
     @Column(name = "ID")
     private long id;
 
-    public synchronized long getId() {
+    public long getId() {
         return id;
     }
 
@@ -21,11 +21,11 @@ public class User implements Serializable {
     @Column(name = "NAME")
     private String name;
 
-    public synchronized void setName(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public synchronized String getName() {
+    public String getName() {
         return name;
     }
 
@@ -33,11 +33,11 @@ public class User implements Serializable {
     @Column(name = "SURNAME")
     private String surname;
 
-    public synchronized String getSurname() {
+    public String getSurname() {
         return surname;
     }
 
-    public synchronized void setSurname(String surname) {
+    public void setSurname(String surname) {
         this.surname = surname;
     }
 
@@ -45,11 +45,11 @@ public class User implements Serializable {
     @Column(name = "EMAIL")
     private String email;
 
-    public synchronized String getEmail() {
+    public String getEmail() {
         return email;
     }
 
-    public synchronized void setEmail(String email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 
@@ -57,11 +57,11 @@ public class User implements Serializable {
     @Column(name = "PASSWORD")
     private String password;
 
-    public synchronized String getPassword() {
+    public String getPassword() {
         return password;
     }
 
-    public synchronized void setPassword(String password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 
@@ -69,11 +69,11 @@ public class User implements Serializable {
     @JoinColumn(name = "ROLE_ID", referencedColumnName = "ID")
     private Role role;
 
-    public synchronized void setRole(Role role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 
-    public synchronized Role getRole() {
+    public Role getRole() {
         return role;
     }
 }

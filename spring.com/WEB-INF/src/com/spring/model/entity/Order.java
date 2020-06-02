@@ -14,7 +14,7 @@ public class Order implements Serializable {
     @Column(name = "ID")
     private long id;
 
-    public synchronized long getId() {
+    public long getId() {
         return id;
     }
 
@@ -22,11 +22,11 @@ public class Order implements Serializable {
     @Column(name = "DATE_IN")
     private Timestamp dateIn;
 
-    public synchronized Timestamp getDateIn() {
+    public Timestamp getDateIn() {
         return dateIn;
     }
 
-    public synchronized void setDateIn(Timestamp dateIn) {
+    public void setDateIn(Timestamp dateIn) {
         this.dateIn = dateIn;
     }
 
@@ -34,11 +34,11 @@ public class Order implements Serializable {
     @Column(name = "DATE_OUT")
     private Timestamp dateOut;
 
-    public synchronized Timestamp getDateOut() {
+    public Timestamp getDateOut() {
         return dateOut;
     }
 
-    public synchronized void setDateOut(Timestamp dateOut) {
+    public void setDateOut(Timestamp dateOut) {
         this.dateOut = dateOut;
     }
 
@@ -46,11 +46,11 @@ public class Order implements Serializable {
     @JoinColumn(name = "USER_ID", referencedColumnName = "ID", nullable = false)
     private User user;
 
-    public synchronized User getUser() {
+    public User getUser() {
         return user;
     }
 
-    public synchronized void setUser(User user) {
+    public void setUser(User user) {
         this.user = user;
     }
 
@@ -58,11 +58,11 @@ public class Order implements Serializable {
     @JoinColumn(name = "ROOM_ID", referencedColumnName = "ID", nullable = false)
     private Room room;
 
-    public synchronized Room getRoom() {
+    public Room getRoom() {
         return room;
     }
 
-    public synchronized void setRoom(Room room) {
+    public void setRoom(Room room) {
         this.room = room;
     }
 }
