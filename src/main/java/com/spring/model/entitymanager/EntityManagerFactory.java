@@ -14,10 +14,6 @@ public class EntityManagerFactory {
         return entityManagerFactory.createEntityManager();
     }
 
-    public static void close(){
-        entityManagerFactory.close();
-    }
-
     public void destroy(){
          entityManagerFactory.close();
     }
