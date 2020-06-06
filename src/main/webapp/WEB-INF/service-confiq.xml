@@ -30,15 +30,10 @@
     <bean id="roleService" class="com.spring.model.service.logic.RoleServiceImpl">
         <property name="genericDao" ref="roleDao"/>
     </bean>
-    <bean id="roleDao" class="com.spring.model.dao.daoImpl.RoleDao"  >
-    </bean>
-    <bean id="userDao" class="com.spring.model.dao.daoImpl.UserDao" >
-    </bean>
-    <bean id="reserveDao" class="com.spring.model.dao.daoImpl.ReserveDao"  >
-    </bean>
-    <bean id="orderDao" class="com.spring.model.dao.daoImpl.OrderDao"  >
-    </bean>
-    <bean id="descriptionDao" class="com.spring.model.dao.daoImpl.DescriptionDao"  >
-    </bean>
+    <bean id="roleDao" class="com.spring.model.dao.daoImpl.RoleDao"/>
+    <bean id="userDao" class="com.spring.model.dao.daoImpl.UserDao"/>
+    <bean id="reserveDao" class="com.spring.model.dao.daoImpl.ReserveDao"/>
+    <bean id="orderDao" class="com.spring.model.dao.daoImpl.OrderDao"/>
+    <bean id="descriptionDao" class="com.spring.model.dao.daoImpl.DescriptionDao"/>
     
 </beans>
