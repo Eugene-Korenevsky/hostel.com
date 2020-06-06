@@ -44,7 +44,7 @@ public class Reserve implements Serializable {
     }
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "USER_ID", referencedColumnName = "ID")
     private User user;
 
@@ -57,7 +57,7 @@ public class Reserve implements Serializable {
     }
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "ROOM_ID", referencedColumnName = "ID")
     private Room room;
 

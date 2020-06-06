@@ -73,7 +73,7 @@ public class OrderController {
                 if (isRoomFreeInDates.IsRoomFree(roomId, dateIn, timeIn, dateOut, timeOut)) {
                     Order order = new Order();
                     order.setUser(user);
-                    Room room = roomService.readById(roomId);
+                    Room room = roomService.readById(roomId,false);
                     order.setRoom(room);
                     Timestamp inDate = timestampMaker.getTimestamp(dateIn, timeIn);
                     Timestamp outDate = timestampMaker.getTimestamp(dateOut, timeOut);
@@ -95,11 +95,11 @@ public class OrderController {
         }
     }
 
-    @RequestMapping(value = {"confirmOrder"})
+    @RequestMapping(value = {"confirmOrder"},method = RequestMethod.POST)
     public String confirmOrder(HttpSession session) {
         User user = (User) session.getAttribute("user");
         Order order = (Order) session.getAttribute("order");
-        if (user.getRole().getRole().equals(access1)  && order != null) {
+        if (user.getRole() != null) {
             orderService.create(order);
             return "redirect:/findUserOrders";
         } else return "loginForm";

@@ -30,6 +30,8 @@ public class UserServiceImpl extends BaseService implements UserService {
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             entityManager.getTransaction().rollback();
+        }finally {
+            entityManager.close();
         }
         return user;
     }
@@ -44,6 +46,8 @@ public class UserServiceImpl extends BaseService implements UserService {
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             entityManager.getTransaction().rollback();
+        }finally {
+            entityManager.close();
         }
         return users;
     }
@@ -58,6 +62,8 @@ public class UserServiceImpl extends BaseService implements UserService {
                 entityManager.getTransaction().commit();
             } catch (Exception e) {
                 entityManager.getTransaction().rollback();
+            }finally {
+                entityManager.close();
             }
         }
     }
@@ -72,6 +78,8 @@ public class UserServiceImpl extends BaseService implements UserService {
                 entityManager.getTransaction().commit();
             } catch (Exception e) {
                 entityManager.getTransaction().rollback();
+            }finally {
+                entityManager.close();
             }
         }
     }
@@ -86,6 +94,8 @@ public class UserServiceImpl extends BaseService implements UserService {
                 entityManager.getTransaction().commit();
             } catch (Exception e) {
                 entityManager.getTransaction().rollback();
+            }finally {
+                entityManager.close();
             }
         }
     }
@@ -106,6 +116,8 @@ public class UserServiceImpl extends BaseService implements UserService {
                 entityManager.getTransaction().commit();
             } catch (Exception e) {
                 entityManager.getTransaction().rollback();
+            }finally {
+                entityManager.close();
             }
             return user;
         } else {
@@ -151,6 +163,8 @@ public class UserServiceImpl extends BaseService implements UserService {
             } catch (Exception e) {
                 entityManager.getTransaction().rollback();
                 MyLogger.log(e,this,"ERROR");
+            }finally {
+                entityManager.close();
             }
             return user;
         } else return new User();
@@ -168,6 +182,8 @@ public class UserServiceImpl extends BaseService implements UserService {
             entityManager.getTransaction().commit();
         }catch (Exception e){
             entityManager.getTransaction().rollback();
+        }finally {
+            entityManager.close();
         }
     }
 }

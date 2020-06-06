@@ -39,7 +39,7 @@ public class RoomController {
 
     @RequestMapping(value = {"roomsList"}, method = RequestMethod.GET)
     public String showRoomList(Map<String, Object> model) {
-        List<Room> rooms = roomService.readAll();
+        List<Room> rooms = roomService.readAll(false);
         model.put("roomList", rooms);
         return "rooms";
     }
@@ -47,7 +47,7 @@ public class RoomController {
     @RequestMapping(value = {"findRoom"}, method = RequestMethod.GET)
     public String showRoom(Map<String, Object> model,
                            @RequestParam(value = "id") long id) {
-        Room room = roomService.readById(id);
+        Room room = roomService.readById(id,true);
         model.put("room", room);
         return "roomFind";
     }
@@ -71,8 +71,8 @@ public class RoomController {
                                          Map<String, Object> model) {
         User user = (User) session.getAttribute("user");
         if (user.getRole().getRole().equals(access1)) {
-            Room room = roomService.readById(roomId);
-            List<Description> descriptions = descriptionService.readAll();
+            Room room = roomService.readById(roomId,true);
+            List<Description> descriptions = descriptionService.readAll(false);
             model.put("descriptions", descriptions);
             session.setAttribute("room", room);
             session.setAttribute("roomId", roomId);
@@ -143,7 +143,7 @@ public class RoomController {
         if (orderCorrectDate.isCorrectDates(dayIn, timeIn, dayOut, timeOut)) {
             try {
                 double price1 = Double.parseDouble(price);
-                List<Room> rooms = roomService.readAll();
+                List<Room> rooms = roomService.readAll(false);
                 Timestamp dateIn = timestampMaker.getTimestamp(dayIn, timeIn);
                 Timestamp dateOut = timestampMaker.getTimestamp(dayOut, timeOut);
                 List<Room> result = roomSearchHelper.searchByTotalPriceAndSits(rooms, dateIn, dateOut, price1, sits);

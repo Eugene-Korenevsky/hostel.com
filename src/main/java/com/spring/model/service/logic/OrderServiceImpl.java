@@ -1,6 +1,8 @@
 package com.spring.model.service.logic;
 
 import com.spring.model.entity.Order;
+import com.spring.model.entity.Room;
+import com.spring.model.entity.User;
 import com.spring.model.entitymanager.EntityManagerFactory;
 import com.spring.model.service.BaseService;
 import com.spring.model.service.OrderService;
@@ -21,6 +23,8 @@ public class OrderServiceImpl extends BaseService implements OrderService {
             entityManager.getTransaction().commit();
         }catch (Exception e){
             entityManager.getTransaction().rollback();
+        }finally {
+            entityManager.close();
         }
         return order;
     }
@@ -35,6 +39,8 @@ public class OrderServiceImpl extends BaseService implements OrderService {
             entityManager.getTransaction().commit();
         }catch (Exception e){
             entityManager.getTransaction().rollback();
+        }finally {
+            entityManager.close();
         }
         return orders;
     }
@@ -45,17 +51,16 @@ public class OrderServiceImpl extends BaseService implements OrderService {
         EntityManager entityManager = EntityManagerFactory.getEntityManager();
         try {
             entityManager.getTransaction().begin();
-           // getGenericDao().getEntityManager().getTransaction().begin();
             TypedQuery<Order> query = entityManager.createQuery(
                     "select i from Order i where USER_ID = ?1",Order.class
             );
             query.setParameter(1,userId);
             orders = query.getResultList();
             entityManager.getTransaction().commit();
-            //getGenericDao().getEntityManager().getTransaction().rollback();
         }catch (Exception e){
             entityManager.getTransaction().rollback();
-            //getGenericDao().getEntityManager().getTransaction().rollback();
+        }finally {
+            entityManager.close();
         }
         return orders;
     }
@@ -66,13 +71,10 @@ public class OrderServiceImpl extends BaseService implements OrderService {
            EntityManager entityManager = EntityManagerFactory.getEntityManager();
            try {
                entityManager.getTransaction().begin();
-               //getGenericDao().getEntityManager().getTransaction().begin();
                getGenericDao().create(order,entityManager);
                entityManager.getTransaction().commit();
-               //getGenericDao().getEntityManager().getTransaction().commit();
            }catch (Exception e){
                entityManager.getTransaction().rollback();
-               //getGenericDao().getEntityManager().getTransaction().rollback();
            }
        }
     }
@@ -98,13 +100,10 @@ public class OrderServiceImpl extends BaseService implements OrderService {
           EntityManager entityManager = EntityManagerFactory.getEntityManager();
           try {
               entityManager.getTransaction().begin();
-             // getGenericDao().getEntityManager().getTransaction().begin();
               getGenericDao().update(order,entityManager);
-              //getGenericDao().getEntityManager().getTransaction().commit();
               entityManager.getTransaction().commit();
           }catch (Exception e){
               entityManager.getTransaction().rollback();
-             // getGenericDao().getEntityManager().getTransaction().rollback();
           }
       }
     }

@@ -19,13 +19,12 @@ public class RoleServiceImpl extends BaseService implements RoleService {
         EntityManager entityManager = EntityManagerFactory.getEntityManager();
         try {
             entityManager.getTransaction().begin();
-            //getGenericDao().getEntityManager().getTransaction().begin();
             roles = getGenericDao().readAll(entityManager);
-            //getGenericDao().getEntityManager().getTransaction().commit();
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             entityManager.getTransaction().rollback();
-           // getGenericDao().getEntityManager().getTransaction().rollback();
+        }finally {
+            entityManager.close();
         }
         return roles;
     }
@@ -36,13 +35,12 @@ public class RoleServiceImpl extends BaseService implements RoleService {
         EntityManager entityManager = EntityManagerFactory.getEntityManager();
         try {
             entityManager.getTransaction().begin();
-            //getGenericDao().getEntityManager().getTransaction().begin();
             role = (Role) getGenericDao().findById(id,entityManager);
             entityManager.getTransaction().commit();
-            //getGenericDao().getEntityManager().getTransaction().commit();
         } catch (Exception e) {
             entityManager.getTransaction().rollback();
-           // getGenericDao().getEntityManager().getTransaction().rollback();
+        }finally {
+            entityManager.close();
         }
         return role;
     }
@@ -53,13 +51,12 @@ public class RoleServiceImpl extends BaseService implements RoleService {
             EntityManager entityManager = EntityManagerFactory.getEntityManager();
             try {
                 entityManager.getTransaction().begin();
-                //getGenericDao().getEntityManager().getTransaction().begin();
                 getGenericDao().create(role,entityManager);
                 entityManager.getTransaction().commit();
-               // getGenericDao().getEntityManager().getTransaction().commit();
             } catch (Exception e) {
                 entityManager.getTransaction().rollback();
-                //getGenericDao().getEntityManager().getTransaction().rollback();
+            }finally {
+                entityManager.close();
             }
         }
     }
@@ -70,13 +67,12 @@ public class RoleServiceImpl extends BaseService implements RoleService {
             EntityManager entityManager = EntityManagerFactory.getEntityManager();
             try {
                 entityManager.getTransaction().begin();
-               // getGenericDao().getEntityManager().getTransaction().begin();
                 getGenericDao().update(role,entityManager);
                 entityManager.getTransaction().commit();
-               // getGenericDao().getEntityManager().getTransaction().commit();
             } catch (Exception e) {
                 entityManager.getTransaction().rollback();
-               // getGenericDao().getEntityManager().getTransaction().rollback();
+            }finally {
+                entityManager.close();
             }
         }
     }
@@ -87,13 +83,12 @@ public class RoleServiceImpl extends BaseService implements RoleService {
             EntityManager entityManager = EntityManagerFactory.getEntityManager();
             try {
                 entityManager.getTransaction().begin();
-               // getGenericDao().getEntityManager().getTransaction().begin();
                 getGenericDao().delete(role,entityManager);
-               // getGenericDao().getEntityManager().getTransaction().commit();
                 entityManager.getTransaction().commit();
             } catch (Exception e) {
                 entityManager.getTransaction().rollback();
-                //getGenericDao().getEntityManager().getTransaction().rollback();
+            }finally {
+                entityManager.close();
             }
         }
     }

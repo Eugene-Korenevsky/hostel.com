@@ -11,29 +11,39 @@ import java.util.List;
 
 public class DescriptionServiceImpl extends BaseService implements DescriptionService {
     @Override
-    public Description findById(long id) {
+    public Description findById(long id,boolean withRooms) {
         Description description = new Description();
         EntityManager entityManager = EntityManagerFactory.getEntityManager();
         try {
             entityManager.getTransaction().begin();
             description = (Description) getGenericDao().findById(id,entityManager);
+            if (withRooms)description.getRooms().size();
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             entityManager.getTransaction().rollback();
+        }finally {
+            entityManager.close();
         }
         return description;
     }
 
     @Override
-    public List<Description> readAll() {
+    public List<Description> readAll(boolean withRooms) {
         List<Description> descriptions = new ArrayList<>();
         EntityManager entityManager = EntityManagerFactory.getEntityManager();
         try {
             entityManager.getTransaction().begin();
             descriptions = getGenericDao().readAll(entityManager);
+            if (withRooms){
+                for (Description description : descriptions){
+                    description.getRooms().size();
+                }
+            }
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             entityManager.getTransaction().rollback();
+        }finally {
+            entityManager.close();
         }
         return descriptions;
     }
@@ -50,6 +60,8 @@ public class DescriptionServiceImpl extends BaseService implements DescriptionSe
                 entityManager.getTransaction().commit();
             } catch (Exception e) {
                 entityManager.getTransaction().rollback();
+            }finally {
+                entityManager.close();
             }
     }
 
@@ -63,6 +75,8 @@ public class DescriptionServiceImpl extends BaseService implements DescriptionSe
                 entityManager.getTransaction().commit();
             } catch (Exception e) {
                 entityManager.getTransaction().rollback();
+            }finally {
+                entityManager.close();
             }
         }
     }
@@ -78,6 +92,8 @@ public class DescriptionServiceImpl extends BaseService implements DescriptionSe
                 entityManager.getTransaction().commit();
             } catch (Exception e) {
                 entityManager.getTransaction().rollback();
+            }finally {
+                entityManager.close();
             }
     }
 }

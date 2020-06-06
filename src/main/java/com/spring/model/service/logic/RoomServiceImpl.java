@@ -23,29 +23,39 @@ public class RoomServiceImpl extends BaseService implements RoomService {
     }
 
     @Override
-    public Room readById(long id) {
+    public Room readById(long id,boolean withDesc) {
         Room room = new Room();
         EntityManager entityManager = EntityManagerFactory.getEntityManager();
         try {
             entityManager.getTransaction().begin();
             room = (Room) getGenericDao().findById(id, entityManager);
+            if (withDesc) room.getDescriptions().size();
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             entityManager.getTransaction().rollback();
+        }finally {
+            entityManager.close();
         }
         return room;
     }
 
     @Override
-    public List<Room> readAll() {
+    public List<Room> readAll(boolean withDesc) {
         List<Room> rooms = new ArrayList<>();
         EntityManager entityManager = EntityManagerFactory.getEntityManager();
         try {
             entityManager.getTransaction().begin();
             rooms = getGenericDao().readAll(entityManager);
+            if (withDesc){
+                for (Room room : rooms){
+                    room.getDescriptions().size();
+                }
+            }
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             entityManager.getTransaction().rollback();
+        }finally {
+            entityManager.close();
         }
         return rooms;
     }
@@ -64,6 +74,8 @@ public class RoomServiceImpl extends BaseService implements RoomService {
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             entityManager.getTransaction().rollback();
+        }finally {
+            entityManager.close();
         }
     }
 
@@ -83,6 +95,8 @@ public class RoomServiceImpl extends BaseService implements RoomService {
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             entityManager.getTransaction().rollback();
+        }finally {
+            entityManager.close();
         }
 
     }
@@ -99,6 +113,8 @@ public class RoomServiceImpl extends BaseService implements RoomService {
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             entityManager.getTransaction().rollback();
+        }finally {
+            entityManager.close();
         }
     }
 
@@ -116,6 +132,8 @@ public class RoomServiceImpl extends BaseService implements RoomService {
                 entityManager.getTransaction().commit();
             } catch (Exception e) {
                 entityManager.getTransaction().rollback();
+            }finally {
+                entityManager.close();
             }
         }
     }

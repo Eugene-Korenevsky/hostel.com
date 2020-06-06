@@ -3,6 +3,8 @@ package com.spring.model.service.logic;
 import com.spring.model.dao.daoImpl.OrderDao;
 import com.spring.model.entity.Order;
 import com.spring.model.entity.Reserve;
+import com.spring.model.entity.Room;
+import com.spring.model.entity.User;
 import com.spring.model.entitymanager.EntityManagerFactory;
 import com.spring.model.service.BaseService;
 import com.spring.model.service.ReserveService;
@@ -29,6 +31,8 @@ public class ReserveServiceImpl extends BaseService implements ReserveService {
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             entityManager.getTransaction().rollback();
+        }finally {
+            entityManager.close();
         }
         return reserve;
     }
@@ -43,6 +47,8 @@ public class ReserveServiceImpl extends BaseService implements ReserveService {
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             entityManager.getTransaction().rollback();
+        }finally {
+            entityManager.close();
         }
         return reserves;
     }
@@ -61,6 +67,8 @@ public class ReserveServiceImpl extends BaseService implements ReserveService {
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             entityManager.getTransaction().rollback();
+        }finally {
+            entityManager.close();
         }
         return reserves;
     }
@@ -83,6 +91,8 @@ public class ReserveServiceImpl extends BaseService implements ReserveService {
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             entityManager.getTransaction().rollback();
+        }finally {
+            entityManager.close();
         }
 }
 
@@ -96,6 +106,8 @@ public class ReserveServiceImpl extends BaseService implements ReserveService {
                 entityManager.getTransaction().commit();
             } catch (Exception e) {
                 entityManager.getTransaction().rollback();
+            }finally {
+                entityManager.close();
             }
         }
     }
@@ -112,6 +124,8 @@ public class ReserveServiceImpl extends BaseService implements ReserveService {
                 entityManager.getTransaction().commit();
             } catch (Exception e) {
                 entityManager.getTransaction().rollback();
+            }finally {
+                entityManager.close();
             }
     }
 }

@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface RoomService {
 
-    public Room readById(long id);
+    public Room readById(long id,boolean withDesc);
 
-    public List<Room> readAll();
+    public List<Room> readAll(boolean withDesc);
 
     public void create(double price,String roomClass,int sits, int number);
 
