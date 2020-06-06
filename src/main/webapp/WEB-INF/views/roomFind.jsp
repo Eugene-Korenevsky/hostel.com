@@ -4,7 +4,7 @@
 <%@ taglib tagdir="/WEB-INF/tags" prefix="u"%>
 
  <fmt:setBundle basename = "ResourceBundle.Global" var="rs" scope="application"/> 
- <fmt:setBundle basename = "resources.access" var="access" scope="request"/>
+ <fmt:setBundle basename = "access" var="access" scope="request"/>
  <fmt:message key="access.first" var="access1" bundle="${access}" />
 <u:html>
 
