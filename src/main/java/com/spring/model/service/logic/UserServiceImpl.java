@@ -1,7 +1,9 @@
 package com.spring.model.service.logic;
 
 import com.spring.model.aspects.MyLogger;
-import com.spring.model.dao.daoImpl.RoleDao;
+import com.spring.model.dao.RoleDao;
+import com.spring.model.dao.UserDao;
+import com.spring.model.dao.daoImpl.RoleDaoImpl;
 import com.spring.model.entity.Role;
 import com.spring.model.entity.User;
 import com.spring.model.entitymanager.EntityManagerFactory;
@@ -14,7 +16,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserServiceImpl extends BaseService implements UserService {
+    private UserDao userDao;
     private RoleDao roleDao;
+
+    public void setUserDao(UserDao userDao) {
+        this.userDao = userDao;
+    }
 
     public void setRoleDao(RoleDao roleDao) {
         this.roleDao = roleDao;
@@ -26,11 +33,12 @@ public class UserServiceImpl extends BaseService implements UserService {
         EntityManager entityManager = EntityManagerFactory.getEntityManager();
         try {
             entityManager.getTransaction().begin();
-            user = (User) getGenericDao().findById(id, entityManager);
+            user = userDao.findById(id, entityManager);
+//            user = (User) getGenericDao().findById(id, entityManager);
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             entityManager.getTransaction().rollback();
-        }finally {
+        } finally {
             entityManager.close();
         }
         return user;
@@ -42,11 +50,12 @@ public class UserServiceImpl extends BaseService implements UserService {
         EntityManager entityManager = EntityManagerFactory.getEntityManager();
         try {
             entityManager.getTransaction().begin();
-            users = getGenericDao().readAll(entityManager);
+            users = userDao.readAll(entityManager);
+//            users = getGenericDao().readAll(entityManager);
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             entityManager.getTransaction().rollback();
-        }finally {
+        } finally {
             entityManager.close();
         }
         return users;
@@ -58,11 +67,12 @@ public class UserServiceImpl extends BaseService implements UserService {
             EntityManager entityManager = EntityManagerFactory.getEntityManager();
             try {
                 entityManager.getTransaction().begin();
-                getGenericDao().create(user, entityManager);
+                userDao.create(user, entityManager);
+                //              getGenericDao().create(user, entityManager);
                 entityManager.getTransaction().commit();
             } catch (Exception e) {
                 entityManager.getTransaction().rollback();
-            }finally {
+            } finally {
                 entityManager.close();
             }
         }
@@ -74,31 +84,33 @@ public class UserServiceImpl extends BaseService implements UserService {
             EntityManager entityManager = EntityManagerFactory.getEntityManager();
             try {
                 entityManager.getTransaction().begin();
-                getGenericDao().update(user, entityManager);
+                userDao.update(user, entityManager);
+//                getGenericDao().update(user, entityManager);
                 entityManager.getTransaction().commit();
             } catch (Exception e) {
                 entityManager.getTransaction().rollback();
-            }finally {
+            } finally {
                 entityManager.close();
             }
         }
     }
 
     @Override
-    public void delete(User user) {
-        if (user != null) {
-            EntityManager entityManager = EntityManagerFactory.getEntityManager();
-            try {
-                entityManager.getTransaction().begin();
-                getGenericDao().delete(user, entityManager);
-                entityManager.getTransaction().commit();
-            } catch (Exception e) {
-                entityManager.getTransaction().rollback();
-            }finally {
-                entityManager.close();
-            }
+    public void delete(long userId) {
+        EntityManager entityManager = EntityManagerFactory.getEntityManager();
+        try {
+            entityManager.getTransaction().begin();
+            User user = userDao.findById(userId, entityManager);
+            userDao.delete(user, entityManager);
+            //getGenericDao().delete(user, entityManager);
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            entityManager.getTransaction().rollback();
+        } finally {
+            entityManager.close();
         }
     }
+
 
     @Override
     public User login(String email, String password) {
@@ -107,16 +119,17 @@ public class UserServiceImpl extends BaseService implements UserService {
             User user = new User();
             try {
                 entityManager.getTransaction().begin();
-                TypedQuery<User> query = entityManager.createQuery(
+                /*TypedQuery<User> query = entityManager.createQuery(
                         "select i from User i where i.password = ?1 and i.email = ?2", User.class
                 );
                 query.setParameter(1, password);
                 query.setParameter(2, email);
-                user = query.getSingleResult();
+                user = query.getSingleResult();*/
+                user = userDao.login(password, email, entityManager);
                 entityManager.getTransaction().commit();
             } catch (Exception e) {
                 entityManager.getTransaction().rollback();
-            }finally {
+            } finally {
                 entityManager.close();
             }
             return user;
@@ -126,7 +139,7 @@ public class UserServiceImpl extends BaseService implements UserService {
     }
 
     @Override
-    public User register(String email,String password,String name,String surname)  {
+    public User register(String email, String password, String name, String surname) {
         User user = new User();
         List<User> users;
         boolean found = false;
@@ -143,7 +156,7 @@ public class UserServiceImpl extends BaseService implements UserService {
                 }
                 if (!found) {
                     long i = 1;
-                    Role role = roleDao.findById(i,entityManager);
+                    Role role = roleDao.findById(i, entityManager);
                     user.setRole(role);
                     if (name == null) user.setName("unknown");
                     else user.setName(name);
@@ -151,19 +164,21 @@ public class UserServiceImpl extends BaseService implements UserService {
                     else user.setSurname(surname);
                     user.setPassword(password);
                     user.setEmail(email);
-                    getGenericDao().create(user, entityManager);
+                    user = userDao.createEntity(user, entityManager);
+                 /*   userDao.create(user,entityManager);
+//                    getGenericDao().create(user, entityManager);
                     TypedQuery<User> query = entityManager.createQuery(
                             "select i from User i where i.password = ?1 and i.email = ?2", User.class
                     );
                     query.setParameter(1, password);
                     query.setParameter(2, email);
-                    user = query.getSingleResult();
+                    user = query.getSingleResult();*/
                 }
                 entityManager.getTransaction().commit();
             } catch (Exception e) {
                 entityManager.getTransaction().rollback();
-                MyLogger.log(e,this,"ERROR");
-            }finally {
+                MyLogger.log(e, this, "ERROR");
+            } finally {
                 entityManager.close();
             }
             return user;
@@ -175,14 +190,16 @@ public class UserServiceImpl extends BaseService implements UserService {
         EntityManager entityManager = EntityManagerFactory.getEntityManager();
         try {
             entityManager.getTransaction().begin();
-            Role role = roleDao.findById(roleId,entityManager);
-            User user = (User) getGenericDao().findById(userId,entityManager);
+            Role role = roleDao.findById(roleId, entityManager);
+            User user = userDao.findById(userId, entityManager);
+//            User user = (User) getGenericDao().findById(userId, entityManager);
             user.setRole(role);
-            getGenericDao().update(user,entityManager);
+            userDao.update(user, entityManager);
+//            getGenericDao().update(user, entityManager);
             entityManager.getTransaction().commit();
-        }catch (Exception e){
+        } catch (Exception e) {
             entityManager.getTransaction().rollback();
-        }finally {
+        } finally {
             entityManager.close();
         }
     }

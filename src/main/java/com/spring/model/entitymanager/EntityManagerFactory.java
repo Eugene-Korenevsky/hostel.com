@@ -8,7 +8,7 @@ public class EntityManagerFactory {
     private EntityManagerFactory(){
 
     }
-    private static javax.persistence.EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("main");
+    private static final javax.persistence.EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("main");
 
     public static EntityManager getEntityManager() {
         return entityManagerFactory.createEntityManager();

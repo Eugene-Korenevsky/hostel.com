@@ -13,7 +13,7 @@ public interface UserService {
 
     public void update(User user);
 
-    public void delete(User user);
+    public void delete(long userId);
 
     public User login(String email,String password);
 

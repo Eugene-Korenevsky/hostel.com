@@ -1,6 +1,7 @@
 package com.spring.model.service.logic;
 
 import com.spring.model.dao.GenericDao;
+import com.spring.model.dao.RoleDao;
 import com.spring.model.entity.Role;
 import com.spring.model.entitymanager.EntityManagerFactory;
 import com.spring.model.service.BaseService;
@@ -11,7 +12,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RoleServiceImpl extends BaseService implements RoleService {
+    private RoleDao roleDao;
 
+    public void setRoleDao(RoleDao roleDao) {
+        this.roleDao = roleDao;
+    }
 
     @Override
     public List<Role> readAll() {
@@ -19,11 +24,12 @@ public class RoleServiceImpl extends BaseService implements RoleService {
         EntityManager entityManager = EntityManagerFactory.getEntityManager();
         try {
             entityManager.getTransaction().begin();
-            roles = getGenericDao().readAll(entityManager);
+            roles = roleDao.readAll(entityManager);
+//            roles = getGenericDao().readAll(entityManager);
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             entityManager.getTransaction().rollback();
-        }finally {
+        } finally {
             entityManager.close();
         }
         return roles;
@@ -35,11 +41,12 @@ public class RoleServiceImpl extends BaseService implements RoleService {
         EntityManager entityManager = EntityManagerFactory.getEntityManager();
         try {
             entityManager.getTransaction().begin();
-            role = (Role) getGenericDao().findById(id,entityManager);
+            role = roleDao.findById(id, entityManager);
+//            role = (Role) getGenericDao().findById(id,entityManager);
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             entityManager.getTransaction().rollback();
-        }finally {
+        } finally {
             entityManager.close();
         }
         return role;
@@ -51,11 +58,12 @@ public class RoleServiceImpl extends BaseService implements RoleService {
             EntityManager entityManager = EntityManagerFactory.getEntityManager();
             try {
                 entityManager.getTransaction().begin();
-                getGenericDao().create(role,entityManager);
+                roleDao.create(role, entityManager);
+                //              getGenericDao().create(role,entityManager);
                 entityManager.getTransaction().commit();
             } catch (Exception e) {
                 entityManager.getTransaction().rollback();
-            }finally {
+            } finally {
                 entityManager.close();
             }
         }
@@ -67,29 +75,31 @@ public class RoleServiceImpl extends BaseService implements RoleService {
             EntityManager entityManager = EntityManagerFactory.getEntityManager();
             try {
                 entityManager.getTransaction().begin();
-                getGenericDao().update(role,entityManager);
+                roleDao.update(role, entityManager);
+//                getGenericDao().update(role,entityManager);
                 entityManager.getTransaction().commit();
             } catch (Exception e) {
                 entityManager.getTransaction().rollback();
-            }finally {
+            } finally {
                 entityManager.close();
             }
         }
     }
 
     @Override
-    public void delete(Role role) {
-        if (role != null) {
-            EntityManager entityManager = EntityManagerFactory.getEntityManager();
-            try {
-                entityManager.getTransaction().begin();
-                getGenericDao().delete(role,entityManager);
-                entityManager.getTransaction().commit();
-            } catch (Exception e) {
-                entityManager.getTransaction().rollback();
-            }finally {
-                entityManager.close();
-            }
+    public void delete(long roleId) {
+        EntityManager entityManager = EntityManagerFactory.getEntityManager();
+        try {
+            entityManager.getTransaction().begin();
+            Role role = roleDao.findById(roleId, entityManager);
+            roleDao.delete(role, entityManager);
+            //              getGenericDao().delete(role,entityManager);
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            entityManager.getTransaction().rollback();
+        } finally {
+            entityManager.close();
         }
     }
 }
+

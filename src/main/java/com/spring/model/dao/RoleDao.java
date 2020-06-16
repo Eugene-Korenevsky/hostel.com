@@ -1,4 +1,6 @@
 package com.spring.model.dao;
 
-public interface RoleDao {
+import com.spring.model.entity.Role;
+
+public interface RoleDao extends GenericDao<Role> {
 }

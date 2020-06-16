@@ -1,4 +1,7 @@
 package com.spring.model.dao;
 
-public interface RoomDao {
+import com.spring.model.entity.Room;
+
+public interface RoomDao extends GenericDao<Room> {
+
 }
