@@ -24,7 +24,6 @@ public class DescriptionServiceImpl extends BaseService implements DescriptionSe
         try {
             entityManager.getTransaction().begin();
             description = descriptionDao.findById(id, entityManager);
-            //description = (Description) getGenericDao().findById(id,entityManager);
             if (withRooms) description.getRooms().size();
             entityManager.getTransaction().commit();
         } catch (Exception e) {
@@ -42,7 +41,6 @@ public class DescriptionServiceImpl extends BaseService implements DescriptionSe
         try {
             entityManager.getTransaction().begin();
             descriptions = descriptionDao.readAll(entityManager);
-            //descriptions = getGenericDao().readAll(entityManager);
             if (withRooms) {
                 for (Description description : descriptions) {
                     description.getRooms().size();
@@ -62,11 +60,9 @@ public class DescriptionServiceImpl extends BaseService implements DescriptionSe
         EntityManager entityManager = EntityManagerFactory.getEntityManager();
         try {
             entityManager.getTransaction().begin();
-            //Description description = (Description) getGenericDao().findById(id,entityManager);
             Description description = descriptionDao.findById(id, entityManager);
             if (description != null) {
                 descriptionDao.delete(description, entityManager);
-//                    getGenericDao().delete(description,entityManager);
             }
             entityManager.getTransaction().commit();
         } catch (Exception e) {
@@ -83,7 +79,6 @@ public class DescriptionServiceImpl extends BaseService implements DescriptionSe
             try {
                 entityManager.getTransaction().begin();
                 descriptionDao.update(description, entityManager);
-//                getGenericDao().update(description,entityManager);
                 entityManager.getTransaction().commit();
             } catch (Exception e) {
                 entityManager.getTransaction().rollback();
@@ -101,7 +96,6 @@ public class DescriptionServiceImpl extends BaseService implements DescriptionSe
         try {
             entityManager.getTransaction().begin();
             descriptionDao.create(description, entityManager);
-            //                getGenericDao().create(description,entityManager);
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             entityManager.getTransaction().rollback();

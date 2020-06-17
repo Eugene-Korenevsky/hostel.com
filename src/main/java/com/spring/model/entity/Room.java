@@ -86,12 +86,7 @@ public class Room implements Serializable {
         descriptions.add(description);
     }
 
-    public void removeDescription(long id) {
-        Description description1 = new Description();
-        for (Description description2 : descriptions) {
-            if (description2.getId() == id) {
-                description1 = description2;
-            }
-        }
+    public void removeDescription(Description description) {
+        descriptions.remove(description);
     }
 }

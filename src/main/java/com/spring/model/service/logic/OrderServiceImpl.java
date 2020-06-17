@@ -27,7 +27,6 @@ public class OrderServiceImpl extends BaseService implements OrderService {
         try {
             entityManager.getTransaction().begin();
             orderDao.findById(id,entityManager);
-//            order = (Order) getGenericDao().findById(id,entityManager);
             entityManager.getTransaction().commit();
         }catch (Exception e){
             entityManager.getTransaction().rollback();
@@ -44,7 +43,6 @@ public class OrderServiceImpl extends BaseService implements OrderService {
         try {
             entityManager.getTransaction().begin();
             orderDao.readAll(entityManager);
-            //          orders = getGenericDao().readAll(entityManager);
             entityManager.getTransaction().commit();
         }catch (Exception e){
             entityManager.getTransaction().rollback();
@@ -61,12 +59,6 @@ public class OrderServiceImpl extends BaseService implements OrderService {
         try {
             entityManager.getTransaction().begin();
             orders = orderDao.findOrdersByUserId(userId,entityManager);
-           /* entityManager.getTransaction().begin();
-            TypedQuery<Order> query = entityManager.createQuery(
-                    "select i from Order i where USER_ID = ?1",Order.class
-            );
-            query.setParameter(1,userId);
-            orders = query.getResultList();*/
             entityManager.getTransaction().commit();
         }catch (Exception e){
             entityManager.getTransaction().rollback();
@@ -83,7 +75,6 @@ public class OrderServiceImpl extends BaseService implements OrderService {
            try {
                entityManager.getTransaction().begin();
                orderDao.create(order,entityManager);
-//               getGenericDao().create(order,entityManager);
                entityManager.getTransaction().commit();
            }catch (Exception e){
                entityManager.getTransaction().rollback();
@@ -99,10 +90,8 @@ public class OrderServiceImpl extends BaseService implements OrderService {
            try {
                entityManager.getTransaction().begin();
                Order order = orderDao.findById(id,entityManager);
-//               Order order = (Order) getGenericDao().findById(id,entityManager);
                if (order != null) {
                    orderDao.delete(order,entityManager);
-                   //                getGenericDao().delete(order,entityManager);
                }
                entityManager.getTransaction().commit();
            }catch (Exception e){
@@ -119,7 +108,6 @@ public class OrderServiceImpl extends BaseService implements OrderService {
           try {
               entityManager.getTransaction().begin();
               orderDao.update(order,entityManager);
-//              getGenericDao().update(order,entityManager);
               entityManager.getTransaction().commit();
           }catch (Exception e){
               entityManager.getTransaction().rollback();

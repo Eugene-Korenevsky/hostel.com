@@ -19,6 +19,10 @@ public class Description implements Serializable {
         return id;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
     @NotNull
     @Column(name = "NAME")
     private String description;
@@ -44,5 +48,21 @@ public class Description implements Serializable {
 
     public void addRoom(Room room){
             rooms.add(room);
+    }
+
+    @Override
+    public boolean equals(Object o){
+        if (o == this) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Description description = (Description) o;
+        return  (description.getId() == this.getId() &&
+                description.getDescription().equals(this.getDescription()));
+    }
+    @Override
+    public int hashCode(){
+        int result = 17;
+        result = 37 * result + (int)id;
+        result = 37 * result + description.hashCode();
+        return result;
     }
 }

@@ -33,7 +33,6 @@ public class ReserveServiceImpl extends BaseService implements ReserveService {
         try {
             entityManager.getTransaction().begin();
             reserve = reserveDao.findById(id, entityManager);
-//            reserve = (Reserve) getGenericDao().findById(id, entityManager);
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             entityManager.getTransaction().rollback();
@@ -50,7 +49,6 @@ public class ReserveServiceImpl extends BaseService implements ReserveService {
         try {
             entityManager.getTransaction().begin();
             reserves = reserveDao.readAll(entityManager);
-//            reserves = getGenericDao().readAll(entityManager);
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             entityManager.getTransaction().rollback();
@@ -67,11 +65,6 @@ public class ReserveServiceImpl extends BaseService implements ReserveService {
         try {
             entityManager.getTransaction().begin();
             reserves = reserveDao.findAllByUserId(userId, entityManager);
-            /*TypedQuery<Reserve> query = entityManager.createQuery(
-                    "select i from Reserve i where USER_ID = ?1 ", Reserve.class
-            );
-            query.setParameter(1, userId);
-            reserves = query.getResultList();*/
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             entityManager.getTransaction().rollback();
@@ -87,7 +80,6 @@ public class ReserveServiceImpl extends BaseService implements ReserveService {
         try {
             entityManager.getTransaction().begin();
             Order order = orderDao.findById(orderId, entityManager);
-//            Order order = orderDao.findById(orderId, entityManager);
             if (order != null) {
                 Reserve reserve = new Reserve();
                 reserve.setDateIn(order.getDateIn());
@@ -95,7 +87,6 @@ public class ReserveServiceImpl extends BaseService implements ReserveService {
                 reserve.setRoom(order.getRoom());
                 reserve.setUser(order.getUser());
                 reserveDao.create(reserve, entityManager);
-                //getGenericDao().create(reserve, entityManager);
                 orderDao.delete(order, entityManager);
             }
             entityManager.getTransaction().commit();
@@ -113,7 +104,6 @@ public class ReserveServiceImpl extends BaseService implements ReserveService {
             try {
                 entityManager.getTransaction().begin();
                 reserveDao.update(reserve, entityManager);
-                //getGenericDao().update(reserve, entityManager);
                 entityManager.getTransaction().commit();
             } catch (Exception e) {
                 entityManager.getTransaction().rollback();
@@ -129,10 +119,8 @@ public class ReserveServiceImpl extends BaseService implements ReserveService {
         try {
             entityManager.getTransaction().begin();
             Reserve reserve = reserveDao.findById(id, entityManager);
-//            Reserve reserve = (Reserve) getGenericDao().findById(id, entityManager);
             if (reserve != null) {
                 reserveDao.delete(reserve, entityManager);
-                //              getGenericDao().delete(reserve, entityManager);
             }
             entityManager.getTransaction().commit();
         } catch (Exception e) {

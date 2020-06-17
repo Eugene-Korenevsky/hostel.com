@@ -2,7 +2,6 @@ package com.spring.model.service.logic;
 
 import com.spring.model.dao.DescriptionDao;
 import com.spring.model.dao.RoomDao;
-import com.spring.model.dao.daoImpl.DescriptionDaoImpl;
 import com.spring.model.entity.Description;
 import com.spring.model.entity.Room;
 import com.spring.model.entitymanager.EntityManagerFactory;
@@ -35,7 +34,6 @@ public class RoomServiceImpl extends BaseService implements RoomService {
         try {
             entityManager.getTransaction().begin();
             room = roomDao.findById(id, entityManager);
-//            room = (Room) getGenericDao().findById(id, entityManager);
             if (withDesc) room.getDescriptions().size();
             entityManager.getTransaction().commit();
         } catch (Exception e) {
@@ -53,7 +51,6 @@ public class RoomServiceImpl extends BaseService implements RoomService {
         try {
             entityManager.getTransaction().begin();
             rooms = roomDao.readAll(entityManager);
-            //          rooms = getGenericDao().readAll(entityManager);
             if (withDesc) {
                 for (Room room : rooms) {
                     room.getDescriptions().size();
@@ -79,7 +76,6 @@ public class RoomServiceImpl extends BaseService implements RoomService {
         try {
             entityManager.getTransaction().begin();
             roomDao.create(room, entityManager);
-//            getGenericDao().create(room, entityManager);
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             entityManager.getTransaction().rollback();
@@ -100,7 +96,6 @@ public class RoomServiceImpl extends BaseService implements RoomService {
                 room.setRoomClass(roomClass);
                 room.setSits(sits);
                 roomDao.update(room, entityManager);
-                //            getGenericDao().update(room, entityManager);
             }
             entityManager.getTransaction().commit();
         } catch (Exception e) {
@@ -117,10 +112,8 @@ public class RoomServiceImpl extends BaseService implements RoomService {
         try {
             entityManager.getTransaction().begin();
             Room room = roomDao.findById(id, entityManager);
-//            Room room = (Room) getGenericDao().findById(id, entityManager);
             if (room != null) {
                 roomDao.delete(room, entityManager);
-                // getGenericDao().delete(room, entityManager);
             }
             entityManager.getTransaction().commit();
         } catch (Exception e) {
@@ -137,9 +130,9 @@ public class RoomServiceImpl extends BaseService implements RoomService {
             try {
                 entityManager.getTransaction().begin();
                 Room room = roomDao.findById(roomId, entityManager);
-//                Room room = (Room) getGenericDao().findById(roomId, entityManager);
+                Description description = descriptionDao.findById(descriptionId,entityManager);
                 if (room != null) {
-                    room.removeDescription(descriptionId);
+                    room.removeDescription(description);
                     getGenericDao().update(room, entityManager);
                 }
                 entityManager.getTransaction().commit();
@@ -159,11 +152,9 @@ public class RoomServiceImpl extends BaseService implements RoomService {
                 entityManager.getTransaction().begin();
                 Description description = descriptionDao.findById(descriptionId, entityManager);
                 Room room = roomDao.findById(roomId, entityManager);
-//                Room room = (Room) getGenericDao().findById(roomId, entityManager);
                 if (room != null && description != null) {
                     room.addDescription(description);
                     roomDao.update(room, entityManager);
-//                    getGenericDao().update(room, entityManager);
                 }
                 entityManager.getTransaction().commit();
             } catch (Exception e) {

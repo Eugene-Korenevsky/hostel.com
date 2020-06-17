@@ -25,7 +25,6 @@ public class RoleServiceImpl extends BaseService implements RoleService {
         try {
             entityManager.getTransaction().begin();
             roles = roleDao.readAll(entityManager);
-//            roles = getGenericDao().readAll(entityManager);
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             entityManager.getTransaction().rollback();
@@ -42,7 +41,6 @@ public class RoleServiceImpl extends BaseService implements RoleService {
         try {
             entityManager.getTransaction().begin();
             role = roleDao.findById(id, entityManager);
-//            role = (Role) getGenericDao().findById(id,entityManager);
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             entityManager.getTransaction().rollback();
@@ -59,7 +57,6 @@ public class RoleServiceImpl extends BaseService implements RoleService {
             try {
                 entityManager.getTransaction().begin();
                 roleDao.create(role, entityManager);
-                //              getGenericDao().create(role,entityManager);
                 entityManager.getTransaction().commit();
             } catch (Exception e) {
                 entityManager.getTransaction().rollback();
@@ -76,7 +73,6 @@ public class RoleServiceImpl extends BaseService implements RoleService {
             try {
                 entityManager.getTransaction().begin();
                 roleDao.update(role, entityManager);
-//                getGenericDao().update(role,entityManager);
                 entityManager.getTransaction().commit();
             } catch (Exception e) {
                 entityManager.getTransaction().rollback();
@@ -93,7 +89,6 @@ public class RoleServiceImpl extends BaseService implements RoleService {
             entityManager.getTransaction().begin();
             Role role = roleDao.findById(roleId, entityManager);
             roleDao.delete(role, entityManager);
-            //              getGenericDao().delete(role,entityManager);
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             entityManager.getTransaction().rollback();
