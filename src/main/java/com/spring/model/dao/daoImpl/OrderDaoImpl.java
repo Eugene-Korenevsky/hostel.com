@@ -17,10 +17,8 @@ public class OrderDaoImpl extends GenericDaoImpl<Order> implements OrderDao {
 
     @Override
     public List<Order> findOrdersByUserId(long userId, EntityManager entityManager) {
-        TypedQuery<Order> query = entityManager.createQuery(
-                "select i from Order i where USER_ID = ?1", Order.class
-        );
-        query.setParameter(1, userId);
+        TypedQuery<Order> query =
+                entityManager.createNamedQuery("findOrdersByUserId", Order.class).setParameter("USER_ID",userId);
         return query.getResultList();
     }
 }

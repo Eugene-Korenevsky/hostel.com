@@ -2,6 +2,7 @@ package com.spring.model.dao.daoImpl;
 
 import com.spring.model.dao.GenericDao;
 import com.spring.model.dao.ReserveDao;
+import com.spring.model.entity.Order;
 import com.spring.model.entity.Reserve;
 
 import javax.persistence.EntityManager;
@@ -13,10 +14,8 @@ public class ReserveDaoImpl extends GenericDaoImpl<Reserve> implements ReserveDa
 
     @Override
     public List<Reserve> findAllByUserId(long id, EntityManager entityManager) {
-        TypedQuery<Reserve> query = entityManager.createQuery(
-                "select i from Reserve i where USER_ID = ?1 ", Reserve.class
-        );
-        query.setParameter(1, id);
+        TypedQuery<Reserve> query =
+                entityManager.createNamedQuery("findReservesByUserId", Reserve.class).setParameter("USER_ID",id);
         return query.getResultList();
     }
 }

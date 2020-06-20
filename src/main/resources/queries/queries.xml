@@ -1,0 +1,24 @@
+<entity-mappings
+        version="2.1"
+        xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm
+            http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd">
+
+    <named-query name="findOrdersByUserId">
+        <query>
+            select i from Order i where USER_ID = :USER_ID
+        </query>
+    </named-query>
+    <named-query name="findReservesByUserId">
+        <query>
+            select i from Reserve i where USER_ID = :USER_ID
+        </query>
+    </named-query>
+    <named-query name="login">
+        <query>
+            select i from User i where i.password = :password and i.email = :email
+        </query>
+    </named-query>
+
+</entity-mappings>

@@ -2,6 +2,8 @@ package com.spring.model.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 @Entity
@@ -19,6 +21,7 @@ public class User implements Serializable {
 
     @NotNull
     @Column(name = "NAME")
+    @Size(min = 2,message = "name min size = 2")
     private String name;
 
     public void setName(String name) {
@@ -31,6 +34,7 @@ public class User implements Serializable {
 
     @NotNull
     @Column(name = "SURNAME")
+    @Size(min = 2,message = "surname min size = 2")
     private String surname;
 
     public String getSurname() {
@@ -43,6 +47,7 @@ public class User implements Serializable {
 
     @NotNull
     @Column(name = "EMAIL")
+    @Pattern(regexp = "^([\\w-\\.]+){1,64}@([\\w&&[^_]]+){2,255}.[a-z]{2,}$",message = "wrong email")
     private String email;
 
     public String getEmail() {
@@ -55,6 +60,7 @@ public class User implements Serializable {
 
     @NotNull
     @Column(name = "PASSWORD")
+    @Size(min = 3,message = "password is too short")
     private String password;
 
     public String getPassword() {
