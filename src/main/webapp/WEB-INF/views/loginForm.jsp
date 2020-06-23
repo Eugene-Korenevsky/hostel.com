@@ -15,7 +15,6 @@
         </script>
         <script>
         $(document).ready(function() {
-            console.log("hello");
             $("#form").validate();
         });
         </script>
