@@ -30,7 +30,7 @@
                 <s:input path="email" type="email"/>
                 <s:errors path="email"/>
                 <p><fmt:message key="login.form.password" bundle="${rs}" />
-                <s:input id="password" path="password" type="text" class="required"
+                <s:input id="password" path="password" type="password" class="required"
                 title="${ wrongEmail }"/>
                 <s:errors path="password"/>
 
