@@ -6,9 +6,12 @@ import com.spring.model.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 
@@ -25,17 +28,22 @@ public class UserController {
 
     @RequestMapping(value = {"/login"}, method = RequestMethod.GET)
     public String loginUserForm(Map<String, Object> model) {
+        User user = new User();
+        model.put("user", user);
         return "loginForm";
     }
 
     @RequestMapping(value = {"/login"}, method = RequestMethod.POST)
-    public String loginUser(@RequestParam(value = "email", defaultValue = "") String email,
-                            @RequestParam(value = "password", defaultValue = "") String password,
+    public String loginUser(@Valid User user, BindingResult bindingResult,
                             HttpSession session,
                             Map<String, Object> model) {
-        User user = userService.login(email, password);
-        if (user.getRole() != null) {
-            session.setAttribute("user", user);
+
+        if (bindingResult.hasErrors()) {
+            return "loginForm";
+        }
+        User user1 = userService.login(user.getEmail(), user.getPassword());
+        if (user1.getRole() != null) {
+            session.setAttribute("user", user1);
             model.put("message", "login.welcome");
             return "user";
         } else {

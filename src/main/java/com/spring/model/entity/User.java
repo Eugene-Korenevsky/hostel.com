@@ -21,7 +21,7 @@ public class User implements Serializable {
 
     @NotNull
     @Column(name = "NAME")
-    @Size(min = 2,message = "name min size = 2")
+    @Size(min = 2, message = "name min size = 2")
     private String name;
 
     public void setName(String name) {
@@ -34,7 +34,7 @@ public class User implements Serializable {
 
     @NotNull
     @Column(name = "SURNAME")
-    @Size(min = 2,message = "surname min size = 2")
+    @Size(min = 2, message = "surname min size = 2")
     private String surname;
 
     public String getSurname() {
@@ -47,7 +47,7 @@ public class User implements Serializable {
 
     @NotNull
     @Column(name = "EMAIL")
-    @Pattern(regexp = "^([\\w-\\.]+){1,64}@([\\w&&[^_]]+){2,255}.[a-z]{2,}$",message = "wrong email")
+    @Pattern(regexp = "^([\\w-\\.]+){1,64}@([\\w&&[^_]]+){2,255}.[a-z]{2,}$", message = "wrong email")
     private String email;
 
     public String getEmail() {
@@ -60,7 +60,7 @@ public class User implements Serializable {
 
     @NotNull
     @Column(name = "PASSWORD")
-    @Size(min = 3,message = "password is too short")
+    @Size(min = 3, message = "password is too short")
     private String password;
 
     public String getPassword() {
@@ -71,7 +71,6 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    @NotNull
     @ManyToOne
     @JoinColumn(name = "ROLE_ID", referencedColumnName = "ID")
     private Role role;
