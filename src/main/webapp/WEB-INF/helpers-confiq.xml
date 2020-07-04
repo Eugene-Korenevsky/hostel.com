@@ -31,7 +31,8 @@
           class="com.spring.model.helpers.roomhelpers.datehelpers.DaysMaker"/>
     <bean id="roomFilterByTotalPrice"
           class="com.spring.model.helpers.roomhelpers.searchhelper.filters.roomfilters.RoomFilterByTotalPrice"/>
-    <bean id="roomSearchHelper" class="com.spring.model.helpers.roomhelpers.searchhelper.search.roomsearch.RoomSearch">
+    <bean id="roomSearchHelper"
+          class="com.spring.model.helpers.roomhelpers.searchhelper.search.roomsearch.RoomSearchBySitsAndPrice">
         <constructor-arg ref="roomFilterBySits"/>
         <constructor-arg ref="roomFilterByTotalPrice"/>
         <constructor-arg ref="daysMaker"/>
@@ -39,14 +40,17 @@
     <bean id="roomFilterBySits"
           class="com.spring.model.helpers.roomhelpers.searchhelper.filters.roomfilters.RoomFilterBySits"/>
 
-    <bean id="orderCorrectDate" class="com.spring.model.helpers.orderhelpers.OrderCorrectDate">
+    <bean id="orderCorrectDate"
+          class="com.spring.model.helpers.orderhelpers.OrderCorrectDate">
         <constructor-arg ref="timestampMaker"/>
     </bean>
-    <bean id="isRoomFreeInDates" class="com.spring.model.helpers.orderhelpers.IsRoomFreeInDates">
+    <bean id="isRoomFreeInDates"
+          class="com.spring.model.helpers.orderhelpers.IsRoomFreeInDates">
         <constructor-arg ref="timestampMaker"/>
         <constructor-arg ref="reserveService"/>
     </bean>
-    <bean id="totalPrice" class="com.spring.model.helpers.pricehelpers.TotalPrice">
+    <bean id="totalPrice"
+          class="com.spring.model.helpers.pricehelpers.TotalPrice">
         <constructor-arg ref="daysMaker"/>
         <constructor-arg ref="timestampMaker"/>
     </bean>
