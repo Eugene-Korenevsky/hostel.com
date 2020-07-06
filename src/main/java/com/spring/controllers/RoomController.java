@@ -10,10 +10,11 @@ import com.spring.model.service.DescriptionService;
 import com.spring.model.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.util.MimeTypeUtils;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
@@ -42,6 +43,38 @@ public class RoomController {
         List<Room> rooms = roomService.readAll(false);
         model.put("roomList", rooms);
         return "rooms";
+    }
+    @RequestMapping(value = {"roomsListAjax"},
+            method = RequestMethod.GET,produces = {MimeTypeUtils.TEXT_PLAIN_VALUE})
+    public ResponseEntity<String>  showRoomListAjax(){
+        try {
+            //List<Room> rooms = roomService.readAll(false);
+           // ResponseEntity<List<Room>> responseEntity = new ResponseEntity<List<Room>>(rooms, HttpStatus.OK);
+            ResponseEntity<String> responseEntity = new ResponseEntity<String>("hello from server",
+                    HttpStatus.OK);
+            System.out.println("ok");
+            //return responseEntity;
+            return responseEntity;
+        }catch (Exception e){
+            System.out.println("error");
+            System.out.println(e.getMessage());
+            return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+            //return new ResponseEntity<List<Room>>(HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
+    @RequestMapping(value = {"roomsListAjax1/{id}"},
+            method = RequestMethod.GET,produces = {MimeTypeUtils.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Room>  showRoomListAjax1(@PathVariable("id") Long id){
+        try {
+            Room room = roomService.readById(id,true);
+            ResponseEntity<Room> responseEntity = new ResponseEntity<Room>(room,HttpStatus.OK);
+            return responseEntity;
+        }catch (Exception e){
+            return new ResponseEntity<Room>(HttpStatus.BAD_REQUEST);
+        }
+
     }
 
     @RequestMapping(value = {"findRoom"}, method = RequestMethod.GET)

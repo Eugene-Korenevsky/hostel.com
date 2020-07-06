@@ -1,5 +1,7 @@
 package com.spring.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -68,6 +70,7 @@ public class Room implements Serializable {
         this.price = price;
     }
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(name = "room_description",
             joinColumns = @JoinColumn(name = "ROOM_ID", referencedColumnName = "ID"),
