@@ -48,18 +48,14 @@ public class RoomController {
             method = RequestMethod.GET,produces = {MimeTypeUtils.TEXT_PLAIN_VALUE})
     public ResponseEntity<String>  showRoomListAjax(){
         try {
-            //List<Room> rooms = roomService.readAll(false);
-           // ResponseEntity<List<Room>> responseEntity = new ResponseEntity<List<Room>>(rooms, HttpStatus.OK);
             ResponseEntity<String> responseEntity = new ResponseEntity<String>("hello from server",
                     HttpStatus.OK);
             System.out.println("ok");
-            //return responseEntity;
             return responseEntity;
         }catch (Exception e){
             System.out.println("error");
             System.out.println(e.getMessage());
             return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
-            //return new ResponseEntity<List<Room>>(HttpStatus.BAD_REQUEST);
         }
 
     }

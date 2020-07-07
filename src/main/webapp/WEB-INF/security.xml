@@ -7,12 +7,21 @@
              http://www.springframework.org/schema/security/spring-security-3.0.xsd">
     <http auto-config="true">
         <intercept-url pattern="/admin/**" access="ROLE_APP"/>
-        <remember-me/>
     </http>
 
     <authentication-manager>
-        <authentication-provider user-service-ref="userServiceSecurity"/>
+        <authentication-provider user-service-ref="userServiceJDBC"/>
     </authentication-manager>
+
+    <jdbc-user-service id="userServiceJDBC" data-source-ref="dataSource"
+                       users-by-username-query="select email, password, true
+                       from project.user
+                       where email=?"
+                       authorities-by-username-query="SELECT u.EMAIL, r.name
+                       from project.user as u,
+                       project.role as r
+                       where u.ROLE_ID = r.ID and
+                       u.EMAIL =?"/>
 
     <user-service id="userServiceSecurity">
         <user name="olga@tut.by" password="kina" authorities="ROLE_APP"/>
