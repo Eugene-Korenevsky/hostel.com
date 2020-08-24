@@ -24,14 +24,12 @@
 						<input id="input" type="text" name="price" </p>
                     <input id="button" type="submit" value="<fmt:message key="search.button" bundle="${rs}" />">
                 </form>
-                <form method="GET"  action="login">
+                <form method="GET"  action="loginForm">
                     <button id="button" type="submit"><fmt:message key="login.button" bundle="${rs}" /></button>
                 </form>
 				<form method="GET" action="cabinet">
             <button id="button" type="submit"><fmt:message key="cabinet.button" bundle="${rs}" /></button>
         </form>
-		<form method="GET" action="home">
-            <button id="button" type="submit"><fmt:message key="main.page" bundle="${rs}" /></button>
-        </form>
+		<a href="/com.company-1.0-SNAPSHOT">home</a>
 
 </div>

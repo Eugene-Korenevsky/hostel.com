@@ -19,6 +19,18 @@ public class Order implements Serializable {
     }
 
     @NotNull
+    @Column(name = "TOTAL_PRICE")
+    private double totalPrice;
+
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    @NotNull
     @Column(name = "DATE_IN")
     private Timestamp dateIn;
 

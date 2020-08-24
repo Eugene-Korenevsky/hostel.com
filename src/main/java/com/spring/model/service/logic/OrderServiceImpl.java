@@ -26,7 +26,7 @@ public class OrderServiceImpl extends BaseService implements OrderService {
         EntityManager entityManager = EntityManagerFactory.getEntityManager();
         try {
             entityManager.getTransaction().begin();
-            orderDao.findById(id,entityManager);
+            order = orderDao.findById(id,entityManager);
             entityManager.getTransaction().commit();
         }catch (Exception e){
             entityManager.getTransaction().rollback();
@@ -42,10 +42,12 @@ public class OrderServiceImpl extends BaseService implements OrderService {
         EntityManager entityManager = EntityManagerFactory.getEntityManager();
         try {
             entityManager.getTransaction().begin();
-            orderDao.readAll(entityManager);
+            orders = orderDao.readAll(entityManager);
             entityManager.getTransaction().commit();
+            System.out.println("ok");
         }catch (Exception e){
             entityManager.getTransaction().rollback();
+            System.out.println("error");
         }finally {
             entityManager.close();
         }

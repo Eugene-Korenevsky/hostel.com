@@ -24,21 +24,26 @@
 			<p><fmt:message key="${message}" bundle="${rs}" /></p>
 			</c:if>
         <div id="login">
+               <form name="f" method="POST" action="/com.company-1.0-SNAPSHOT/j_spring_security_check">
+               <input type="text" name="j_username"/>
+               <input type="password" name="j_password"/>
+               <input name="submit" type="submit"/>
+               </form>
 
-           <s:form id="form" method="POST" action="login" modelAttribute ="user">
+          <!-- <s:form id="form" method="POST" action="/com.company-1.0-SNAPSHOT/j_spring_security_check" modelAttribute ="user">
                 <p><fmt:message key="login.form.email" bundle="${rs}" />
-                <s:input path="email" type="email"/>
+                <s:input path="email" type="email" name="j_username"/>
                 <s:errors path="email"/>
                 <p><fmt:message key="login.form.password" bundle="${rs}" />
                 <s:input id="password" path="password" type="password" class="required"
-                title="${ wrongEmail }"/>
+                title="${ wrongEmail }" name="j_password"/>
                 <s:errors path="password"/>
 
 
                 <s:input path="name" type="hidden" value="default"/>
                 <s:input path="surname" type="hidden" value="default"/>
                 <p><input id="button" type="submit" value="<fmt:message key="login.button" bundle="${rs}" />"></p>
-           </s:form>
+           </s:form>-->
 			<form action="registerForm">
             <button id="button" type="submit"><fmt:message key="register.button" bundle="${rs}" /></button>
         </form>

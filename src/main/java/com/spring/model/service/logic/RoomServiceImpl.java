@@ -10,7 +10,9 @@ import com.spring.model.service.RoomService;
 
 import javax.persistence.EntityManager;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 public class RoomServiceImpl extends BaseService implements RoomService {
@@ -73,6 +75,20 @@ public class RoomServiceImpl extends BaseService implements RoomService {
         room.setPrice(price);
         room.setRoomClass(roomClass);
         room.setSits(sits);
+        try {
+            entityManager.getTransaction().begin();
+            roomDao.create(room, entityManager);
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            entityManager.getTransaction().rollback();
+        } finally {
+            entityManager.close();
+        }
+    }
+
+    @Override
+    public void createRoom(Room room) {
+        EntityManager entityManager = EntityManagerFactory.getEntityManager();
         try {
             entityManager.getTransaction().begin();
             roomDao.create(room, entityManager);
@@ -160,6 +176,20 @@ public class RoomServiceImpl extends BaseService implements RoomService {
             } catch (Exception e) {
                 entityManager.getTransaction().rollback();
             }
+        }
+    }
+
+    @Override
+    public void update(Room room) {
+        EntityManager entityManager = EntityManagerFactory.getEntityManager();
+        try {
+            entityManager.getTransaction().begin();
+            roomDao.update(room,entityManager);
+            entityManager.getTransaction().commit();
+        }catch (Exception e){
+            entityManager.getTransaction().rollback();
+        }finally {
+            entityManager.close();
         }
     }
 }

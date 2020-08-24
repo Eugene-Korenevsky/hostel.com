@@ -9,6 +9,7 @@ import com.spring.model.entity.User;
 import com.spring.model.entitymanager.EntityManagerFactory;
 import com.spring.model.service.BaseService;
 import com.spring.model.service.UserService;
+import com.spring.model.service.exceptions.EmailIsExistException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -128,18 +129,18 @@ public class UserServiceImpl extends BaseService implements UserService {
     }
 
     @Override
-    public User register(String email, String password, String name, String surname) {
-        User user = new User();
+    public User register(User user) throws EmailIsExistException {
         List<User> users;
         boolean found = false;
-        if (email != null && password != null) {
+        if (user.getEmail() != null && user.getPassword() != null) {
             EntityManager entityManager = EntityManagerFactory.getEntityManager();
             try {
                 entityManager.getTransaction().begin();
                 users = getGenericDao().readAll(entityManager);
                 for (User user2 : users) {
-                    if (user2.getEmail().equals(email)) {
+                    if (user2.getEmail().equals(user.getEmail())) {
                         found = true;
+                        System.out.println("found");
                         break;
                     }
                 }
@@ -147,13 +148,9 @@ public class UserServiceImpl extends BaseService implements UserService {
                     long i = 1;
                     Role role = roleDao.findById(i, entityManager);
                     user.setRole(role);
-                    if (name == null) user.setName("unknown");
-                    else user.setName(name);
-                    if (surname == null) user.setSurname("unknown");
-                    else user.setSurname(surname);
-                    user.setPassword(password);
-                    user.setEmail(email);
-                    user = userDao.createEntity(user, entityManager);
+                    userDao.createEntity(user, entityManager);
+                } else{
+                    throw new EmailIsExistException();
                 }
                 entityManager.getTransaction().commit();
             } catch (Exception e) {

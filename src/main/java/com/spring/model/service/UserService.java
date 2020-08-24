@@ -1,6 +1,7 @@
 package com.spring.model.service;
 
 import com.spring.model.entity.User;
+import com.spring.model.service.exceptions.EmailIsExistException;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ public interface UserService {
 
     public User login(String email,String password);
 
-    public User register(String email,String password,String name,String surname);
+    public User register(User user) throws EmailIsExistException;
 
     public void changeUserRole(long userId,long roleId);
 }

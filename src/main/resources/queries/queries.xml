@@ -20,5 +20,8 @@
             select i from User i where i.password = :password and i.email = :email
         </query>
     </named-query>
+    <named-query name="descByName">
+        <query> select i from Description i where i.description = :description</query>
+    </named-query>
 
 </entity-mappings>

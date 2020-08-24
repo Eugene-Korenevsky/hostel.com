@@ -86,6 +86,7 @@ public class ReserveServiceImpl extends BaseService implements ReserveService {
                 reserve.setDateOut(order.getDateOut());
                 reserve.setRoom(order.getRoom());
                 reserve.setUser(order.getUser());
+                reserve.setTotalPrice(order.getTotalPrice());
                 reserveDao.create(reserve, entityManager);
                 orderDao.delete(order, entityManager);
             }
