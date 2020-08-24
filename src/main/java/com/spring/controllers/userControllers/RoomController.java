@@ -30,10 +30,6 @@ import java.util.*;
 public class RoomController {
     @Value("${access.first}")
     private String access1;
-    @Value("${access.second}")
-    private String access2;
-    @Autowired
-    private DescriptionService descriptionService;
     @Autowired
     private TimestampMaker timestampMaker;
     @Autowired
@@ -42,14 +38,10 @@ public class RoomController {
     private RoomSearchHelper roomSearchHelper;
     @Autowired
     private RoomService roomService;
-    @Autowired
-    private TotalPrice totalPrice;
-    @Autowired
-    private IsRoomFreeInDates isRoomFreeInDates;
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private OrderService orderService;
+
+
+
+
 
 
     @GetMapping()
@@ -65,30 +57,6 @@ public class RoomController {
         Room room = roomService.readById(id, true);
         model.put("room", room);
         return "room";
-    }
-
-    @RequestMapping(value = {"addDescription"}, method = RequestMethod.POST)
-    public String addDescription(HttpSession session, @RequestParam(value = "descriptionId") long descriptionId) {
-        User user = (User) session.getAttribute("user");
-        if (user.getRole().getRole().equals(access1)) {
-            Room room = (Room) session.getAttribute("room");
-            if (room != null) {
-                roomService.addDescription(room.getId(), descriptionId);
-            }
-            return "redirect:/roomsList";
-        } else return "loginForm";
-    }
-
-    @RequestMapping(value = {"removeDescription"}, method = RequestMethod.POST)
-    public String removeDescription(HttpSession session, @RequestParam(value = "descriptionId") long descriptionId) {
-        User user = (User) session.getAttribute("user");
-        if (user.getRole().getRole().equals(access1)) {
-            Room room = (Room) session.getAttribute("room");
-            if (room != null) {
-                roomService.removeDescription(room.getId(), descriptionId);
-            }
-            return "redirect:/roomsList";
-        } else return "loginForm";
     }
 
 
