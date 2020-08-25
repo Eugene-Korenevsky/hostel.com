@@ -46,26 +46,8 @@ public class UserController {
         return "login";
     }
 
-    /*@RequestMapping(value = {"/login"}, method = RequestMethod.POST)
-    public String loginUser(@Valid User user, BindingResult bindingResult,
-                            HttpSession session,
-                            Map<String, Object> model) {
 
-        if (bindingResult.hasErrors()) {
-            return "loginForm";
-        }
-        User user1 = userService.login(user.getEmail(), user.getPassword());
-        if (user1.getRole() != null) {
-            session.setAttribute("user", user1);
-            model.put("message", "login.welcome");
-            return "user";
-        } else {
-            model.put("message", "login.wrong");
-            return "loginForm";
-        }
-    }*/
-
-    @RequestMapping(value = {"profile"}, method = RequestMethod.GET)
+    @GetMapping(value = {"profile"})
     public String showCabinet(Map<String, Object> model) {
         try {
             SecurityContext securityContext = SecurityContextHolder.getContext();
@@ -91,28 +73,15 @@ public class UserController {
     }
 
 
-
-   /* @RequestMapping(value = {"changeRole"}, method = RequestMethod.POST)
-    public String changeUserRole(HttpSession session, @RequestParam(value = "roleId") long roleId,
-                                 @RequestParam(value = "userId") long userId) {
-        User user = (User) session.getAttribute("user");
-        if (user.getRole().getRole().equals(access1)) {
-            userService.changeUserRole(userId, roleId);
-            return "redirect:/usersList";
-        } else return "loginForm";
-    }*/
-
-    @RequestMapping(value = {"registration"}, method = RequestMethod.GET)
+    @GetMapping(value = {"registration"})
     public String showRegisterForm(Map<String, Object> model) {
         User user = new User();
         model.put("user", user);
         return "registration";
     }
 
-    @RequestMapping(value = {"/registration"}, method = RequestMethod.POST)
-    public String registerUser(@Valid User user, BindingResult bindingResult,
-                               Map<String, Object> model) {
-
+    @PostMapping(value = {"registration"})
+    public String registerUser(@Valid User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             System.out.println("error");
             return "registration";

@@ -23,6 +23,29 @@
     </script>
     <script>
         $(document).ready(function() {
+          $(".deleteR").on("click", function() {
+                  var value1 = $(this).attr('href');
+                 console.log(value1);
+                 $("#delete").show();
+                 url1 = value1;
+                 console.log("url = "+url1);
+                 return false;
+          });
+
+          $("#deleteForm").click(function(event) {
+                 event.preventDefault();
+                 var req = new XMLHttpRequest();
+                 req.open("DELETE", "order/" + url1, false);
+                 req.send(null);
+                 document.location.href = "profile";
+          });
+          $("#cancelD").click(function() {
+                  $("#delete").hide();
+                  return false;
+          });
+
+
+
             $(".sm").smartmenus();
             $("#orders1").hide();
             $("#reserves1").hide();
@@ -168,6 +191,7 @@
                         <p class="data">Price : <c:out value="${ order.totalPrice }"  /> $</p>
                         <p class="data">arrive date : <c:out value="${ order.dateIn }"  /></p>
                         <p class="data">leave date : <c:out value="${ order.dateOut }"  /></p>
+                        <p class="more"><a class="deleteR" href="${order.id}">Cancel</a></p>
                         </c:forEach>
 
                     </div>
@@ -177,6 +201,18 @@
             </div>
         </div>
     </div>
+      <div class=" container chooseDateDialog1" id="delete" title="Chose dates" hidden>
+                        <div id="hide" class="row">
+                            <p>This dioloq window.You can moove it in the window</p>
+
+                            delete this reserve?
+
+                            <div>
+                               <a id="cancelD" class="previous" href="#">Previous</a>
+                               <a id="deleteForm" class="makeorder" href="75" data-method="delete">Delete</a>
+                            </div>
+                        </div>
+         </div>
 
     <footer>
         <div class="container">

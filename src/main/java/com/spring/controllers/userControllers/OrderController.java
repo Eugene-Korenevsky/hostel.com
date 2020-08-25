@@ -1,6 +1,7 @@
 package com.spring.controllers.userControllers;
 
 import com.spring.model.entity.Order;
+import com.spring.model.entity.Reserve;
 import com.spring.model.entity.Room;
 import com.spring.model.entity.User;
 import com.spring.model.helpers.orderhelpers.IsRoomFreeInDates;
@@ -42,27 +43,16 @@ public class OrderController {
    @Autowired
    private RoomService roomService;
 
+   @DeleteMapping(value = {"{id}"})
+   public ResponseEntity<Order> deleteOrder(@PathVariable("id") long id){
+       try {
+           orderService.delete(id);
+           return new ResponseEntity<>(HttpStatus.OK);
+       }catch (Exception e){
+           return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+       }
+   }
 
-
-  /*  @RequestMapping(value = {"confirmOrder"}, method = RequestMethod.POST)
-    public String confirmOrder(HttpSession session) {
-        User user = (User) session.getAttribute("user");
-        Order order = (Order) session.getAttribute("order");
-        if (user.getRole() != null) {
-            orderService.create(order);
-            return "redirect:/findUserOrders";
-        } else return "loginForm";
-    }
-
-
-    @RequestMapping(value = {"deleteOrder"})
-    public String deleteOrder(@RequestParam(value = "id") long id, HttpSession session) {
-        User user = (User) session.getAttribute("user");
-        if (user != null) {
-            orderService.delete(id);
-            return "redirect:/findUserOrders";
-        } else return "loginForm";
-    }*/
 
     @PostMapping(produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
     public ResponseEntity<Order> makeOrder(@RequestParam("dateIn") String dateIn,

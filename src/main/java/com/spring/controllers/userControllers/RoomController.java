@@ -1,35 +1,20 @@
 package com.spring.controllers.userControllers;
 
 import com.spring.model.entity.*;
-import com.spring.model.helpers.orderhelpers.IsRoomFreeInDates;
 import com.spring.model.helpers.orderhelpers.OrderCorrectDate;
-import com.spring.model.helpers.pricehelpers.TotalPrice;
 import com.spring.model.helpers.roomhelpers.datehelpers.TimestampMaker;
 import com.spring.model.helpers.roomhelpers.searchhelper.RoomSearchHelper;
-import com.spring.model.service.DescriptionService;
-import com.spring.model.service.OrderService;
 import com.spring.model.service.RoomService;
-import com.spring.model.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.MimeTypeUtils;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
 import java.util.*;
 
 @Controller
 @RequestMapping("room")
 public class RoomController {
-    @Value("${access.first}")
-    private String access1;
     @Autowired
     private TimestampMaker timestampMaker;
     @Autowired
@@ -38,11 +23,6 @@ public class RoomController {
     private RoomSearchHelper roomSearchHelper;
     @Autowired
     private RoomService roomService;
-
-
-
-
-
 
     @GetMapping()
     public String showRoomList(Map<String, Object> model) {
@@ -53,7 +33,7 @@ public class RoomController {
 
 
     @GetMapping(value = {"{id}"})
-    public String showRoom(Map<String, Object> model,@PathVariable("id") long id) {
+    public String showRoom(Map<String, Object> model, @PathVariable("id") long id) {
         Room room = roomService.readById(id, true);
         model.put("room", room);
         return "room";
