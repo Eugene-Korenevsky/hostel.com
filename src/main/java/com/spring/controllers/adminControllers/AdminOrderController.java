@@ -20,24 +20,7 @@ import java.util.Map;
 public class AdminOrderController {
     @Autowired
     private OrderService orderService;
-    @Autowired
-    private ReserveService reserveService;
-    @Autowired
-    private IsRoomFreeInDates isRoomFreeInDates;
 
-
-  /*  @GetMapping(value = {"confirmOrder/{id}"})
-    public String confirmUserOrder(@PathVariable("id") long orderId,
-                                   HttpSession session) {
-        Order order = orderService.findById(orderId);
-        if (isRoomFreeInDates.isRoomFree(order.getRoom().getId(), order.getDateIn(), order.getDateOut())) {
-            reserveService.create(orderId);
-            return "redirect:/admin/reserve";
-        } else {
-            session.setAttribute("datesNotFree", "error");
-            return "redirect:/admin/order";
-        }
-    }*/
 
     @DeleteMapping(value = {"{id}"})
     public String cancelUserOrder(@PathVariable("id") long orderId) {
@@ -46,14 +29,7 @@ public class AdminOrderController {
     }
 
     @GetMapping()
-    public String showAdminOrdersList(HttpSession session, Map<String, Object> model) {
-      /*  String error = (String) session.getAttribute("datesNotFree");
-        if (error != null) {
-            if (error.equals("error")) {
-                session.setAttribute("datesNotFree", "clear");
-                model.put("datesNotFreeError", error);
-            }
-        }*/
+    public String showAdminOrdersList(Map<String, Object> model) {
         List<Order> orders = orderService.readAll();
         model.put("orders", orders);
         return "adminOrders";

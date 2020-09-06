@@ -25,8 +25,10 @@
       $(document).ready(function() {
           var order1;
           var reserve = {};
+          var dates = {};
           $(".confirm").on("click",function(){
                var value1 = $(this).attr('href');
+               $("#confirmOrder").show();
                $.getJSON("order/"+value1,function( order ){
                    console.log(order);
                    reserve.id = order.id;
@@ -35,24 +37,61 @@
                    reserve.totalPrice = order.totalPrice;
                    reserve.dateIn = order.dateIn;
                    reserve.dateOut = order.dateOut;
+                   dates.dateIn = order.dateIn;
+                   dates.dateOut = order.dateOut;
+                   dates.roomId = order.room.id;
+                   dates.orderId = order.id;
+                   console.log(dates.dateIn);
+                   console.log(dates.dateOut);
+                   console.log(dates.roomId);
                    result_json = JSON.stringify(reserve);
                    console.log(result_json);
-                            $.ajax({
-                               type: 'POST',
-                               url: 'reserve',
-                               contentType: 'application/json',
-                               data: result_json,
-                               success: function(data) {
-                                    console.log("done");
-                                    document.location.href = "reserve";
-                               },
-                               error:  function(){
-                                  alert('Ошибка!');
-                               }
-                            });
+                   $.post("reserve/isFree",dates,function(data){
+                      console.log(data);
+                      if(data == "notFree"){
+                         $("#message1").show();
+                      }else{
+                         $("#message").show();
+                         $("#res").show();
+                         $("#res").text(data);
+                      }
+                   });
+
                });
              return false;
           });
+
+          $("#cancelCO").click(function() {
+            $("#confirmOrder").hide();
+            $("#message1").hide();
+            $("#message").hide();
+            $("#res").hide();
+            return false;
+          });
+
+
+           $("#confirmOrder1").click(function() {
+                      $("#message1").hide();
+                      $("#message").hide();
+                      $("#res").hide();
+                      result_json = JSON.stringify(reserve);
+                           $.ajax({
+                              type: 'POST',
+                              url: 'reserve',
+                              contentType: 'application/json',
+                              data: result_json,
+                              success: function(data) {
+                                   console.log("done");
+                                   document.location.href = "reserve";
+                              },
+                              error:  function(){
+                                 alert('Ошибка!');
+                              }
+                           });
+                      return false;
+           });
+
+
           $(".deleteR").on("click", function() {
                  var value1 = $(this).attr('href');
                  console.log(value1);
@@ -109,7 +148,7 @@
 
                         <a href="#">About Us</a>
                         <a class="current-page" href="roomsList">rooms</a>
-                        <a href="home.html">Home</a>
+                        <a href="../">Home</a>
                     </nav>
                 </div>
             </div>
@@ -171,9 +210,23 @@
                        delete this reserve?
                        <div>
                           <a id="cancelD" class="previous" href="#">Previous</a>
-                          <a id="deleteForm" class="makeorder" href="75" data-method="delete">Delete</a>
+                          <a id="deleteForm" class="makeorder" href="75" >Delete</a>
                        </div>
            </div>
+     </div>
+
+     <div class=" container chooseDateDialog1" id="confirmOrder" title="Chose dates" hidden>
+                <div id="hide" class="row">
+                                    <p id="message" hidden>It will be cost for user
+                                    <p id="res" class="desc1" hidden> </p>
+                                    </p>
+                                    <p id="message1" hidden>not free
+                                    </p>
+                            <div>
+                               <a id="cancelCO" class="previous" href="#">Previous</a>
+                               <a id="confirmOrder1" class="makeorder" href="75" >Confirm</a>
+                            </div>
+                </div>
      </div>
 
 
