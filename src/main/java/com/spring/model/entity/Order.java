@@ -79,4 +79,25 @@ public class Order implements Serializable {
     public void setRoom(Room room) {
         this.room = room;
     }
+
+    @Override
+    public boolean equals(Object o){
+        if (o == this) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Order order = (Order) o;
+        return (order.getId() == this.getId() && order.getRoom().equals(this.getRoom()) &&
+                order.getUser().equals(this.getUser()) && order.getDateIn() == this.getDateIn()
+        && order.getDateOut() == this.getDateOut() && order.getTotalPrice() == this.getTotalPrice());
+    }
+
+    public int hashCode(){
+        int result = 17;
+        result = 37 * result + (int)id;
+        result = 37 * result + user.hashCode();
+        result = 37 * result + room.hashCode();
+        result = 37 * result + dateIn.hashCode();
+        result = 37 * result + dateOut.hashCode();
+        result = 37 * result + (int) totalPrice;
+        return result;
+    }
 }

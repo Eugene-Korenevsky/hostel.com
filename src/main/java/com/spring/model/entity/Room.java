@@ -93,4 +93,25 @@ public class Room implements Serializable {
     public void removeDescription(Description description) {
         descriptions.remove(description);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Room room = (Room) o;
+        return (room.getId() == this.getId() && room.getNumber() == this.getNumber()
+                && room.getPrice() == this.getPrice() && room.getSits() == this.getSits()
+                && room.getRoomClass().equals(this.getRoomClass()));
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 17;
+        result = 37 * result + (int) id;
+        result = 37 * result + number;
+        result = 37 * result + (int) price;
+        result = 37 * result + sits;
+        result = 37 * result + roomClass.hashCode();
+        return result;
+    }
 }

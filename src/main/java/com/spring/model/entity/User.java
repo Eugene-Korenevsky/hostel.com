@@ -82,4 +82,26 @@ public class User implements Serializable {
     public Role getRole() {
         return role;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return (user.getId() == this.getId() && user.getEmail().equals(this.getEmail())
+                && user.getName().equals(this.getName()) && user.getPassword().equals(this.getPassword())
+                && user.getRole().equals(this.getRole()) && user.getSurname().equals(this.getSurname()));
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 17;
+        result = 37 * result + (int) id;
+        result = 37 * result + email.hashCode();
+        result = 37 * result + name.hashCode();
+        result = 37 * result + password.hashCode();
+        result = 37 * result + role.hashCode();
+        result = 37 * result + surname.hashCode();
+        return result;
+    }
 }
