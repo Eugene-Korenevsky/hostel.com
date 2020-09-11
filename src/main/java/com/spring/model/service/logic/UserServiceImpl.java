@@ -3,20 +3,17 @@ package com.spring.model.service.logic;
 import com.spring.model.aspects.MyLogger;
 import com.spring.model.dao.RoleDao;
 import com.spring.model.dao.UserDao;
-import com.spring.model.dao.daoImpl.RoleDaoImpl;
 import com.spring.model.entity.Role;
 import com.spring.model.entity.User;
 import com.spring.model.entitymanager.EntityManagerFactory;
-import com.spring.model.service.BaseService;
 import com.spring.model.service.UserService;
 import com.spring.model.service.exceptions.EmailIsExistException;
 
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserServiceImpl extends BaseService implements UserService {
+public class UserServiceImpl  implements UserService {
     private UserDao userDao;
     private RoleDao roleDao;
 
@@ -136,7 +133,7 @@ public class UserServiceImpl extends BaseService implements UserService {
             EntityManager entityManager = EntityManagerFactory.getEntityManager();
             try {
                 entityManager.getTransaction().begin();
-                users = getGenericDao().readAll(entityManager);
+                users = userDao.readAll(entityManager);
                 for (User user2 : users) {
                     if (user2.getEmail().equals(user.getEmail())) {
                         found = true;

@@ -2,19 +2,16 @@ package com.spring.model.service.logic;
 
 import com.spring.model.dao.OrderDao;
 import com.spring.model.dao.ReserveDao;
-import com.spring.model.dao.daoImpl.OrderDaoImpl;
 import com.spring.model.entity.Order;
 import com.spring.model.entity.Reserve;
 import com.spring.model.entitymanager.EntityManagerFactory;
-import com.spring.model.service.BaseService;
 import com.spring.model.service.ReserveService;
 
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReserveServiceImpl extends BaseService implements ReserveService {
+public class ReserveServiceImpl  implements ReserveService {
     private ReserveDao reserveDao;
     private OrderDao orderDao;
 

@@ -5,17 +5,14 @@ import com.spring.model.dao.RoomDao;
 import com.spring.model.entity.Description;
 import com.spring.model.entity.Room;
 import com.spring.model.entitymanager.EntityManagerFactory;
-import com.spring.model.service.BaseService;
 import com.spring.model.service.RoomService;
 
 import javax.persistence.EntityManager;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 
-public class RoomServiceImpl extends BaseService implements RoomService {
+public class RoomServiceImpl implements RoomService {
 
     private DescriptionDao descriptionDao;
 
@@ -105,7 +102,7 @@ public class RoomServiceImpl extends BaseService implements RoomService {
         EntityManager entityManager = EntityManagerFactory.getEntityManager();
         try {
             entityManager.getTransaction().begin();
-            Room room = (Room) getGenericDao().findById(roomId, entityManager);
+            Room room = roomDao.findById(roomId, entityManager);
             if (room != null) {
                 room.setNumber(number);
                 room.setPrice(price);
@@ -146,10 +143,10 @@ public class RoomServiceImpl extends BaseService implements RoomService {
             try {
                 entityManager.getTransaction().begin();
                 Room room = roomDao.findById(roomId, entityManager);
-                Description description = descriptionDao.findById(descriptionId,entityManager);
+                Description description = descriptionDao.findById(descriptionId, entityManager);
                 if (room != null) {
                     room.removeDescription(description);
-                    getGenericDao().update(room, entityManager);
+                    roomDao.update(room, entityManager);
                 }
                 entityManager.getTransaction().commit();
             } catch (Exception e) {
@@ -184,11 +181,11 @@ public class RoomServiceImpl extends BaseService implements RoomService {
         EntityManager entityManager = EntityManagerFactory.getEntityManager();
         try {
             entityManager.getTransaction().begin();
-            roomDao.update(room,entityManager);
+            roomDao.update(room, entityManager);
             entityManager.getTransaction().commit();
-        }catch (Exception e){
+        } catch (Exception e) {
             entityManager.getTransaction().rollback();
-        }finally {
+        } finally {
             entityManager.close();
         }
     }

@@ -75,22 +75,20 @@ public class UserController {
 
     @GetMapping(value = {"registration"})
     public String showRegisterForm(Map<String, Object> model) {
-        User user = new User();
-        model.put("user", user);
+        model.put("user", new User());
         return "registration";
     }
 
     @PostMapping(value = {"registration"})
     public String registerUser(@Valid User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            System.out.println("error");
             return "registration";
         }
         try {
             userService.register(user);
             return "login";
         } catch (EmailIsExistException e) {
-            return "index";
+            return "registration";
         }
     }
 

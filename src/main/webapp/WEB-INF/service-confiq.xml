@@ -16,34 +16,27 @@
     </bean>
     <bean id="entityManagerFactory" class="com.spring.model.entitymanager.EntityManagerFactory"
           destroy-method="destroy"/>
-    <bean id="roomDao" class="com.spring.model.dao.daoImpl.RoomDaoImp">
-    </bean>
+    <bean id="roomDao" class="com.spring.model.dao.daoImpl.RoomDaoImp"/>
     <bean id="descriptionService" class="com.spring.model.service.logic.DescriptionServiceImpl">
         <property name="descriptionDao" ref="descriptionDao"/>
-        <property name="genericDao" ref="descriptionDao"/>
     </bean>
     <bean id="roomService" class="com.spring.model.service.logic.RoomServiceImpl">
         <property name="roomDao" ref="roomDao"/>
-        <property name="genericDao" ref="roomDao"/>
         <property name="descriptionDao" ref="descriptionDao"/>
     </bean>
     <bean id="orderService" class="com.spring.model.service.logic.OrderServiceImpl">
         <property name="orderDao" ref="orderDao"/>
-        <property name="genericDao" ref="orderDao"/>
     </bean>
     <bean id="reserveService" class="com.spring.model.service.logic.ReserveServiceImpl">
         <property name="reserveDao" ref="reserveDao"/>
-        <property name="genericDao" ref="reserveDao"/>
         <property name="orderDao" ref="orderDao"/>
     </bean>
     <bean id="userService" class="com.spring.model.service.logic.UserServiceImpl">
-        <property name="genericDao" ref="userDao"/>
         <property name="userDao" ref="userDao"/>
         <property name="roleDao" ref="roleDao"/>
     </bean>
     <bean id="roleService" class="com.spring.model.service.logic.RoleServiceImpl">
         <property name="roleDao" ref="roleDao"/>
-        <property name="genericDao" ref="roleDao"/>
     </bean>
     <bean id="roleDao" class="com.spring.model.dao.daoImpl.RoleDaoImpl"/>
     <bean id="userDao" class="com.spring.model.dao.daoImpl.UserDaoImpl"/>

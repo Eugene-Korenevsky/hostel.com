@@ -2,18 +2,14 @@ package com.spring.model.service.logic;
 
 import com.spring.model.dao.OrderDao;
 import com.spring.model.entity.Order;
-import com.spring.model.entity.Room;
-import com.spring.model.entity.User;
 import com.spring.model.entitymanager.EntityManagerFactory;
-import com.spring.model.service.BaseService;
 import com.spring.model.service.OrderService;
 
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrderServiceImpl extends BaseService implements OrderService {
+public class OrderServiceImpl  implements OrderService {
     private OrderDao orderDao;
 
     public void setOrderDao(OrderDao orderDao) {

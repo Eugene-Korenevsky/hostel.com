@@ -1,17 +1,15 @@
 package com.spring.model.service.logic;
 
-import com.spring.model.dao.GenericDao;
 import com.spring.model.dao.RoleDao;
 import com.spring.model.entity.Role;
 import com.spring.model.entitymanager.EntityManagerFactory;
-import com.spring.model.service.BaseService;
 import com.spring.model.service.RoleService;
 
 import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RoleServiceImpl extends BaseService implements RoleService {
+public class RoleServiceImpl implements RoleService {
     private RoleDao roleDao;
 
     public void setRoleDao(RoleDao roleDao) {

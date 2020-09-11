@@ -3,14 +3,13 @@ package com.spring.model.service.logic;
 import com.spring.model.dao.DescriptionDao;
 import com.spring.model.entity.Description;
 import com.spring.model.entitymanager.EntityManagerFactory;
-import com.spring.model.service.BaseService;
 import com.spring.model.service.DescriptionService;
 
 import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DescriptionServiceImpl extends BaseService implements DescriptionService {
+public class DescriptionServiceImpl  implements DescriptionService {
     private DescriptionDao descriptionDao;
 
     public void setDescriptionDao(DescriptionDao descriptionDao) {
