@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "project.order")
+@Table(name = "project.orders")
 public class Order implements Serializable {
     @Id
     @NotNull

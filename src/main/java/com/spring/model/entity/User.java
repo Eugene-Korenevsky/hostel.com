@@ -7,7 +7,7 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class User implements Serializable {
     @Id
     @NotNull
@@ -90,7 +90,7 @@ public class User implements Serializable {
         User user = (User) o;
         return (user.getId() == this.getId() && user.getEmail().equals(this.getEmail())
                 && user.getName().equals(this.getName()) && user.getPassword().equals(this.getPassword())
-                && user.getRole().equals(this.getRole()) && user.getSurname().equals(this.getSurname()));
+                && user.getSurname().equals(this.getSurname()));
     }
 
     @Override
@@ -100,7 +100,6 @@ public class User implements Serializable {
         result = 37 * result + email.hashCode();
         result = 37 * result + name.hashCode();
         result = 37 * result + password.hashCode();
-        result = 37 * result + role.hashCode();
         result = 37 * result + surname.hashCode();
         return result;
     }

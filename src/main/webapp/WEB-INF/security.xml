@@ -23,10 +23,10 @@
 
     <jdbc-user-service id="userServiceJDBC" data-source-ref="dataSource"
                        users-by-username-query="select email, password, true
-                       from project.user
+                       from project.users
                        where email=?"
                        authorities-by-username-query="SELECT u.EMAIL, r.name
-                       from project.user as u,
+                       from project.users as u,
                        project.role as r
                        where u.ROLE_ID = r.ID and
                        u.EMAIL =?"/>

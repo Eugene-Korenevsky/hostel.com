@@ -142,7 +142,7 @@ public class UserServiceImpl  implements UserService {
                     }
                 }
                 if (!found) {
-                    long i = 1;
+                    long i = 2;
                     Role role = roleDao.findById(i, entityManager);
                     user.setRole(role);
                     userDao.createEntity(user, entityManager);
