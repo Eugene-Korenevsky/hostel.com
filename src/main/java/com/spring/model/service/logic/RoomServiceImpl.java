@@ -57,7 +57,12 @@ public class RoomServiceImpl implements RoomService {
             }
             entityManager.getTransaction().commit();
         } catch (Exception e) {
-            entityManager.getTransaction().rollback();
+            System.out.println("error");
+            System.out.println("--------------");
+            System.out.println(e.getMessage());
+            if (entityManager.getTransaction().isActive()) {
+                entityManager.getTransaction().rollback();
+            }
         } finally {
             entityManager.close();
         }
@@ -130,7 +135,9 @@ public class RoomServiceImpl implements RoomService {
             }
             entityManager.getTransaction().commit();
         } catch (Exception e) {
-            entityManager.getTransaction().rollback();
+            if (entityManager.getTransaction().isActive()) {
+                entityManager.getTransaction().rollback();
+            }
         } finally {
             entityManager.close();
         }

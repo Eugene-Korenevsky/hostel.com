@@ -25,6 +25,7 @@ public class Room implements Serializable {
 
     @NotNull
     @Column(name = "NUMBER")
+    @Min(value = 1,message = "min value is 1")
     private int number;
 
     public void setNumber(int number) {
@@ -49,6 +50,7 @@ public class Room implements Serializable {
 
     @NotNull
     @Column(name = "SITS")
+    @Min(value = 1,message = "min value is 1")
     private Integer sits;
 
     public Integer getSits() {
@@ -61,6 +63,7 @@ public class Room implements Serializable {
 
     @NotNull
     @Column(name = "PRICE")
+    @Min(value = 0,message = "min price is 0")
     private double price;
 
     public double getPrice() {

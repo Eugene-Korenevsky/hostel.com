@@ -93,10 +93,12 @@ public class AdminRoomController {
         room1.setRoomClass(room.getRoomClass());
         room1.setSits(room.getSits());
         List<Description> descriptions = descriptionService.readAll(false);
-        for (String s : room.getDescriptions()) {
-            for (Description description1 : descriptions) {
-                if (description1.getDescription().equals(s)) {
-                    room1.addDescription(description1);
+        if (room.getDescriptions() != null) {
+            for (String s : room.getDescriptions()) {
+                for (Description description1 : descriptions) {
+                    if (description1.getDescription().equals(s)) {
+                        room1.addDescription(description1);
+                    }
                 }
             }
         }

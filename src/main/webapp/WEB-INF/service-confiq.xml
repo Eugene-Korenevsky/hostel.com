@@ -15,7 +15,7 @@
         <property name="password" value="kara" />
     </bean>
     <bean id="entityManagerFactory" class="com.spring.model.entitymanager.EntityManagerFactory"
-          destroy-method="destroy"/>
+          init-method="init" destroy-method="destroy"/>
     <bean id="roomDao" class="com.spring.model.dao.daoImpl.RoomDaoImp"/>
     <bean id="descriptionService" class="com.spring.model.service.logic.DescriptionServiceImpl">
         <property name="descriptionDao" ref="descriptionDao"/>
