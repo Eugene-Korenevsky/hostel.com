@@ -57,6 +57,7 @@ public class Global_ru_RU extends ListResourceBundle {
             {"message.write.your.password","Напишите ваш пароль"},
             {"message.wrong.email","Некорректный email"},
             {"main.page","Главная"},
+            {"login.first","Сначала нужно войти"},
             {"first.page.text","Добро пожаловать на наш сайт. У нас вы сможете найти номера для своего пребывания в центре"
             		+ " вселенной по доступным ценам и с комфортом."}
         };
