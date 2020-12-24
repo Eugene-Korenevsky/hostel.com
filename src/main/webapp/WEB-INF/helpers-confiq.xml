@@ -6,22 +6,20 @@
        http://www.springframework.org/schema/aop
        http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
     <bean id="firstAspect" class="com.spring.model.aspects.FirstAspect" init-method="init" destroy-method="destroy">
-        <property name="fileName" value="webapps/spring.com/file.txt"/>
+        <!--<property name="fileName" value="log/file.txt"/>-->
+        <constructor-arg value="webapps/com.company-1.0-SNAPSHOT/log/log"/>
     </bean>
     <aop:config>
         <aop:aspect ref="firstAspect">
-            <aop:pointcut id="performance"
-                          expression="execution(* com.spring.model.helpers.roomhelpers.searchhelper.RoomSearchHelper.searchByTotalPriceAndSits(..))"/>
+            <aop:pointcut id="performance" expression="execution(* com.spring.model.helpers.roomhelpers.searchhelper.RoomSearchHelper.searchByTotalPriceAndSits(..))"/>
             <aop:before pointcut-ref="performance" method="writeData"/>
         </aop:aspect>
-		<aop:aspect ref="firstAspect">
-            <aop:pointcut id="log"
-                          expression="within(com.spring.model.dao..**)"/>
+        <aop:aspect ref="firstAspect">
+            <aop:pointcut id="log" expression="within(com.spring.model.dao..**)"/>
             <aop:before pointcut-ref="log" method="log"/>
         </aop:aspect>
-		<aop:aspect ref="firstAspect">
-            <aop:pointcut id="log1"
-                          expression="within(com.spring.model.service..**)"/>
+        <aop:aspect ref="firstAspect">
+            <aop:pointcut id="log1" expression="within(com.spring.model.service..**)"/>
             <aop:after-throwing pointcut-ref="log1" method="afterThrowing" throwing="e"/>
         </aop:aspect>
     </aop:config>
@@ -54,5 +52,5 @@
         <constructor-arg ref="daysMaker"/>
         <constructor-arg ref="timestampMaker"/>
     </bean>
-
+    <bean id="myLogger" class="com.spring.model.aspects.MyLogger"/>
 </beans>
