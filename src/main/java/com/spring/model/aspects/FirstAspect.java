@@ -11,6 +11,10 @@ public class FirstAspect {
     private String fileName;
     private File file;
 
+    public FirstAspect(String fileName){
+        this.fileName = fileName;
+    }
+
     public void setFileName(String fileName) {
         this.fileName = fileName;
     }
@@ -40,8 +44,12 @@ public class FirstAspect {
                         "\n", true);
     }
 
-    public void init() {
+    public void init() throws IOException {
         this.file = new File(fileName);
+        FileUtils.writeStringToFile
+                (file, "init"+
+                        "\n", true);
+
     }
 
     public void destroy() throws IOException {

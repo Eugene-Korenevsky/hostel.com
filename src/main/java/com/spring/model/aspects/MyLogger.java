@@ -8,18 +8,22 @@ import java.util.Date;
 
 public class MyLogger {
 
-    public  static void log(Exception e, Object object, String message) {
+    public static void log(Kind kind, Object errorClass, String message) {
         Date date = new Date();
         String string = date.toString();
         string = string.substring(0, 10);
         String res = string.replaceAll(" ", ".");
-        File file = new File("webapps/spring.com/fileLog" + res + ".txt");
+        File file = new File("webapps/com.company-1.0-SNAPSHOT/log/myLogger " + res + ".txt");
         try {
             FileUtils.writeStringToFile
-                    (file, date.toString() + " " + message + "\n" + object.getClass().toString() + "\n"
-                            + e.getLocalizedMessage() + "\n", true);
+                    (file, kind + " --" + date.toString() + " " + message + " " + errorClass.getClass().toString() + " "
+                            + "\n", true);
         } catch (IOException ex) {
             System.out.println();
         }
     }
-}
+
+        public enum Kind {
+            INFO, WARNING, FATAL
+        }
+    }
