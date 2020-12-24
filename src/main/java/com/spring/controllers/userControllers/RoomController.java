@@ -13,7 +13,7 @@ import java.sql.Timestamp;
 import java.util.*;
 
 @Controller
-@RequestMapping("room")
+@RequestMapping("rooms")
 public class RoomController {
     @Autowired
     private TimestampMaker timestampMaker;

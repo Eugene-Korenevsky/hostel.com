@@ -35,7 +35,7 @@
           $("#deleteForm").click(function(event) {
                  event.preventDefault();
                  var req = new XMLHttpRequest();
-                 req.open("DELETE", "order/" + url1, false);
+                 req.open("DELETE", "orders/" + url1, false);
                  req.send(null);
                  document.location.href = "profile";
           });
@@ -115,8 +115,8 @@
 
 
                         <a href="#">About Us</a>
-                        <a href="room">rooms</a>
-                        <a class = "home"  href="/">Home</a>
+                        <a href="rooms">rooms</a>
+                        <a class = "home"  href="home">Home</a>
                     </nav>
                 </div>
             </div>

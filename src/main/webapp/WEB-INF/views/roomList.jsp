@@ -53,7 +53,7 @@
 
 
                         <a href="#">About Us</a>
-                        <a class="current-page" href="roomsList">rooms</a>
+                        <a class="current-page" href="rooms">rooms</a>
                         <a class="home" href="home">Home</a>
                     </nav>
                 </div>
@@ -122,7 +122,7 @@
                 <c:forEach var="desc" items="${elem.descriptions}" varStatus="status">
                 <p class="desc"><c:out value="${ desc.description }"  /></p>
                 </c:forEach>
-                <p class="more"><a href="room/${elem.id}">More</a></p>
+                <p class="more"><a href="rooms/${elem.id}">More</a></p>
             </div>
 
 

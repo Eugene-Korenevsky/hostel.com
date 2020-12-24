@@ -90,7 +90,7 @@
                                  <a href="logout">log Out</a>
                            </security:authorize>
                            <security:authorize access="!isAuthenticated()">
-                                 <a href="registration.html">registratinion</a>
+                                 <a class="current-page" href="registration.html">registratinion</a>
                            </security:authorize>
                            <security:authorize access="isAuthenticated()">
                                   <a href="profile">cabinet</a>
@@ -98,7 +98,7 @@
 
 
                            <a href="#">About Us</a>
-                           <a class="current-page" href="roomsList">rooms</a>
+                           <a  href="rooms">rooms</a>
                            <a class="home" href="home.html">Home</a>
                     </nav>
                 </div>

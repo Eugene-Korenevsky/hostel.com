@@ -35,9 +35,9 @@
          $("#deleteForm").click(function(event) {
                 event.preventDefault();
                 var req = new XMLHttpRequest();
-                req.open("DELETE", "reserve/" + url1, false);
+                req.open("DELETE", "reserves/" + url1, false);
                 req.send(null);
-                document.location.href = "reserve";
+                document.location.href = "reserves";
          });
          $("#cancelD").click(function() {
                  $("#delete").hide();
@@ -78,7 +78,7 @@
 
 
                         <a href="#">About Us</a>
-                        <a href="../room">rooms</a>
+                        <a href="../rooms">rooms</a>
                         <a class="home" href="../home">Home</a>
                     </nav>
                 </div>

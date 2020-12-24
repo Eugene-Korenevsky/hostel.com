@@ -29,7 +29,7 @@
           $(".confirm").on("click",function(){
                var value1 = $(this).attr('href');
                $("#confirmOrder").show();
-               $.getJSON("order/"+value1,function( order ){
+               $.getJSON("orders/"+value1,function( order ){
                    console.log(order);
                    reserve.id = order.id;
                    reserve.user = order.user;
@@ -46,7 +46,7 @@
                    console.log(dates.roomId);
                    result_json = JSON.stringify(reserve);
                    console.log(result_json);
-                   $.post("reserve/isFree",dates,function(data){
+                   $.post("reserves/isFree",dates,function(data){
                       console.log(data);
                       if(data == "notFree"){
                          $("#message1").show();
@@ -77,12 +77,12 @@
                       result_json = JSON.stringify(reserve);
                            $.ajax({
                               type: 'POST',
-                              url: 'reserve',
+                              url: 'reserves',
                               contentType: 'application/json',
                               data: result_json,
                               success: function(data) {
                                    console.log("done");
-                                   document.location.href = "reserve";
+                                   document.location.href = "reserves";
                               },
                               error:  function(){
                                  alert('Ошибка!');
@@ -104,9 +104,9 @@
           $("#deleteForm").click(function(event) {
                  event.preventDefault();
                  var req = new XMLHttpRequest();
-                 req.open("DELETE", "order/" + url1, false);
+                 req.open("DELETE", "orders/" + url1, false);
                  req.send(null);
-                 document.location.href = "order";
+                 document.location.href = "orders";
           });
           $("#cancelD").click(function() {
                   $("#delete").hide();
@@ -142,13 +142,13 @@
                               <a href="registration.html">registratinion</a>
                         </security:authorize>
                         <security:authorize access="isAuthenticated()">
-                               <a class="home" href="profile">cabinet</a>
+                               <a class="current-page" href="profile">cabinet</a>
                         </security:authorize>
 
 
                         <a href="#">About Us</a>
-                        <a class="current-page" href="roomsList">rooms</a>
-                        <a href="../">Home</a>
+                        <a href="../rooms">rooms</a>
+                        <a class="home" href="../">Home</a>
                     </nav>
                 </div>
             </div>

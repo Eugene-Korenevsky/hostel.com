@@ -30,7 +30,7 @@
             $("#hello").hide();
             $("#shouldLogin").hide();
              $("#confirm1").click(function(evt) {
-             $.post("../order",dates,function(data){
+             $.post("../orders",dates,function(data){
                 document.location.href = "../profile";
              });
 
@@ -44,7 +44,7 @@
                    dates.roomId = $("#roomId").val()
 
 
-                $.post("../order/isFree",dates,function(data){
+                $.post("../orders/isFree",dates,function(data){
                   if(data == "notFree"){
                      $("#res").hide();
                      $("#message1").hide();
@@ -113,7 +113,7 @@
                         </security:authorize>
 
                         <a href="#">About Us</a>
-                        <a class="current-page" href="../room">rooms</a>
+                        <a class="current-page" href="../rooms">rooms</a>
                         <a class="home" href="../">Home</a>
                     </nav>
                 </div>

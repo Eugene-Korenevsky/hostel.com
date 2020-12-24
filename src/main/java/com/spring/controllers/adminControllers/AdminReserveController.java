@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("admin/reserve")
+@RequestMapping("admin/reserves")
 public class AdminReserveController {
     @Autowired
     private ReserveService reserveService;

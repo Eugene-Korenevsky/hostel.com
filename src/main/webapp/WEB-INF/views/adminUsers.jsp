@@ -29,7 +29,7 @@
                     var value1 = $(this).attr('href');
                     console.log(value1);
                     $("#hello").show();
-                    $.getJSON("user/"+value1,function( user ){
+                    $.getJSON("users/"+value1,function( user ){
                       console.log(user);
                       user1 = user;
                     });
@@ -56,7 +56,7 @@
                    console.log(user1);
                    $.ajax({
                       type: 'PUT',
-                      url: 'user',
+                      url: 'users',
                       contentType: 'application/json',
                       data: result_json,
                       success: function(data) {
@@ -99,13 +99,13 @@
                               <a href="registration.html">registratinion</a>
                         </security:authorize>
                         <security:authorize access="isAuthenticated()">
-                               <a href="profile">cabinet</a>
+                               <a class="current-page" href="profile">cabinet</a>
                         </security:authorize>
 
 
                         <a href="#">About Us</a>
-                        <a class="current-page" href="roomsList">rooms</a>
-                        <a class="home" href="home.html">Home</a>
+                        <a  href="../rooms">rooms</a>
+                        <a class="home" href="../home">Home</a>
                     </nav>
                 </div>
             </div>

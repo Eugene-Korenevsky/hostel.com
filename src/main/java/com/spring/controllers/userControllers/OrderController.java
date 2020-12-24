@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("order")
+@RequestMapping("orders")
 public class OrderController {
    @Autowired
    private OrderService orderService;
@@ -58,11 +58,12 @@ public class OrderController {
     public ResponseEntity<Order> makeOrder(@RequestParam("dateIn") String dateIn,
                                            @RequestParam("dateOut") String dateOut,
                                            @RequestParam("roomId") long id) {
+
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        Authentication authentication = securityContext.getAuthentication();
+        org.springframework.security.core.userdetails.User user =
+                (org.springframework.security.core.userdetails.User) authentication.getPrincipal();
         try {
-            SecurityContext securityContext = SecurityContextHolder.getContext();
-            Authentication authentication = securityContext.getAuthentication();
-            org.springframework.security.core.userdetails.User user =
-                    (org.springframework.security.core.userdetails.User) authentication.getPrincipal();
             User user1 = userService.login(user.getUsername(), user.getPassword());
             Timestamp inDate = timestampMaker.getTimestamp(dateIn, "12:00");
             Timestamp outDate = timestampMaker.getTimestamp(dateOut, "12:00");
@@ -76,7 +77,7 @@ public class OrderController {
             order.setRoom(room);
             order.setUser(user1);
             orderService.create(order);
-            return new ResponseEntity<>(order, HttpStatus.OK);
+            return new ResponseEntity<>(order, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

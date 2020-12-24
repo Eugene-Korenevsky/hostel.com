@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.MimeTypeUtils;
 import org.springframework.validation.BindingResult;
@@ -46,15 +47,33 @@ public class UserController {
         return "login";
     }
 
+    @RequestMapping(value = {"/loginError"}, method = RequestMethod.GET)
+    public String loginUserFormError(Map<String, Object> model) {
+        User user = new User();
+        model.put("user", user);
+        model.put("message","login.wrong");
+        return "login";
+    }
+
+    @RequestMapping(value = {"/loginFirst"}, method = RequestMethod.GET)
+    public String loginUserFirst(Map<String, Object> model) {
+        User user = new User();
+        model.put("user", user);
+        model.put("message","login.first");
+        return "login";
+    }
+
+
 
     @GetMapping(value = {"profile"})
     public String showCabinet(Map<String, Object> model) {
         try {
             SecurityContext securityContext = SecurityContextHolder.getContext();
             Authentication authentication = securityContext.getAuthentication();
-            org.springframework.security.core.userdetails.User user =
-                    (org.springframework.security.core.userdetails.User) authentication.getPrincipal();
-            User user1 = userService.login(user.getUsername(), user.getPassword());
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            //org.springframework.security.core.userdetails.User user =
+              //      (org.springframework.security.core.userdetails.User) authentication.getPrincipal();
+            User user1 = userService.login(userDetails.getUsername(), userDetails.getPassword());
             if (user1.getRole().getRole().equals(access1)) {
                 model.put("user", user1);
                 return "redirect:/admin/profile";
@@ -67,7 +86,7 @@ public class UserController {
                 return "profile";
             }
         } catch (Exception e) {
-            return "login";
+            return "redirect:/loginFirst";
         }
 
     }

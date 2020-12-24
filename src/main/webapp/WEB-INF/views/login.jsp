@@ -5,6 +5,9 @@
 <%@ taglib tagdir="/WEB-INF/tags" prefix="u"%>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
+<fmt:setBundle basename = "ResourceBundle.Global" var="rs" scope="application"/>
+<fmt:message key="message.wrong.email" var="wrongEmail" bundle="${rs}" />
+
 <!DOCTYPE html>
 <html>
 
@@ -69,10 +72,10 @@
                 <div class="nine columns">
                     <nav class="nav">
                         <security:authorize access="!isAuthenticated()">
-                             <a href="loginForm">log In</a>
+                             <a class="current-page" href="loginForm">log In</a>
                         </security:authorize>
                         <security:authorize access="isAuthenticated()">
-                              <a href="logout">log Out</a>
+                              <a class="current-page" href="logout">log Out</a>
                         </security:authorize>
                         <security:authorize access="!isAuthenticated()">
                               <a href="registration.html">registratinion</a>
@@ -83,8 +86,8 @@
 
 
                         <a href="#">About Us</a>
-                        <a class="current-page" href="roomsList">rooms</a>
-                        <a class="home" href="home.html">Home</a>
+                        <a  href="rooms">rooms</a>
+                        <a class="home" href="home">Home</a>
                     </nav>
                 </div>
             </div>
@@ -92,6 +95,13 @@
         </div>
     </header>
     <div class="container">
+    <c:if test="${ not empty message}">
+           <div class="row">
+             <div class="twelve columns">
+                <p class="text" ><fmt:message key="${message}" bundle="${rs}" /></p>
+             </div>
+    	   </div>
+    </c:if>
         <div class="row">
             <div class="twelve columns">
 

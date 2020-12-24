@@ -101,12 +101,12 @@
                         result_json = JSON.stringify(room1);
                         $.ajax({
                            type: 'PUT',
-                           url: 'room',
+                           url: 'rooms',
                            contentType: 'application/json',
                            data: result_json,
                            success: function(data) {
                                 console.log("done");
-                                document.location.href = "room";
+                                document.location.href = "rooms";
                            },
                            error:  function(){
                               alert('Ошибка!');
@@ -137,9 +137,9 @@
                      $("#deleteForm").click(function(event) {
                          event.preventDefault();
                          var req = new XMLHttpRequest();
-                         req.open("DELETE", "room/" + url1, false);
+                         req.open("DELETE", "rooms/" + url1, false);
                          req.send(null);
-                         document.location.href = "room";
+                         document.location.href = "rooms";
                      });
 
 
@@ -232,7 +232,7 @@
 
 
                         <a href="#">About Us</a>
-                        <a  href="../room">rooms</a>
+                        <a  href="../rooms">rooms</a>
                         <a class="home" href="../home">Home</a>
                     </nav>
                 </div>
@@ -318,7 +318,7 @@
             <div id="hide" class="row">
                 <p>This dioloq window.You can moove it in the window</p>
 
-                <sf:form id="form" class="form" action="room" method="POST" modelAttribute ="room">
+                <sf:form id="form" class="form" action="rooms" method="POST" modelAttribute ="room">
 
                     <label class="label" for="number">Number </label>
                     <sf:input path="number"  name="number" type="number"/>

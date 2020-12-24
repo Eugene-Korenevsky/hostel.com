@@ -56,7 +56,7 @@
 
 
                         <a href="#">About Us</a>
-                        <a href="room">rooms</a>
+                        <a href="rooms">rooms</a>
                         <a class="home current-page" href="">Home</a>
                     </nav>
                 </div>

@@ -10,7 +10,7 @@
         <intercept-url pattern="/users/**" access="hasRole('user')"/>
         <form-login login-processing-url="/j_spring_security_check"
                     login-page="/loginForm"
-                    authentication-failure-url="/loginForm?login_error=t"
+                    authentication-failure-url="/loginError"
                     default-target-url="/profile"/>
         <logout
                 logout-url="/logout"
