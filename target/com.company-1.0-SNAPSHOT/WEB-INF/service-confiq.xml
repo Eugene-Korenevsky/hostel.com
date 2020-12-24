@@ -1,0 +1,47 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+    <bean id="dataSource"
+          class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <property name="url" value="jdbc:mysql://localhost:3306/project" />
+        <property name="username" value="root" />
+        <property name="password" value="kara" />
+    </bean>
+    <bean id="entityManagerFactory" class="com.spring.model.entitymanager.EntityManagerFactory"
+          init-method="init" destroy-method="destroy"/>
+    <bean id="roomDao" class="com.spring.model.dao.daoImpl.RoomDaoImp"/>
+    <bean id="descriptionService" class="com.spring.model.service.logic.DescriptionServiceImpl">
+        <property name="descriptionDao" ref="descriptionDao"/>
+    </bean>
+    <bean id="roomService" class="com.spring.model.service.logic.RoomServiceImpl">
+        <property name="roomDao" ref="roomDao"/>
+        <property name="descriptionDao" ref="descriptionDao"/>
+    </bean>
+    <bean id="orderService" class="com.spring.model.service.logic.OrderServiceImpl">
+        <property name="orderDao" ref="orderDao"/>
+    </bean>
+    <bean id="reserveService" class="com.spring.model.service.logic.ReserveServiceImpl">
+        <property name="reserveDao" ref="reserveDao"/>
+        <property name="orderDao" ref="orderDao"/>
+    </bean>
+    <bean id="userService" class="com.spring.model.service.logic.UserServiceImpl">
+        <property name="userDao" ref="userDao"/>
+        <property name="roleDao" ref="roleDao"/>
+    </bean>
+    <bean id="roleService" class="com.spring.model.service.logic.RoleServiceImpl">
+        <property name="roleDao" ref="roleDao"/>
+    </bean>
+    <bean id="roleDao" class="com.spring.model.dao.daoImpl.RoleDaoImpl"/>
+    <bean id="userDao" class="com.spring.model.dao.daoImpl.UserDaoImpl"/>
+    <bean id="reserveDao" class="com.spring.model.dao.daoImpl.ReserveDaoImpl"/>
+    <bean id="orderDao" class="com.spring.model.dao.daoImpl.OrderDaoImpl"/>
+    <bean id="descriptionDao" class="com.spring.model.dao.daoImpl.DescriptionDaoImpl"/>
+
+</beans>

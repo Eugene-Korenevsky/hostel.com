@@ -1,0 +1,37 @@
+<beans:beans xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns="http://www.springframework.org/schema/security"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans
+             http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+             http://www.springframework.org/schema/security
+             http://www.springframework.org/schema/security/spring-security-3.0.xsd">
+    <http auto-config="true" use-expressions="true">
+        <intercept-url pattern="/admin/**" access="hasRole('administration')"/>
+        <intercept-url pattern="/users/**" access="hasRole('user')"/>
+        <form-login login-processing-url="/j_spring_security_check"
+                    login-page="/loginForm"
+                    authentication-failure-url="/loginError"
+                    default-target-url="/profile"/>
+        <logout
+                logout-url="/logout"
+                logout-success-url="/"/>
+    </http>
+
+    <authentication-manager>
+        <authentication-provider user-service-ref="userServiceJDBC"/>
+    </authentication-manager>
+
+    <jdbc-user-service id="userServiceJDBC" data-source-ref="dataSource"
+                       users-by-username-query="select email, password, true
+                       from project.users
+                       where email=?"
+                       authorities-by-username-query="SELECT u.EMAIL, r.name
+                       from project.users as u,
+                       project.role as r
+                       where u.ROLE_ID = r.ID and
+                       u.EMAIL =?"/>
+
+    <user-service id="userServiceSecurity">
+        <user name="olga@tut.by" password="kina" authorities="ROLE_APP"/>
+    </user-service>
+</beans:beans>

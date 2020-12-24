@@ -1,0 +1,56 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+    <bean id="firstAspect" class="com.spring.model.aspects.FirstAspect" init-method="init" destroy-method="destroy">
+        <!--<property name="fileName" value="log/file.txt"/>-->
+        <constructor-arg value="webapps/com.company-1.0-SNAPSHOT/log/log"/>
+    </bean>
+    <aop:config>
+        <aop:aspect ref="firstAspect">
+            <aop:pointcut id="performance" expression="execution(* com.spring.model.helpers.roomhelpers.searchhelper.RoomSearchHelper.searchByTotalPriceAndSits(..))"/>
+            <aop:before pointcut-ref="performance" method="writeData"/>
+        </aop:aspect>
+        <aop:aspect ref="firstAspect">
+            <aop:pointcut id="log" expression="within(com.spring.model.dao..**)"/>
+            <aop:before pointcut-ref="log" method="log"/>
+        </aop:aspect>
+        <aop:aspect ref="firstAspect">
+            <aop:pointcut id="log1" expression="within(com.spring.model.service..**)"/>
+            <aop:after-throwing pointcut-ref="log1" method="afterThrowing" throwing="e"/>
+        </aop:aspect>
+    </aop:config>
+    <bean id="timestampMaker"
+          class="com.spring.model.helpers.roomhelpers.datehelpers.TimestampMaker"/>
+    <bean id="daysMaker"
+          class="com.spring.model.helpers.roomhelpers.datehelpers.DaysMaker"/>
+    <bean id="roomFilterByTotalPrice"
+          class="com.spring.model.helpers.roomhelpers.searchhelper.filters.roomfilters.RoomFilterByTotalPrice"/>
+    <bean id="roomSearchHelper"
+          class="com.spring.model.helpers.roomhelpers.searchhelper.search.roomsearch.RoomSearchBySitsAndPrice">
+        <constructor-arg ref="roomFilterBySits"/>
+        <constructor-arg ref="roomFilterByTotalPrice"/>
+        <constructor-arg ref="daysMaker"/>
+    </bean>
+    <bean id="roomFilterBySits"
+          class="com.spring.model.helpers.roomhelpers.searchhelper.filters.roomfilters.RoomFilterBySits"/>
+
+    <bean id="orderCorrectDate"
+          class="com.spring.model.helpers.orderhelpers.OrderCorrectDate">
+        <constructor-arg ref="timestampMaker"/>
+    </bean>
+    <bean id="isRoomFreeInDates"
+          class="com.spring.model.helpers.orderhelpers.IsRoomFreeInDates">
+        <constructor-arg ref="timestampMaker"/>
+        <constructor-arg ref="reserveService"/>
+    </bean>
+    <bean id="totalPrice"
+          class="com.spring.model.helpers.pricehelpers.TotalPrice">
+        <constructor-arg ref="daysMaker"/>
+        <constructor-arg ref="timestampMaker"/>
+    </bean>
+    <bean id="myLogger" class="com.spring.model.aspects.MyLogger"/>
+</beans>
