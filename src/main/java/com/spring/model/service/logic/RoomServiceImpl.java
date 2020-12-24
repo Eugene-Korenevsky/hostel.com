@@ -1,5 +1,6 @@
 package com.spring.model.service.logic;
 
+import com.spring.model.aspects.MyLogger;
 import com.spring.model.dao.DescriptionDao;
 import com.spring.model.dao.RoomDao;
 import com.spring.model.entity.Description;
@@ -15,7 +16,6 @@ import java.util.List;
 public class RoomServiceImpl implements RoomService {
 
     private DescriptionDao descriptionDao;
-
     private RoomDao roomDao;
 
     public void setRoomDao(RoomDao roomDao) {
@@ -37,6 +37,7 @@ public class RoomServiceImpl implements RoomService {
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             entityManager.getTransaction().rollback();
+            MyLogger.log(MyLogger.Kind.WARNING,this,e.getMessage());
         } finally {
             entityManager.close();
         }
@@ -57,12 +58,10 @@ public class RoomServiceImpl implements RoomService {
             }
             entityManager.getTransaction().commit();
         } catch (Exception e) {
-            System.out.println("error");
-            System.out.println("--------------");
-            System.out.println(e.getMessage());
             if (entityManager.getTransaction().isActive()) {
                 entityManager.getTransaction().rollback();
             }
+            MyLogger.log(MyLogger.Kind.WARNING,this,e.getMessage());
         } finally {
             entityManager.close();
         }
@@ -82,6 +81,7 @@ public class RoomServiceImpl implements RoomService {
             roomDao.create(room, entityManager);
             entityManager.getTransaction().commit();
         } catch (Exception e) {
+            MyLogger.log(MyLogger.Kind.WARNING,this,e.getMessage());
             entityManager.getTransaction().rollback();
         } finally {
             entityManager.close();
@@ -96,6 +96,7 @@ public class RoomServiceImpl implements RoomService {
             roomDao.create(room, entityManager);
             entityManager.getTransaction().commit();
         } catch (Exception e) {
+            MyLogger.log(MyLogger.Kind.WARNING,this,e.getMessage());
             entityManager.getTransaction().rollback();
         } finally {
             entityManager.close();
@@ -117,6 +118,7 @@ public class RoomServiceImpl implements RoomService {
             }
             entityManager.getTransaction().commit();
         } catch (Exception e) {
+            MyLogger.log(MyLogger.Kind.WARNING,this,e.getMessage());
             entityManager.getTransaction().rollback();
         } finally {
             entityManager.close();
@@ -138,6 +140,7 @@ public class RoomServiceImpl implements RoomService {
             if (entityManager.getTransaction().isActive()) {
                 entityManager.getTransaction().rollback();
             }
+            MyLogger.log(MyLogger.Kind.WARNING,this,e.getMessage());
         } finally {
             entityManager.close();
         }
@@ -157,6 +160,7 @@ public class RoomServiceImpl implements RoomService {
                 }
                 entityManager.getTransaction().commit();
             } catch (Exception e) {
+                MyLogger.log(MyLogger.Kind.WARNING,this,e.getMessage());
                 entityManager.getTransaction().rollback();
             } finally {
                 entityManager.close();
@@ -178,6 +182,7 @@ public class RoomServiceImpl implements RoomService {
                 }
                 entityManager.getTransaction().commit();
             } catch (Exception e) {
+                MyLogger.log(MyLogger.Kind.WARNING,this,e.getMessage());
                 entityManager.getTransaction().rollback();
             }
         }
@@ -191,6 +196,7 @@ public class RoomServiceImpl implements RoomService {
             roomDao.update(room, entityManager);
             entityManager.getTransaction().commit();
         } catch (Exception e) {
+            MyLogger.log(MyLogger.Kind.WARNING,this,e.getMessage());
             entityManager.getTransaction().rollback();
         } finally {
             entityManager.close();

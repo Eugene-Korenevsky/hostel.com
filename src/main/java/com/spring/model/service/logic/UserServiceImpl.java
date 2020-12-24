@@ -34,6 +34,7 @@ public class UserServiceImpl  implements UserService {
             user = userDao.findById(id, entityManager);
             entityManager.getTransaction().commit();
         } catch (Exception e) {
+            MyLogger.log(MyLogger.Kind.WARNING,this,e.getMessage());
             entityManager.getTransaction().rollback();
         } finally {
             entityManager.close();
@@ -50,6 +51,7 @@ public class UserServiceImpl  implements UserService {
             users = userDao.readAll(entityManager);
             entityManager.getTransaction().commit();
         } catch (Exception e) {
+            MyLogger.log(MyLogger.Kind.WARNING,this,e.getMessage());
             entityManager.getTransaction().rollback();
         } finally {
             entityManager.close();
@@ -66,6 +68,7 @@ public class UserServiceImpl  implements UserService {
                 userDao.create(user, entityManager);
                 entityManager.getTransaction().commit();
             } catch (Exception e) {
+                MyLogger.log(MyLogger.Kind.WARNING,this,e.getMessage());
                 entityManager.getTransaction().rollback();
             } finally {
                 entityManager.close();
@@ -82,6 +85,7 @@ public class UserServiceImpl  implements UserService {
                 userDao.update(user, entityManager);
                 entityManager.getTransaction().commit();
             } catch (Exception e) {
+                MyLogger.log(MyLogger.Kind.WARNING,this,e.getMessage());
                 entityManager.getTransaction().rollback();
             } finally {
                 entityManager.close();
@@ -98,6 +102,7 @@ public class UserServiceImpl  implements UserService {
             userDao.delete(user, entityManager);
             entityManager.getTransaction().commit();
         } catch (Exception e) {
+            MyLogger.log(MyLogger.Kind.WARNING,this,e.getMessage());
             entityManager.getTransaction().rollback();
         } finally {
             entityManager.close();
@@ -115,6 +120,7 @@ public class UserServiceImpl  implements UserService {
                 user = userDao.login(password, email, entityManager);
                 entityManager.getTransaction().commit();
             } catch (Exception e) {
+                MyLogger.log(MyLogger.Kind.WARNING,this,e.getMessage());
                 entityManager.getTransaction().rollback();
             } finally {
                 entityManager.close();
@@ -152,7 +158,7 @@ public class UserServiceImpl  implements UserService {
                 entityManager.getTransaction().commit();
             } catch (Exception e) {
                 entityManager.getTransaction().rollback();
-                MyLogger.log(e, this, "ERROR");
+                MyLogger.log(MyLogger.Kind.WARNING,this,e.getMessage());
             } finally {
                 entityManager.close();
             }
@@ -171,6 +177,7 @@ public class UserServiceImpl  implements UserService {
             userDao.update(user, entityManager);
             entityManager.getTransaction().commit();
         } catch (Exception e) {
+            MyLogger.log(MyLogger.Kind.WARNING,this,e.getMessage());
             entityManager.getTransaction().rollback();
         } finally {
             entityManager.close();

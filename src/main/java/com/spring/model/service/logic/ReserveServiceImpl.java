@@ -1,5 +1,6 @@
 package com.spring.model.service.logic;
 
+import com.spring.model.aspects.MyLogger;
 import com.spring.model.dao.OrderDao;
 import com.spring.model.dao.ReserveDao;
 import com.spring.model.entity.Order;
@@ -32,6 +33,7 @@ public class ReserveServiceImpl  implements ReserveService {
             reserve = reserveDao.findById(id, entityManager);
             entityManager.getTransaction().commit();
         } catch (Exception e) {
+            MyLogger.log(MyLogger.Kind.WARNING,this,e.getMessage());
             entityManager.getTransaction().rollback();
         } finally {
             entityManager.close();
@@ -48,6 +50,7 @@ public class ReserveServiceImpl  implements ReserveService {
             reserves = reserveDao.readAll(entityManager);
             entityManager.getTransaction().commit();
         } catch (Exception e) {
+            MyLogger.log(MyLogger.Kind.WARNING,this,e.getMessage());
             entityManager.getTransaction().rollback();
         } finally {
             entityManager.close();
@@ -64,6 +67,7 @@ public class ReserveServiceImpl  implements ReserveService {
             reserves = reserveDao.findAllByUserId(userId, entityManager);
             entityManager.getTransaction().commit();
         } catch (Exception e) {
+            MyLogger.log(MyLogger.Kind.WARNING,this,e.getMessage());
             entityManager.getTransaction().rollback();
         } finally {
             entityManager.close();
@@ -89,6 +93,7 @@ public class ReserveServiceImpl  implements ReserveService {
             }
             entityManager.getTransaction().commit();
         } catch (Exception e) {
+            MyLogger.log(MyLogger.Kind.WARNING,this,e.getMessage());
             entityManager.getTransaction().rollback();
         } finally {
             entityManager.close();
@@ -104,6 +109,7 @@ public class ReserveServiceImpl  implements ReserveService {
                 reserveDao.update(reserve, entityManager);
                 entityManager.getTransaction().commit();
             } catch (Exception e) {
+                MyLogger.log(MyLogger.Kind.WARNING,this,e.getMessage());
                 entityManager.getTransaction().rollback();
             } finally {
                 entityManager.close();
@@ -122,6 +128,7 @@ public class ReserveServiceImpl  implements ReserveService {
             }
             entityManager.getTransaction().commit();
         } catch (Exception e) {
+            MyLogger.log(MyLogger.Kind.WARNING,this,e.getMessage());
             entityManager.getTransaction().rollback();
         } finally {
             entityManager.close();

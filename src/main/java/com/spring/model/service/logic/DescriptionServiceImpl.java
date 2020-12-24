@@ -1,5 +1,6 @@
 package com.spring.model.service.logic;
 
+import com.spring.model.aspects.MyLogger;
 import com.spring.model.dao.DescriptionDao;
 import com.spring.model.entity.Description;
 import com.spring.model.entitymanager.EntityManagerFactory;
@@ -11,6 +12,7 @@ import java.util.List;
 
 public class DescriptionServiceImpl  implements DescriptionService {
     private DescriptionDao descriptionDao;
+    private MyLogger myLogger;
 
     public void setDescriptionDao(DescriptionDao descriptionDao) {
         this.descriptionDao = descriptionDao;
@@ -27,6 +29,7 @@ public class DescriptionServiceImpl  implements DescriptionService {
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             entityManager.getTransaction().rollback();
+            MyLogger.log(MyLogger.Kind.WARNING,this,e.getMessage());
         } finally {
             entityManager.close();
         }
@@ -47,6 +50,7 @@ public class DescriptionServiceImpl  implements DescriptionService {
             }
             entityManager.getTransaction().commit();
         } catch (Exception e) {
+            MyLogger.log(MyLogger.Kind.WARNING,this,e.getMessage());
             entityManager.getTransaction().rollback();
         } finally {
             entityManager.close();
@@ -65,6 +69,7 @@ public class DescriptionServiceImpl  implements DescriptionService {
             }
             entityManager.getTransaction().commit();
         } catch (Exception e) {
+            MyLogger.log(MyLogger.Kind.WARNING,this,e.getMessage());
             entityManager.getTransaction().rollback();
         } finally {
             entityManager.close();
@@ -80,6 +85,7 @@ public class DescriptionServiceImpl  implements DescriptionService {
                 descriptionDao.update(description, entityManager);
                 entityManager.getTransaction().commit();
             } catch (Exception e) {
+                MyLogger.log(MyLogger.Kind.WARNING,this,e.getMessage());
                 entityManager.getTransaction().rollback();
             } finally {
                 entityManager.close();
@@ -97,6 +103,7 @@ public class DescriptionServiceImpl  implements DescriptionService {
             descriptionDao.create(description, entityManager);
             entityManager.getTransaction().commit();
         } catch (Exception e) {
+            MyLogger.log(MyLogger.Kind.WARNING,this,e.getMessage());
             entityManager.getTransaction().rollback();
         } finally {
             entityManager.close();

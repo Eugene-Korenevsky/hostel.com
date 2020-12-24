@@ -1,5 +1,6 @@
 package com.spring.model.service.logic;
 
+import com.spring.model.aspects.MyLogger;
 import com.spring.model.dao.OrderDao;
 import com.spring.model.entity.Order;
 import com.spring.model.entitymanager.EntityManagerFactory;
@@ -25,6 +26,7 @@ public class OrderServiceImpl  implements OrderService {
             order = orderDao.findById(id,entityManager);
             entityManager.getTransaction().commit();
         }catch (Exception e){
+            MyLogger.log(MyLogger.Kind.WARNING,this,e.getMessage());
             entityManager.getTransaction().rollback();
         }finally {
             entityManager.close();
@@ -42,8 +44,8 @@ public class OrderServiceImpl  implements OrderService {
             entityManager.getTransaction().commit();
             System.out.println("ok");
         }catch (Exception e){
+            MyLogger.log(MyLogger.Kind.WARNING,this,e.getMessage());
             entityManager.getTransaction().rollback();
-            System.out.println("error");
         }finally {
             entityManager.close();
         }
@@ -59,6 +61,7 @@ public class OrderServiceImpl  implements OrderService {
             orders = orderDao.findOrdersByUserId(userId,entityManager);
             entityManager.getTransaction().commit();
         }catch (Exception e){
+            MyLogger.log(MyLogger.Kind.WARNING,this,e.getMessage());
             entityManager.getTransaction().rollback();
         }finally {
             entityManager.close();
@@ -75,6 +78,7 @@ public class OrderServiceImpl  implements OrderService {
                orderDao.create(order,entityManager);
                entityManager.getTransaction().commit();
            }catch (Exception e){
+               MyLogger.log(MyLogger.Kind.WARNING,this,e.getMessage());
                entityManager.getTransaction().rollback();
            }finally {
                entityManager.close();
@@ -93,6 +97,7 @@ public class OrderServiceImpl  implements OrderService {
                }
                entityManager.getTransaction().commit();
            }catch (Exception e){
+               MyLogger.log(MyLogger.Kind.WARNING,this,e.getMessage());
                entityManager.getTransaction().rollback();
            }finally {
                entityManager.close();
@@ -108,6 +113,7 @@ public class OrderServiceImpl  implements OrderService {
               orderDao.update(order,entityManager);
               entityManager.getTransaction().commit();
           }catch (Exception e){
+              MyLogger.log(MyLogger.Kind.WARNING,this,e.getMessage());
               entityManager.getTransaction().rollback();
           }finally {
               entityManager.close();

@@ -1,5 +1,6 @@
 package com.spring.model.service.logic;
 
+import com.spring.model.aspects.MyLogger;
 import com.spring.model.dao.RoleDao;
 import com.spring.model.entity.Role;
 import com.spring.model.entitymanager.EntityManagerFactory;
@@ -25,6 +26,7 @@ public class RoleServiceImpl implements RoleService {
             roles = roleDao.readAll(entityManager);
             entityManager.getTransaction().commit();
         } catch (Exception e) {
+            MyLogger.log(MyLogger.Kind.WARNING,this,e.getMessage());
             entityManager.getTransaction().rollback();
         } finally {
             entityManager.close();
@@ -41,6 +43,7 @@ public class RoleServiceImpl implements RoleService {
             role = roleDao.findById(id, entityManager);
             entityManager.getTransaction().commit();
         } catch (Exception e) {
+            MyLogger.log(MyLogger.Kind.WARNING,this,e.getMessage());
             entityManager.getTransaction().rollback();
         } finally {
             entityManager.close();
@@ -57,6 +60,7 @@ public class RoleServiceImpl implements RoleService {
                 roleDao.create(role, entityManager);
                 entityManager.getTransaction().commit();
             } catch (Exception e) {
+                MyLogger.log(MyLogger.Kind.WARNING,this,e.getMessage());
                 entityManager.getTransaction().rollback();
             } finally {
                 entityManager.close();
@@ -73,6 +77,7 @@ public class RoleServiceImpl implements RoleService {
                 roleDao.update(role, entityManager);
                 entityManager.getTransaction().commit();
             } catch (Exception e) {
+                MyLogger.log(MyLogger.Kind.WARNING,this,e.getMessage());
                 entityManager.getTransaction().rollback();
             } finally {
                 entityManager.close();
@@ -89,6 +94,7 @@ public class RoleServiceImpl implements RoleService {
             roleDao.delete(role, entityManager);
             entityManager.getTransaction().commit();
         } catch (Exception e) {
+            MyLogger.log(MyLogger.Kind.WARNING,this,e.getMessage());
             entityManager.getTransaction().rollback();
         } finally {
             entityManager.close();

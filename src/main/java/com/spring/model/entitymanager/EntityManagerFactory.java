@@ -1,5 +1,7 @@
 package com.spring.model.entitymanager;
 
+import com.spring.model.aspects.MyLogger;
+
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import java.io.File;
@@ -12,7 +14,13 @@ public class EntityManagerFactory {
     }
 
     public void init() {
-        entityManagerFactory = Persistence.createEntityManagerFactory("main");
+        try {
+            entityManagerFactory = Persistence.createEntityManagerFactory("main");
+            MyLogger.log(MyLogger.Kind.INFO,this,"entityManager init");
+        }catch (Exception e){
+            MyLogger.log(MyLogger.Kind.FATAL,this,e.getMessage());
+        }
+
     }
 
 
