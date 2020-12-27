@@ -51,7 +51,7 @@ public class UserController {
     public String loginUserFormError(Map<String, Object> model) {
         User user = new User();
         model.put("user", user);
-        model.put("message","login.wrong");
+        model.put("message", "login.wrong");
         return "login";
     }
 
@@ -59,10 +59,9 @@ public class UserController {
     public String loginUserFirst(Map<String, Object> model) {
         User user = new User();
         model.put("user", user);
-        model.put("message","login.first");
+        model.put("message", "login.first");
         return "login";
     }
-
 
 
     @GetMapping(value = {"profile"})
@@ -72,7 +71,7 @@ public class UserController {
             Authentication authentication = securityContext.getAuthentication();
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
             //org.springframework.security.core.userdetails.User user =
-              //      (org.springframework.security.core.userdetails.User) authentication.getPrincipal();
+            //      (org.springframework.security.core.userdetails.User) authentication.getPrincipal();
             User user1 = userService.login(userDetails.getUsername(), userDetails.getPassword());
             if (user1.getRole().getRole().equals(access1)) {
                 model.put("user", user1);
@@ -99,7 +98,7 @@ public class UserController {
     }
 
     @PostMapping(value = {"registration"})
-    public String registerUser(@Valid User user, BindingResult bindingResult) {
+    public String registerUser(@Valid User user, BindingResult bindingResult, Map<String, Object> model) {
         if (bindingResult.hasErrors()) {
             return "registration";
         }
@@ -107,6 +106,7 @@ public class UserController {
             userService.register(user);
             return "login";
         } catch (EmailIsExistException e) {
+            model.put("message", "register.wrong");
             return "registration";
         }
     }

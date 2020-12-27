@@ -5,6 +5,9 @@
 <%@ taglib tagdir="/WEB-INF/tags" prefix="u"%>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
+<fmt:setBundle basename = "ResourceBundle.Global" var="rs" scope="application"/>
+<fmt:message key="message.wrong.email" var="wrongEmail" bundle="${rs}" />
+
 
 <!DOCTYPE html>
 <html>
@@ -107,6 +110,13 @@
         </div>
     </header>
     <div class="container">
+    <c:if test="${ not empty message}">
+               <div class="row">
+                 <div class="twelve columns">
+                    <p class="text" ><fmt:message key="${message}" bundle="${rs}" /></p>
+                 </div>
+        	   </div>
+        </c:if>
         <div class="row">
             <div class="twelve columns">
                 <s:form id="form" class="form" name="f" method="POST" action="registration"
