@@ -22,7 +22,7 @@
          }
 
          #body {
-             background: #c7b39b url(resources/images/main.jpg) no-repeat  ; /* Цвет фона и путь к файлу */
+             background: #c7b39b ; /* Цвет фона и путь к файлу */
              color: #fff;
              margin-top: -1.2%;
              width: 100%;

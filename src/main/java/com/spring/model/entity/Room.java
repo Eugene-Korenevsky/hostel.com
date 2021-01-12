@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -37,6 +38,7 @@ public class Room implements Serializable {
     }
 
     @NotNull
+    @Size(min = 1, message = "roomClass min size = 1")
     @Column(name = "CLASS")
     private String roomClass;
 
@@ -51,9 +53,9 @@ public class Room implements Serializable {
     @NotNull
     @Column(name = "SITS")
     @Min(value = 1,message = "min value is 1")
-    private Integer sits;
+    private int sits;
 
-    public Integer getSits() {
+    public int getSits() {
         return sits;
     }
 

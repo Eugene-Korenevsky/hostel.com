@@ -5,6 +5,7 @@ import com.spring.model.helpers.roomhelpers.datehelpers.DaysMaker;
 import com.spring.model.helpers.roomhelpers.searchhelper.RoomSearchHelper;
 import com.spring.model.helpers.roomhelpers.searchhelper.filters.Filter;
 import com.spring.model.helpers.roomhelpers.searchhelper.filters.FilterWithTwoParam;
+import com.spring.model.service.exceptions.ValidationException;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -24,14 +25,16 @@ public class RoomSearchBySitsAndPrice implements RoomSearchHelper {
 
     @Override
     public List<Room> searchByTotalPriceAndSits(List<Room> rooms, Timestamp dateIn, Timestamp dateOut,
-                                                double searchPrice, int sits) {
-        List<Room> result = new ArrayList<>();
-        int days = daysMaker.getDays(dateIn, dateOut);
-        for (Room room : rooms) {
-            if (filter.doFilter(room, sits) && filterWithTwoParam.doFilter(room, days, searchPrice)) {
-                result.add(room);
+                                                double searchPrice, int sits) throws ValidationException {
+        if (rooms != null && dateIn != null && dateOut != null) {
+            List<Room> result = new ArrayList<>();
+            int days = daysMaker.getDays(dateIn, dateOut);
+            for (Room room : rooms) {
+                if (filter.doFilter(room, sits) && filterWithTwoParam.doFilter(room, days, searchPrice)) {
+                    result.add(room);
+                }
             }
-        }
-        return result;
+            return result;
+        }else throw new ValidationException("parameters mustn't be null");
     }
 }

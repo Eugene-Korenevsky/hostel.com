@@ -6,6 +6,7 @@ import com.spring.model.entity.Description;
 import com.spring.model.entity.User;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
@@ -17,10 +18,14 @@ public class DescriptionDaoImpl extends GenericDaoImpl<Description> implements D
     }
 
     @Override
-    public Description findDescriptionByName(String name,EntityManager entityManager) {
+    public Description findDescriptionByName(String name, EntityManager entityManager) {
         TypedQuery<Description> query =
                 entityManager.createNamedQuery("descByName", Description.class);
         query.setParameter("description", name);
-        return query.getSingleResult();
+        try {
+            return query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 }

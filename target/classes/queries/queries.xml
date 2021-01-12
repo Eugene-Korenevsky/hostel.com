@@ -23,5 +23,10 @@
     <named-query name="descByName">
         <query> select i from Description i where i.description = :description</query>
     </named-query>
-
+    <named-query name="findRoleByName">
+        <query> select i from Role i where i.role = :role</query>
+    </named-query>
+    <named-query name="findRoomByNumber">
+        <query> select i from Room i where i.number = :number</query>
+    </named-query>
 </entity-mappings>

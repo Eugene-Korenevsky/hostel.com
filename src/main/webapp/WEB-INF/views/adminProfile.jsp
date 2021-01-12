@@ -91,10 +91,10 @@
             </div>
             <div class="five columns">
                 <nav class="pagebutton">
-                    <p><a href="room">Rooms</a></p>
-                    <p><a href="reserve">Reserves</a></p>
-                    <p><a href="order">Orders</a></p>
-                    <p><a href="user">Users</a></p>
+                    <p><a href="rooms">Rooms</a></p>
+                    <p><a href="reserves">Reserves</a></p>
+                    <p><a href="orders">Orders</a></p>
+                    <p><a href="users">Users</a></p>
                 </nav>
             </div>
         </div>

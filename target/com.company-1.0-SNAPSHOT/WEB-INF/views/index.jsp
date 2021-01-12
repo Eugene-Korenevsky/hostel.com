@@ -71,9 +71,7 @@
         <div class="row">
             <div class="six columns">
                 <div class="news">
-                    <p>
-                        Hello
-                    </p>
+                    <p class="text" ></p>
                 </div>
             </div>
             <div class="six columns">

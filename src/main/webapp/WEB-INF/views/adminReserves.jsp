@@ -86,7 +86,16 @@
 
         </div>
     </header>
-    <div class="container">
+ <div class="container">
+   <c:choose>
+      <c:when test="${ not empty error}">
+          <div class="row">
+             <div class="twelve columns">
+               <p class="text" ><fmt:message key="${error}" bundle="${rs}" /></p>
+             </div>
+          </div>
+      </c:when>
+      <c:otherwise>
         <div class="row rooms">
             <div class="four columns">
                 Client
@@ -129,7 +138,9 @@
             </div>
         </div>
         </c:forEach>
-    </div>
+   </c:otherwise>
+  </c:choose>
+ </div>
 
 
 

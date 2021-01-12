@@ -120,6 +120,7 @@
 <body>
     <header>
         <div class="container">
+
             <div class="row">
                 <div class="three columns">
                     <a href="home.html">
@@ -156,6 +157,15 @@
         </div>
     </header>
     <div class="container">
+      <c:choose>
+           <c:when test="${ not empty error}">
+               <div class="row">
+                  <div class="twelve columns">
+                      <p class="text" ><fmt:message key="${error}" bundle="${rs}" /></p>
+                  </div>
+               </div>
+           </c:when>
+           <c:otherwise>
         <div class="row rooms">
             <div class="four columns">
                 Client
@@ -202,6 +212,8 @@
             </div>
         </div>
         </c:forEach>
+       </c:otherwise>
+      </c:choose>
     </div>
 
      <div class=" container chooseDateDialog1" id="delete" title="Chose dates" hidden>

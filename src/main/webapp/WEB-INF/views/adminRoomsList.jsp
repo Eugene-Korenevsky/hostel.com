@@ -6,6 +6,10 @@
 <%@ taglib tagdir="/WEB-INF/tags" prefix="u"%>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
+<fmt:setBundle basename = "ResourceBundle.Global" var="rs" scope="application"/>
+<fmt:message key="error" var="fatal" bundle="${rs}" />
+<fmt:message key="bad.request" var="notFound" bundle="${rs}" />
+
 <!DOCTYPE html>
 <html>
 
@@ -31,8 +35,9 @@
                         var value1 = $(this).attr('href');
                         $("#changeRoom").show();
                         console.log("id = " + value1);
-                        $.getJSON("room/"+value1,function( room ){
+                        $.getJSON("rooms/"+value1,function( room ){
                             room1 = room;
+                            console.log('room id is' + room1.id);
                             $("#price1").attr('value', room.price);
                             $("#sits1").attr('value', room.sits);
                             $("#number1").attr('value', room.number);
@@ -101,15 +106,26 @@
                         result_json = JSON.stringify(room1);
                         $.ajax({
                            type: 'PUT',
-                           url: 'rooms',
+                           url: 'rooms/' + room1.id,
                            contentType: 'application/json',
                            data: result_json,
-                           success: function(data) {
-                                console.log("done");
-                                document.location.href = "rooms";
-                           },
-                           error:  function(){
-                              alert('Ошибка!');
+                           success: function(output) {
+                                         console.log(output);
+                                         document.location.href = "rooms";
+                                       },
+                           error: function(output){
+                                 console.log(output.status);
+                                 if(output.status === 400){
+                                    console.log(output);
+                                    console.log(output.body);
+                                    console.log(output.responseJSON.errors);
+                                    console.log(output.responseText);
+                                    $("#changeRoom").hide();
+                                    $("#badR").show();
+                                 }else{
+                                    $("#changeRoom").hide();
+                                    $("#error").show();
+                                 }
                            }
                         });
                         return false;
@@ -117,7 +133,15 @@
 
                      });
 
+                    $("#cancelBadR").click(function() {
+                        $("#badR").hide();
+                        return false;
+                    });
 
+                    $("#cancelError").click(function() {
+                        $("#error").hide();
+                        return false;
+                    });
 
 
                     $("#cancelD").click(function() {
@@ -135,11 +159,19 @@
                     });
 
                      $("#deleteForm").click(function(event) {
-                         event.preventDefault();
-                         var req = new XMLHttpRequest();
-                         req.open("DELETE", "rooms/" + url1, false);
-                         req.send(null);
-                         document.location.href = "rooms";
+                         $.ajax({
+                                   type: 'DELETE',
+                                   url: 'rooms/' + url1,
+                                   success: function(output) {
+                                      console.log(status);
+                                      document.location.href = "rooms";
+                                   },
+                                   error: function(output){
+                                      console.log(output.getResponseHeader("error"));
+                                      console.log(output.status);
+                                   }
+                            });
+                            return false;
                      });
 
 
@@ -170,7 +202,7 @@
                             min: 0
                             },
                          roomClass: {
-                            required: true,
+                            //required: true,
                             minlength: 1
                             }
                          },
@@ -188,7 +220,7 @@
                             min: "can't be less then 0"
                             },
                          roomClass: {
-                            required: "Write class",
+                           // required: "Write class",
                             minlength: "min 1 letter"
                          }
                          },
@@ -252,7 +284,15 @@
 
 
     <div class="container">
-
+       <c:choose>
+           <c:when test="${ not empty error}">
+               <div class="row">
+                  <div class="twelve columns">
+                      <p class="text" ><fmt:message key="${error}" bundle="${rs}" /></p>
+                  </div>
+               </div>
+           </c:when>
+           <c:otherwise>
 
         <div class="row rooms">
             <div class="seven columns">
@@ -311,6 +351,9 @@
 
         </div>
         </c:forEach>
+
+        </c:otherwise>
+      </c:choose>
     </div>
 
 
@@ -415,6 +458,27 @@
                 </div>
 
         </div>
+
+        <div class=" container chooseDateDialog1" id="badR" title="Chose dates" hidden>
+                        <div id="hide" class="row">
+                                     <div class="twelve columns">
+                                          <p class="text" ><c:out value="${ notFound }"  /></p>
+                                     </div>
+                            <a id="cancelBadR" class="previous dialog" href="#">Previous</a></p>
+                            </div>
+                        </div>
+
+                </div>
+                  <div class=" container chooseDateDialog1" id="error" title="Chose dates" hidden>
+                          <div id="hide" class="row">
+                                     <div class="twelve columns">
+                                          <p class="text" ><c:out value="${ fatal }"  /></p>
+                                     </div>
+                              <a id="cancelError" class="previous dialog" href="#">Previous</a></p>
+                              </div>
+                          </div>
+
+                  </div>
 
 
     <footer>

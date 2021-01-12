@@ -2,20 +2,37 @@ package com.spring.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
 public class RoomForm {
+    @NotNull
+    @Min(value = 1,message = "min number value is 1")
     @JsonProperty("number")
     private int number;
+
+    @NotNull
+    @Min(value = 1,message = "min sits count is 1")
     @JsonProperty("sits")
     private int sits;
+
+    @NotNull
+    @Min(value = 0,message = "min price value is 0")
     @JsonProperty("price")
     private double price;
+
+    @NotNull
+    @Size(min = 1,message = "roomClass min size is 1")
     @JsonProperty("roomClass")
     private String roomClass;
+
     @JsonProperty("descriptions")
     private List<String> descriptions;
+
+    @NotNull
     @JsonProperty("id")
     private long id;
 

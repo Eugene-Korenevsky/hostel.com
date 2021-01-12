@@ -3,24 +3,18 @@ package com.spring.controllers.userControllers;
 import com.spring.model.entity.*;
 import com.spring.model.service.*;
 import com.spring.model.service.exceptions.EmailIsExistException;
+import com.spring.model.service.exceptions.UserServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.MimeTypeUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.lang.reflect.Array;
-import java.security.Principal;
 import java.util.*;
 
 @Controller
@@ -66,22 +60,20 @@ public class UserController {
 
     @GetMapping(value = {"profile"})
     public String showCabinet(Map<String, Object> model) {
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        Authentication authentication = securityContext.getAuthentication();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         try {
-            SecurityContext securityContext = SecurityContextHolder.getContext();
-            Authentication authentication = securityContext.getAuthentication();
-            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            //org.springframework.security.core.userdetails.User user =
-            //      (org.springframework.security.core.userdetails.User) authentication.getPrincipal();
-            User user1 = userService.login(userDetails.getUsername(), userDetails.getPassword());
-            if (user1.getRole().getRole().equals(access1)) {
-                model.put("user", user1);
+            User user = userService.login(userDetails.getUsername(), userDetails.getPassword());
+            if (user.getRole().getRole().equals(access1)) {
+                model.put("user", user);
                 return "redirect:/admin/profile";
             } else {
-                List<Reserve> reserves = reserveService.readAllByUserId(user1.getId());
-                List<Order> orders = orderService.findByUserId(user1.getId());
+                List<Reserve> reserves = reserveService.readAllByUserId(user.getId());
+                List<Order> orders = orderService.findByUserId(user.getId());
                 model.put("orders", orders);
                 model.put("reserves", reserves);
-                model.put("user", user1);
+                model.put("user", user);
                 return "profile";
             }
         } catch (Exception e) {
@@ -107,6 +99,9 @@ public class UserController {
             return "login";
         } catch (EmailIsExistException e) {
             model.put("message", "register.wrong");
+            return "registration";
+        } catch (UserServiceException e) {
+            model.put("message", "error");
             return "registration";
         }
     }

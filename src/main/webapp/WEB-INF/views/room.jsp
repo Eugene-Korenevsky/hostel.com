@@ -4,6 +4,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="u"%>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+
+<fmt:setBundle basename = "ResourceBundle.Global" var="rs" scope="application"/>
+<fmt:message key="message.wrong.email" var="wrongEmail" bundle="${rs}" />
 <!DOCTYPE html>
 <html>
 
@@ -42,6 +45,7 @@
                    dates.dateIn = $("#dateIn").val(),
                    dates.dateOut = $("#dateOut").val(),
                    dates.roomId = $("#roomId").val()
+                   console.log(dates);
 
 
                 $.post("../orders/isFree",dates,function(data){
@@ -125,47 +129,84 @@
 
 
         <div class="row">
-            <div class="six columns">
-                <div class="slider" id="main-slider">
-                    <!-- outermost container element -->
-                    <div class="slider-wrapper">
-                        <!-- innermost wrapper element -->
-                        <div class="slide"> <img src="../resources/images/img1/2.jpg" width="550" height="365"></div>
-                        <!-- slides -->
-                        <div class="slide"> <img src="../resources/images/img1/5.jpg" width="550" height="365"></div>
-                        <div class="slide"> <img src="../resources/images/img1/3.jpg" width="550" height="365"></div>
-                    </div>
-                    <div class="slider-nav">
-                        <button class="slider-previous">Previous</button>
-                        <button class="slider-next">Next</button>
-                    </div>
-                </div>
-            </div>
-            <div class="six columns rowdesc">
-                <div class="data">
-                    <p>Number : <c:out value="${ room.number }"  /></p>
-                </div>
-                <div class="data">
-                    <p>Sits : <c:out value="${ room.sits }"  /></p>
-                </div>
-                <div class="data">
-                    <p>Class : <c:out value="${ room.roomClass }"  /></p>
-                </div>
-                <div class="data">
-                    <p>Price : <c:out value="${ room.price }"  /> $</p>
-                </div>
-                <div class="data1">
-                    <p>Descriptions :
-                        <c:forEach var="desc" items="${room.descriptions}" varStatus="status">
-                        <p class="desc1"><c:out value="${ desc.description }"  /></p>
-                        </c:forEach>
-                    </p>
-                </div>
-                <div>
-                    <a class="previous" href="room/${elem.id}">Previous</a>
-                    <a id="makeOrder" class="makeorder" href="#">Make Order</a>
-                </div>
-            </div>
+        <c:choose>
+          <c:when test="${ not empty error}">
+                 <div class="row">
+                   <div class="twelve columns">
+                      <p class="text" ><fmt:message key="${error}" bundle="${rs}" /></p>
+                   </div>
+          	   </div>
+          	   <div class="row">
+                          <div class="four columns">
+                                       <p class="text" ></p>
+                                      </div>
+                           <div class="four columns">
+                            <div> <img src="/com.company-1.0-SNAPSHOT/resources/images/error.jpg"></div>
+                           </div>
+                           <div class="four columns">
+                                       <p class="text" ></p>
+                           </div>
+                        </div>
+                        <div class="row">
+                                   <div class="twelve columns">
+                                     <p class="text" ></p>
+                                   </div>
+                   	   </div>
+                   	   <div class="row">
+                              <div class="twelve columns">
+                                    <p class="text" ></p>
+                              </div>
+                   	   </div>
+          </c:when>
+          <c:otherwise>
+             <div class="six columns">
+                          <div class="slider" id="main-slider">
+                              <!-- outermost container element -->
+                              <div class="slider-wrapper">
+                                  <!-- innermost wrapper element -->
+                                  <div class="slide"> <img src="../resources/images/img1/2.jpg" width="550" height="365"></div>
+                                  <!-- slides -->
+                                  <div class="slide"> <img src="../resources/images/img1/5.jpg" width="550" height="365"></div>
+                                  <div class="slide"> <img src="../resources/images/img1/3.jpg" width="550" height="365"></div>
+                              </div>
+                              <div class="slider-nav">
+                                  <button class="slider-previous">Previous</button>
+                                  <button class="slider-next">Next</button>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="six columns rowdesc">
+                          <div class="data">
+                              <p>Number : <c:out value="${ room.number }"  /></p>
+                          </div>
+                          <div class="data">
+                              <p>Sits : <c:out value="${ room.sits }"  /></p>
+                          </div>
+                          <div class="data">
+                              <p>Class : <c:out value="${ room.roomClass }"  /></p>
+                          </div>
+                          <div class="data">
+                              <p>Price : <c:out value="${ room.price }"  /> $</p>
+                          </div>
+                          <div class="data1">
+                              <p>Descriptions :
+                                  <c:forEach var="desc" items="${room.descriptions}" varStatus="status">
+                                  <p class="desc1"><c:out value="${ desc.description }"  /></p>
+                                  </c:forEach>
+                              </p>
+                          </div>
+                          <div>
+                              <a class="previous" href="../rooms">Previous</a>
+                              <a id="makeOrder" class="makeorder" href="#">Make Order</a>
+                          </div>
+                      </div>
+
+          </c:otherwise>
+        </c:choose>
+
+
+
+
 
         </div>
 

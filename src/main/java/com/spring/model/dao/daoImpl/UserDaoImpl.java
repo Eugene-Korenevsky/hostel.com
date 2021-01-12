@@ -7,19 +7,26 @@ import com.spring.model.entity.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.LockModeType;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
 public class UserDaoImpl extends GenericDaoImpl<User> implements UserDao {
-    UserDaoImpl(){super(User.class);}
+    UserDaoImpl() {
+        super(User.class);
+    }
 
     @Override
-    public User login(String password, String email,EntityManager entityManager) {
+    public User login(String password, String email, EntityManager entityManager) {
         TypedQuery<User> query =
                 entityManager.createNamedQuery("login", User.class);
         query.setParameter("password", password);
         query.setParameter("email", email);
-        return query.getSingleResult();
+        try {
+            return query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 
 }

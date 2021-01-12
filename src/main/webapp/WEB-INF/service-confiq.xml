@@ -6,6 +6,14 @@
        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
        http://www.springframework.org/schema/aop
        http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:access.properties</value>
+            </list>
+        </property>
+        <property name="ignoreResourceNotFound" value="true"/>
+    </bean>
     <bean id="dataSource"
           class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 
@@ -16,6 +24,8 @@
     </bean>
     <bean id="entityManagerFactory" class="com.spring.model.entitymanager.EntityManagerFactory"
           init-method="init" destroy-method="destroy"/>
+    <bean id="myValidator" class="com.spring.model.helpers.validator.MyValidator" init-method="init"/>
+
     <bean id="roomDao" class="com.spring.model.dao.daoImpl.RoomDaoImp"/>
     <bean id="descriptionService" class="com.spring.model.service.logic.DescriptionServiceImpl">
         <property name="descriptionDao" ref="descriptionDao"/>
@@ -34,6 +44,7 @@
     <bean id="userService" class="com.spring.model.service.logic.UserServiceImpl">
         <property name="userDao" ref="userDao"/>
         <property name="roleDao" ref="roleDao"/>
+        <property name="defaultRole" value="${default.role}"/>
     </bean>
     <bean id="roleService" class="com.spring.model.service.logic.RoleServiceImpl">
         <property name="roleDao" ref="roleDao"/>
