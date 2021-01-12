@@ -35,7 +35,7 @@ public class MainController {
             User user1 = userService.login(user.getUsername(), user.getPassword());
             model.put("user", user1);
             return "adminProfile";
-        } catch (UserServiceException e) {
+        } catch (Exception e) {
             model.put("error","error");
             return "registration";
         }

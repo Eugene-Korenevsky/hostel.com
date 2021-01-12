@@ -28,6 +28,7 @@ com\spring\controllers\adminControllers\RoomController.class
 com\spring\model\dao\daoImpl\GenericDaoImpl.class
 com\spring\model\helpers\roomhelpers\searchhelper\filters\roomfilters\RoomFilterBySits.class
 com\spring\model\helpers\roomhelpers\datehelpers\DaysMaker.class
+com\spring\model\service\exceptions\OrderNotFountException.class
 com\spring\model\service\exceptions\RoomServiceException.class
 com\spring\model\entity\Role.class
 com\spring\model\service\logic\RoleServiceImpl.class

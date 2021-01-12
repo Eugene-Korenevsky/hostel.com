@@ -28,7 +28,7 @@ public class ReserveDaoImpl extends GenericDaoImpl<Reserve> implements ReserveDa
     }
 
     @Override
-    public List<Reserve> findByDatesInterval(Timestamp dateIn, Timestamp dateOut, Room room, EntityManager entityManager) {
+    public List<Reserve> findByDatesIntervalAndRoom(Timestamp dateIn, Timestamp dateOut, Room room, EntityManager entityManager) {
         CriteriaQuery<Reserve> criteriaQuery = entityManager.getCriteriaBuilder().createQuery(Reserve.class);
         Root<Reserve> itemRoot = criteriaQuery.from(Reserve.class);
         Predicate predicateDateIn = entityManager.getCriteriaBuilder().between(

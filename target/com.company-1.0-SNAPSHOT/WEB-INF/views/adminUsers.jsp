@@ -56,7 +56,7 @@
                    console.log(user1);
                    $.ajax({
                       type: 'PUT',
-                      url: 'users',
+                      url: 'users/' + user1.id,
                       contentType: 'application/json',
                       data: result_json,
                       success: function(data) {

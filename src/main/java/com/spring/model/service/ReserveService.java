@@ -22,6 +22,6 @@ public interface ReserveService {
 
     public void delete(long id) throws ReserveServiceException,EntityNotFoundException;
 
-    public List<Reserve> findByDatesInterval(Timestamp dateIn, Timestamp dateOut, Room room)
+    public List<Reserve> findByDatesIntervalAndRoom(Timestamp dateIn, Timestamp dateOut, Room room)
             throws ReserveServiceException,ValidationException;
 }

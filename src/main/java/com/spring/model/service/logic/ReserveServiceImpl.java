@@ -169,13 +169,13 @@ public class ReserveServiceImpl implements ReserveService {
     }
 
     @Override
-    public List<Reserve> findByDatesInterval(Timestamp dateIn, Timestamp dateOut, Room room)
+    public List<Reserve> findByDatesIntervalAndRoom(Timestamp dateIn, Timestamp dateOut, Room room)
             throws ReserveServiceException, ValidationException {
         if (dateIn != null && dateOut != null) {
             EntityManager entityManager = EntityManagerFactory.getEntityManager();
             try {
                 entityManager.getTransaction().begin();
-                List<Reserve> reserves = reserveDao.findByDatesInterval(dateIn, dateOut, room, entityManager);
+                List<Reserve> reserves = reserveDao.findByDatesIntervalAndRoom(dateIn, dateOut, room, entityManager);
                 entityManager.getTransaction().commit();
                 return reserves;
             } catch (Exception e) {

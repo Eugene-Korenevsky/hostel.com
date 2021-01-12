@@ -28,7 +28,7 @@ public class IsRoomFreeInDates {
     }
 
     public boolean isRoomFree(Room room, Timestamp dateIn, Timestamp dateOut) throws ReserveServiceException,ValidationException {
-        List<Reserve> reserves = reserveService.findByDatesInterval(dateIn, dateOut, room);
+        List<Reserve> reserves = reserveService.findByDatesIntervalAndRoom(dateIn, dateOut, room);
         return reserves.size() < 1;
     }
 }
