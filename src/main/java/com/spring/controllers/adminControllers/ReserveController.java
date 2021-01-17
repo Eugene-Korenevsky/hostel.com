@@ -51,21 +51,21 @@ public class ReserveController {
                         Order order = orderService.findById(orderId);
                         double price = order.getTotalPrice();
                         result.append(price);
-                    } catch (OrderServiceException e) {
+                    } catch (ServiceException e) {
                         return new ResponseEntity<>("server error", HttpStatus.INTERNAL_SERVER_ERROR);
-                    } catch (OrderNotFountException e) {
+                    } catch (EntityNotFoundException e) {
                         return new ResponseEntity<>("order not exist", HttpStatus.NOT_FOUND);
                     }
                 } else {
                     result.append("notFree");
                 }
             } catch (ValidationException e) {
-                return new ResponseEntity<>("dates format must be yyyy-mm-dd hh:mm:ss[.fffffffff] ",
+                return new ResponseEntity<>("error date format",
                         HttpStatus.BAD_REQUEST);
             } catch (ReserveServiceException e) {
                 return new ResponseEntity<>("server error", HttpStatus.INTERNAL_SERVER_ERROR);
             }
-            return new ResponseEntity<>(result,HttpStatus.OK);
+            return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (EntityNotFoundException e) {
             return new ResponseEntity<>("room is not exist", HttpStatus.NOT_FOUND);
         } catch (RoomServiceException e) {
@@ -75,14 +75,21 @@ public class ReserveController {
 
     @PostMapping(consumes = MimeTypeUtils.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> createReserve(@RequestBody Reserve reserve) {
-        try {
-            reserveService.create(reserve.getId());
-            return new ResponseEntity<>(reserve, HttpStatus.CREATED);
-        } catch (EntityNotFoundException e) {
-            return new ResponseEntity<>("order isn't exist", HttpStatus.NOT_FOUND);
-        } catch (ReserveServiceException e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        if (reserve != null) {
+            try {
+                if (isRoomFreeInDates.isRoomFree(reserve.getRoom(), reserve.getDateIn(), reserve.getDateOut())) {
+                    reserveService.create(reserve.getId());
+                    return new ResponseEntity<>(reserve, HttpStatus.CREATED);
+                } else return new ResponseEntity<>("room is not free in dates", HttpStatus.OK);
+            } catch (EntityNotFoundException e) {
+                return new ResponseEntity<>("order isn't exist", HttpStatus.NOT_FOUND);
+            } catch (ReserveServiceException e) {
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            } catch (ValidationException e) {
+                return new ResponseEntity<>(e.getValidError(), HttpStatus.BAD_REQUEST);
+            }
+        } else return new ResponseEntity<>("reserve must be not null", HttpStatus.BAD_REQUEST);
+
     }
 
 
@@ -91,7 +98,7 @@ public class ReserveController {
         try {
             reserveService.delete(reserveId);
             return "redirect:/admin/reserves";
-        } catch (ReserveServiceException e) {
+        } catch (ServiceException e) {
             model.put("error", "error");
             return "adminReserves";
         } catch (EntityNotFoundException e) {
@@ -106,7 +113,7 @@ public class ReserveController {
             List<Reserve> reserves = reserveService.readAll();
             model.put("reserves", reserves);
             return "adminReserves";
-        } catch (ReserveServiceException e) {
+        } catch (ServiceException e) {
             model.put("error", "error");
             return "adminReserves";
         }

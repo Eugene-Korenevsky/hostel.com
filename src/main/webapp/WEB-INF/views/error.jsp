@@ -38,8 +38,8 @@
                 <div class="nine columns">
                     <nav class="nav">
                         <a href="#">About Us</a>
-                        <a href="rooms">rooms</a>
-                        <a class="home" href="home">Home</a>
+                        <a href="/com.company-1.0-SNAPSHOT/rooms">rooms</a>
+                        <a class="home" href="/com.company-1.0-SNAPSHOT/">Home</a>
                     </nav>
                 </div>
             </div>

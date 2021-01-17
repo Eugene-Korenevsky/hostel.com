@@ -110,7 +110,7 @@ public class RoomController {
         try {
             roomService.delete(id);
             return new ResponseEntity<>(HttpStatus.OK);
-        } catch (RoomServiceException e) {
+        } catch (ServiceException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (EntityNotFoundException e) {
             return new ResponseEntity<>("resource not found", HttpStatus.NOT_FOUND);

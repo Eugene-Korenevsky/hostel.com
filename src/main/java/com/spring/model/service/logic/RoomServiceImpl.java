@@ -24,10 +24,14 @@ import java.util.List;
 import java.util.Set;
 
 
-public class RoomServiceImpl implements RoomService {
+public class RoomServiceImpl extends GenericServiceImpl<Room> implements RoomService {
 
     private DescriptionDao descriptionDao;
     private RoomDao roomDao;
+
+    public RoomServiceImpl(){
+        super(Room.class);
+    }
 
     public void setRoomDao(RoomDao roomDao) {
         this.roomDao = roomDao;
@@ -127,25 +131,6 @@ public class RoomServiceImpl implements RoomService {
                 throw new ValidationException("validError", validError);
             }
         } else throw new ValidationException("can not be null");
-    }
-
-    @Override
-    public void delete(long id) throws RoomServiceException, EntityNotFoundException {
-        EntityManager entityManager = EntityManagerFactory.getEntityManager();
-        try {
-            entityManager.getTransaction().begin();
-            Room room = roomDao.findById(id, entityManager);
-            if (room != null) {
-                roomDao.delete(room, entityManager);
-                entityManager.getTransaction().commit();
-            } else throw new EntityNotFoundException("resource not found");
-        } catch (IllegalArgumentException | TransactionRequiredException e) {
-            if (entityManager.getTransaction().isActive()) entityManager.getTransaction().rollback();
-            MyLogger.log(MyLogger.Kind.WARNING, this, e.getMessage());
-            throw new RoomServiceException(e.getMessage());
-        } finally {
-            entityManager.close();
-        }
     }
 
     @Override

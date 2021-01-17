@@ -5,6 +5,8 @@
 <%@ taglib tagdir="/WEB-INF/tags" prefix="u"%>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
+<fmt:setBundle basename = "ResourceBundle.Global" var="rs" scope="application"/>
+
 <!DOCTYPE html>
 <html>
 
@@ -64,22 +66,22 @@
                 <div class="nine columns">
                     <nav class="nav">
                         <security:authorize access="!isAuthenticated()">
-                             <a href="../loginForm">log In</a>
+                             <a href="loginForm"><fmt:message key="login.button" bundle="${rs}" /></a>
                         </security:authorize>
                         <security:authorize access="isAuthenticated()">
-                              <a href="../logout">log Out</a>
+                              <a href="../logout"><fmt:message key="logout.button" bundle="${rs}" /></a>
                         </security:authorize>
                         <security:authorize access="!isAuthenticated()">
-                              <a href="../registration">registratinion</a>
+                              <a href="registration.html"><fmt:message key="registration.button" bundle="${rs}" /></a>
                         </security:authorize>
                         <security:authorize access="isAuthenticated()">
-                               <a class="current-page" href="profile">cabinet</a>
+                               <a class="current-page" href="profile"><fmt:message key="cabinet.button" bundle="${rs}" /></a>
                         </security:authorize>
 
 
-                        <a href="#">About Us</a>
-                        <a href="../rooms">rooms</a>
-                        <a class="home" href="../home">Home</a>
+                        <a href="#"><fmt:message key="about" bundle="${rs}" /></a>
+                        <a href="../rooms"><fmt:message key="room.button" bundle="${rs}" /></a>
+                        <a class="home" href="../"><fmt:message key="main.page" bundle="${rs}" /></a>
                     </nav>
                 </div>
             </div>
@@ -98,13 +100,13 @@
       <c:otherwise>
         <div class="row rooms">
             <div class="four columns">
-                Client
+                <fmt:message key="client" bundle="${rs}" />
             </div>
             <div class="seven columns">
-                Room
+                <fmt:message key="room" bundle="${rs}" />
             </div>
             <div class="two columns">
-                total price
+                <fmt:message key="total.price" bundle="${rs}" />
             </div>
         </div>
 
@@ -115,9 +117,9 @@
 
                 </div>
                 <div>
-                    <p> Name : <c:out value="${reserve.user.name}"/></p>
-                    <p>Surname : <c:out value="${reserve.user.surname}"/></p>
-                    <p>Email : <c:out value="${reserve.user.email}"/></p>
+                    <p><fmt:message key="login.form.name" bundle="${rs}" /> : <c:out value="${reserve.user.name}"/></p>
+                    <p><fmt:message key="login.form.surname" bundle="${rs}" /> : <c:out value="${reserve.user.surname}"/></p>
+                    <p><fmt:message key="login.form.email" bundle="${rs}" /> : <c:out value="${reserve.user.email}"/></p>
                 </div>
             </div>
             <div class="seven columns data ">
@@ -125,16 +127,16 @@
                     <img class="img" src="../resources/images/img1/1.jpg" width="250" height="150">
                 </div>
                 <div>
-                    <p>Number : <c:out value="${reserve.room.number}"/></p>
-                    <p>Arrive date : <c:out value="${reserve.dateIn}"/></p>
-                    <p>Leave date : <c:out value="${reserve.dateOut}"/></p>
+                    <p><fmt:message key="room.number" bundle="${rs}" /> : <c:out value="${reserve.room.number}"/></p>
+                    <p><fmt:message key="date.arrive" bundle="${rs}" /> : <c:out value="${reserve.dateIn}"/></p>
+                    <p><fmt:message key="date.leave" bundle="${rs}" />: <c:out value="${reserve.dateOut}"/></p>
                 </div>
             </div>
             <div class="two columns data ">
                 <div>
                     <p> <c:out value="${reserve.totalPrice}"/></p>
                 </div>
-                <p class="more"><a class="deleteR" href="${reserve.id}">Cancel</a></p>
+                <p class="more"><a class="deleteR" href="${reserve.id}"><fmt:message key="cancel" bundle="${rs}" /></a></p>
             </div>
         </div>
         </c:forEach>
@@ -146,13 +148,12 @@
 
      <div class=" container chooseDateDialog1" id="delete" title="Chose dates" hidden>
                     <div id="hide" class="row">
-                        <p>This dioloq window.You can moove it in the window</p>
 
-                        delete this reserve?
+                        <fmt:message key="delete.reserve" bundle="${rs}" />
 
                         <div>
-                           <a id="cancelD" class="previous" href="#">Previous</a>
-                           <a id="deleteForm" class="makeorder" href="75" data-method="delete">Delete</a>
+                           <a id="cancelD" class="previous" href="#"><fmt:message key="cancel" bundle="${rs}" /></a>
+                           <a id="deleteForm" class="makeorder" href="75" data-method="delete"><fmt:message key="delete" bundle="${rs}" /></a>
                         </div>
                     </div>
      </div>

@@ -87,22 +87,22 @@
                 <div class="nine columns">
                     <nav class="nav">
                            <security:authorize access="!isAuthenticated()">
-                                <a href="loginForm">log In</a>
+                                <a href="loginForm"><fmt:message key="login.button" bundle="${rs}" /></a>
                            </security:authorize>
                            <security:authorize access="isAuthenticated()">
-                                 <a href="logout">log Out</a>
+                                 <a href="logout"><fmt:message key="logout.button" bundle="${rs}" /></a>
                            </security:authorize>
                            <security:authorize access="!isAuthenticated()">
-                                 <a class="current-page" href="registration.html">registratinion</a>
+                                 <a class="current-page" href="registration.html"><fmt:message key="register.button" bundle="${rs}" /></a>
                            </security:authorize>
                            <security:authorize access="isAuthenticated()">
-                                  <a href="profile">cabinet</a>
+                                  <a href="profile"><fmt:message key="cabinet.button" bundle="${rs}" /></a>
                            </security:authorize>
 
 
-                           <a href="#">About Us</a>
-                           <a  href="rooms">rooms</a>
-                           <a class="home" href="home.html">Home</a>
+                           <a href="#"><fmt:message key="about" bundle="${rs}" /></a>
+                           <a  href="rooms"><fmt:message key="room.button" bundle="${rs}" /></a>
+                           <a class="home" href="home.html"><fmt:message key="main.page" bundle="${rs}" /></a>
                     </nav>
                 </div>
             </div>
@@ -121,36 +121,36 @@
             <div class="twelve columns">
                 <s:form id="form" class="form" name="f" method="POST" action="registration"
                     modelAttribute="user">
-                    <p>Registration</p>
+                    <p><fmt:message key="register.button" bundle="${rs}" /></p>
                     <p>
-                        <label class="label" for="j_username">Email : </label>
+                        <label class="label" for="j_username"><fmt:message key="login.form.email" bundle="${rs}" /> : </label>
                         <s:input path="email" type="email" name="j_username"/>
                         <label for="j_username" class="error"></label>
                         <label for="j_username" class="success" hidden></label>
                         <s:errors path="email"/>
                     </p>
                     <p>
-                        <label class="label" for="j_password"> Password : </label>
+                        <label class="label" for="j_password"><fmt:message key="login.form.password" bundle="${rs}" /> : </label>
                         <s:input path="password" type="password" name="password"/>
                         <label for="password" class="error"></label>
                         <label for="password" class="success" hidden></label>
                         <s:errors path="password"/>
                     </p>
                     <p>
-                        <label class="label" for="name"> Name : </label>
+                        <label class="label" for="name"><fmt:message key="login.form.name" bundle="${rs}" /> : </label>
                         <s:input path="name" type="text" name="name"  />
                         <label for="name" class="error"></label>
                         <label for="name" class="success" hidden></label>
                         <s:errors path="name"/>
                     </p>
                     <p>
-                        <label class="label" for="surname"> Surname : </label>
+                        <label class="label" for="surname"><fmt:message key="login.form.surname" bundle="${rs}" /> : </label>
                         <s:input path="surname" type="text" name="surname"/>
                         <label for="surname" class="error"></label>
                         <label for="surname" class="success" hidden></label>
                         <s:errors path="surname"/>
                     </p>
-                    <p><input class="submit" name="submit" type="submit" value="submit" /></p>
+                    <p><input class="submit" name="submit" type="submit" value="<fmt:message key="confirm" bundle="${rs}" />" /></p>
                 </s:form>
 
 

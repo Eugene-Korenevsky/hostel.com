@@ -61,7 +61,7 @@
                       data: result_json,
                       success: function(data) {
                          console.log("done");
-                         document.location.href = "user";
+                         document.location.href = "users";
                       },
                       error:  function(){
                           alert('Ошибка!');

@@ -9,7 +9,7 @@ import java.util.List;
 public  class GenericDaoImpl<T> implements GenericDao<T> {
     private Class<T> entityClass;
 
-    protected GenericDaoImpl(Class entityClass) {
+    public GenericDaoImpl(Class entityClass) {
         this.entityClass = entityClass;
     }
 

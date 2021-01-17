@@ -5,6 +5,8 @@
 <%@ taglib tagdir="/WEB-INF/tags" prefix="u"%>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
+<fmt:setBundle basename = "ResourceBundle.Global" var="rs" scope="application"/>
+
 <!DOCTYPE html>
 <html>
 
@@ -42,22 +44,22 @@
                 <div class="nine columns">
                     <nav class="nav">
                         <security:authorize access="!isAuthenticated()">
-                             <a href="loginForm">log In</a>
+                             <a href="loginForm"><fmt:message key="login.button" bundle="${rs}" /></a>
                         </security:authorize>
                         <security:authorize access="isAuthenticated()">
-                              <a href="logout">log Out</a>
+                              <a href="logout"><fmt:message key="logout.button" bundle="${rs}" /></a>
                         </security:authorize>
                         <security:authorize access="!isAuthenticated()">
-                              <a href="registration">registratinion</a>
+                              <a href="registration"><fmt:message key="register.button" bundle="${rs}" /></a>
                         </security:authorize>
                         <security:authorize access="isAuthenticated()">
-                               <a href="profile">cabinet</a>
+                               <a href="profile"><fmt:message key="cabinet.button" bundle="${rs}" /></a>
                         </security:authorize>
 
 
-                        <a href="#">About Us</a>
-                        <a href="rooms">rooms</a>
-                        <a class="home current-page" href="">Home</a>
+                        <a href="#"><fmt:message key="about" bundle="${rs}" /></a>
+                        <a href="rooms"><fmt:message key="room.button" bundle="${rs}" /></a>
+                        <a class="home current-page" href=""><fmt:message key="main.page" bundle="${rs}" /></a>
                     </nav>
                 </div>
             </div>
@@ -71,7 +73,7 @@
         <div class="row">
             <div class="six columns">
                 <div class="news">
-                    <p class="text" ></p>
+                    <p class="text" ><fmt:message key="first.page.text" bundle="${rs}" /></p>
                 </div>
             </div>
             <div class="six columns">

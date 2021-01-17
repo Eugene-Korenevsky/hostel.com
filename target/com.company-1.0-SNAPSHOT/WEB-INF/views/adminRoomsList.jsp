@@ -7,8 +7,6 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 <fmt:setBundle basename = "ResourceBundle.Global" var="rs" scope="application"/>
-<fmt:message key="error" var="fatal" bundle="${rs}" />
-<fmt:message key="bad.request" var="notFound" bundle="${rs}" />
 
 <!DOCTYPE html>
 <html>
@@ -33,11 +31,13 @@
 
                      $(".chRoom").on("click", function() {
                         var value1 = $(this).attr('href');
-                        $("#changeRoom").show();
                         console.log("id = " + value1);
                         $.getJSON("rooms/"+value1,function( room ){
+
+                        }).done(function(response){
                             room1 = room;
                             console.log('room id is' + room1.id);
+                            $("#changeRoom").show();
                             $("#price1").attr('value', room.price);
                             $("#sits1").attr('value', room.sits);
                             $("#number1").attr('value', room.number);
@@ -48,7 +48,12 @@
                               + room.descriptions[i]
                               + '<a class="removeDesc"  href="' + str + '">Delete</a></p>');
                             }
-
+                        }).fail(function(response){
+                              if(response.status === 404){
+                                 $("#badR").show();
+                              }else{
+                                $("#error").show();
+                              }
                         });
                         return false;
                      });
@@ -166,9 +171,12 @@
                                       console.log(status);
                                       document.location.href = "rooms";
                                    },
-                                   error: function(output){
-                                      console.log(output.getResponseHeader("error"));
-                                      console.log(output.status);
+                                   error: function(response){
+                                      if(response.status === 404){
+                                         $("#badR").show();
+                                      }else{
+                                         $("#error").show();
+                                      }
                                    }
                             });
                             return false;
@@ -250,22 +258,22 @@
                 <div class="nine columns">
                     <nav class="nav">
                         <security:authorize access="!isAuthenticated()">
-                             <a href="../loginForm">log In</a>
+                             <a href="loginForm"><fmt:message key="login.button" bundle="${rs}" /></a>
                         </security:authorize>
                         <security:authorize access="isAuthenticated()">
-                              <a href="../logout">log Out</a>
+                              <a href="../logout"><fmt:message key="logout.button" bundle="${rs}" /></a>
                         </security:authorize>
                         <security:authorize access="!isAuthenticated()">
-                              <a href="../registration">registratinion</a>
+                              <a href="registration.html"><fmt:message key="registration.button" bundle="${rs}" /></a>
                         </security:authorize>
                         <security:authorize access="isAuthenticated()">
-                               <a class="current-page" href="profile">cabinet</a>
+                               <a class="current-page" href="profile"><fmt:message key="cabinet.button" bundle="${rs}" /></a>
                         </security:authorize>
 
 
-                        <a href="#">About Us</a>
-                        <a  href="../rooms">rooms</a>
-                        <a class="home" href="../home">Home</a>
+                        <a href="#"><fmt:message key="about" bundle="${rs}" /></a>
+                        <a href="../rooms"><fmt:message key="room.button" bundle="${rs}" /></a>
+                        <a class="home" href="../"><fmt:message key="main.page" bundle="${rs}" /></a>
                     </nav>
                 </div>
             </div>
@@ -300,7 +308,7 @@
             </div>
             <div class="five columns">
                 <div class="textcenter">
-                    <p class="floatleft">Add new room</p>
+                    <p class="floatleft"><fmt:message key="create.room.button" bundle="${rs}" /></p>
                     <p class="add">
                         <a id="makeRoom" class="add" href="#"><img src="../resources/images/img/add1_1_50X50.png"></a>
                     </p>
@@ -318,30 +326,30 @@
             </div>
             <div class="five columns">
                 <div class="data profile1">
-                    <p>Number : <c:out value="${room.number}"/> </p>
+                    <p><fmt:message key="room.number" bundle="${rs}" /> : <c:out value="${room.number}"/> </p>
                 </div>
                 <div class="data profile1">
-                    <p>Sits : <c:out value="${room.sits}"/></p>
+                    <p><fmt:message key="room.sits" bundle="${rs}" /> : <c:out value="${room.sits}"/></p>
                 </div>
                 <div class="data profile1">
-                    <p>Class : <c:out value="${room.roomClass}"/></p>
+                    <p><fmt:message key="room.class.message" bundle="${rs}" /> : <c:out value="${room.roomClass}"/></p>
                 </div>
                 <div class="data profile1">
-                    <p>Price : <c:out value="${room.price}"/></p>
+                    <p><fmt:message key="room.price" bundle="${rs}" /> : <c:out value="${room.price}"/></p>
                 </div>
                 <div class="data1 profile1 borderradiosbottomnone">
-                    <p>Descriptions :
+                    <p><fmt:message key="room.descriptions" bundle="${rs}" /> :
                       <c:forEach var="desc" items="${room.descriptions}" varStatus="status">
                         <p class="desc1"><c:out value="${ desc.description }"  /></p>
                       </c:forEach>
                     </p>
                 </div>
                 <div class="data margintop1">
-                    <p class="more"><a class="chRoom" href="${room.id}">Change</a></p>
+                    <p class="more"><a class="chRoom" href="${room.id}"><fmt:message key="change" bundle="${rs}" /></a></p>
                 </div>
                 <div class="data profile1">
-                   <p>Delete Room</p>
-                   <p class="more right"><a class="deleteR" href="${room.id}">Delete</a></p>
+                   <p><fmt:message key="delete.room.button" bundle="${rs}" /></p>
+                   <p class="more right"><a class="deleteR" href="${room.id}"><fmt:message key="delete" bundle="${rs}" /></a></p>
                 </div>
 
             </div>
@@ -359,23 +367,22 @@
 
     <div class=" container chooseDateDialog1" id="hello" title="Chose dates">
             <div id="hide" class="row">
-                <p>This dioloq window.You can moove it in the window</p>
 
                 <sf:form id="form" class="form" action="rooms" method="POST" modelAttribute ="room">
 
-                    <label class="label" for="number">Number </label>
+                    <label class="label" for="number"><fmt:message key="room.number" bundle="${rs}" /> </label>
                     <sf:input path="number"  name="number" type="number"/>
                     <label class="error" for="number"></label>
 
-                    <label class="label" for="sits">Sits </label>
+                    <label class="label" for="sits"><fmt:message key="room.sits" bundle="${rs}" /> </label>
                     <sf:input path="sits"  name="sits" type="number"/>
                     <label class="error" for="sits"></label>
 
-                    <label class="label" for="roomClass">Class </label>
+                    <label class="label" for="roomClass"><fmt:message key="room.class.message" bundle="${rs}" /> </label>
                     <sf:input path="roomClass"  name="roomClass" type="text"/>
                     <label class="error" for="roomClass"></label>
 
-                    <label class="label" for="price">price </label>
+                    <label class="label" for="price"><fmt:message key="room.price" bundle="${rs}" /> </label>
                     <sf:input path="price"  step="0.01" name="price" type="number"/>
                     <label class="error" for="price"></label>
                      <c:forEach var="item" items="${descriptionsList}">
@@ -386,23 +393,22 @@
                           path="descriptions" value="${item.description}"/>
                      </c:forEach>
                      <div class="row">
-                     <p><input id="submit" class="makeorder dialog" name="submit" type="submit" value="Create" /></p>
+                     <p><input id="submit" class="makeorder dialog" name="submit" type="submit" value="<fmt:message key="create.room.button" bundle="${rs}" />" /></p>
                 </sf:form>
 
-                <a id="cancel" class="previous dialog" href="#">Previous</a></p>
+                <a id="cancel" class="previous dialog" href="#"><fmt:message key="cancel" bundle="${rs}" /></a></p>
                 </div>
             </div>
 
         </div>
         <div class=" container chooseDateDialog1" id="delete" title="Chose dates" hidden>
                 <div id="hide" class="row">
-                    <p>This dioloq window.You can moove it in the window</p>
 
-                    delete this room?
+                   <fmt:message key="delete.room.button" bundle="${rs}" />
 
                     <div>
-                       <a id="cancelD" class="previous" href="#">Previous</a>
-                       <a id="deleteForm" class="makeorder" href="75" data-method="delete">Delete</a>
+                       <a id="cancelD" class="previous" href="#"><fmt:message key="cancel" bundle="${rs}" /></a>
+                       <a id="deleteForm" class="makeorder" href="75" data-method="delete"><fmt:message key="delete" bundle="${rs}" /></a>
                     </div>
 
 
@@ -415,22 +421,20 @@
 
         <div class=" container chooseDateDialog1" id="changeRoom" title="Chose dates" hidden>
                 <div id="hide" class="row">
-                    <p>This dioloq window.You can moove it in the window</p>
-
                     <form id="form1" class="form" action="1223">
-                        <label class="label" for="roomNumber1">Number </label>
+                        <label class="label" for="roomNumber1"><fmt:message key="room.number" bundle="${rs}" /> </label>
                         <input id="number1" name="roomNumber1" type="number" value="">
                         <label class="error" for="roomNumber"></label>
 
-                        <label class="label" for="sits">Sits </label>
+                        <label class="label" for="sits"><fmt:message key="room.sits" bundle="${rs}" /> </label>
                         <input id="sits1" name="sits" type="number" value="">
                         <label class="error" for="sits"></label>
 
-                        <label class="label" for="class">Class </label>
+                        <label class="label" for="class"><fmt:message key="room.class.message" bundle="${rs}" /> </label>
                         <input id="classRoom" name="class" type="text" value="">
                         <label class="error" for="class"></label>
 
-                        <label class="label" for="price">price </label>
+                        <label class="label" for="price"><fmt:message key="room.price" bundle="${rs}" /> </label>
                         <input id="price1" step="0.01" name="price" type="number" value="">
                         <label class="error" for="price"></label>
 
@@ -450,10 +454,10 @@
 
 
                         <div class="row">
-                            <p><input id="submit1" class="makeorder dialog" name="submit" type="submit" value="submit" /></p>
+                            <p><input id="submit1" class="makeorder dialog" name="submit" type="submit" value="<fmt:message key="confirm" bundle="${rs}" />" /></p>
                     </form>
 
-                    <a id="cancelCh" class="previous dialog" href="#">Previous</a></p>
+                    <a id="cancelCh" class="previous dialog" href="#"><fmt:message key="cancel" bundle="${rs}" /></a></p>
                     </div>
                 </div>
 
@@ -462,9 +466,9 @@
         <div class=" container chooseDateDialog1" id="badR" title="Chose dates" hidden>
                         <div id="hide" class="row">
                                      <div class="twelve columns">
-                                          <p class="text" ><c:out value="${ notFound }"  /></p>
+                                          <p class="text" ><fmt:message key="entity.not.exist" bundle="${rs}" /></p>
                                      </div>
-                            <a id="cancelBadR" class="previous dialog" href="#">Previous</a></p>
+                            <a id="cancelBadR" class="previous dialog" href="#"><fmt:message key="cancel" bundle="${rs}" /></a></p>
                             </div>
                         </div>
 
@@ -472,9 +476,9 @@
                   <div class=" container chooseDateDialog1" id="error" title="Chose dates" hidden>
                           <div id="hide" class="row">
                                      <div class="twelve columns">
-                                          <p class="text" ><c:out value="${ fatal }"  /></p>
+                                          <p class="text" ><fmt:message key="error.message" bundle="${rs}" /></p>
                                      </div>
-                              <a id="cancelError" class="previous dialog" href="#">Previous</a></p>
+                              <a id="cancelError" class="previous dialog" href="#"><fmt:message key="cancel" bundle="${rs}" /></a></p>
                               </div>
                           </div>
 

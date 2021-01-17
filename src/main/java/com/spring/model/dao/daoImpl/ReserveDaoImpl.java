@@ -1,13 +1,10 @@
 package com.spring.model.dao.daoImpl;
 
-import com.spring.model.dao.GenericDao;
 import com.spring.model.dao.ReserveDao;
-import com.spring.model.entity.Order;
 import com.spring.model.entity.Reserve;
 import com.spring.model.entity.Room;
 
 import javax.persistence.EntityManager;
-import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;

@@ -22,6 +22,7 @@ C:\Users\karag\Desktop\hostel.com\src\main\java\com\spring\model\service\excepti
 C:\Users\karag\Desktop\hostel.com\src\main\java\com\spring\model\service\exceptions\OrderServiceException.java
 C:\Users\karag\Desktop\hostel.com\src\main\java\com\spring\model\helpers\roomhelpers\searchhelper\RoomSearchHelper.java
 C:\Users\karag\Desktop\hostel.com\src\main\java\com\spring\model\dao\UserDao.java
+C:\Users\karag\Desktop\hostel.com\src\main\java\com\spring\model\service\GenericService.java
 C:\Users\karag\Desktop\hostel.com\src\main\java\com\spring\model\dao\RoleDao.java
 C:\Users\karag\Desktop\hostel.com\src\main\java\com\spring\model\helpers\roomhelpers\searchhelper\search\roomsearch\RoomSearchBySitsAndPrice.java
 C:\Users\karag\Desktop\hostel.com\src\main\java\com\spring\controllers\userControllers\ReserveController.java
@@ -31,6 +32,7 @@ C:\Users\karag\Desktop\hostel.com\src\main\java\com\spring\controllers\adminCont
 C:\Users\karag\Desktop\hostel.com\src\main\java\com\spring\model\entity\Order.java
 C:\Users\karag\Desktop\hostel.com\src\main\java\com\spring\model\helpers\orderhelpers\IsRoomFreeInDates.java
 C:\Users\karag\Desktop\hostel.com\src\main\java\com\spring\model\helpers\roomhelpers\searchhelper\filters\FilterWithTwoParam.java
+C:\Users\karag\Desktop\hostel.com\src\main\java\com\spring\model\service\exceptions\ServiceException.java
 C:\Users\karag\Desktop\hostel.com\src\main\java\com\spring\model\dao\daoImpl\RoomDaoImp.java
 C:\Users\karag\Desktop\hostel.com\src\main\java\com\spring\model\dao\daoImpl\UserDaoImpl.java
 C:\Users\karag\Desktop\hostel.com\src\main\java\com\spring\controllers\adminControllers\OrderController.java
@@ -39,8 +41,10 @@ C:\Users\karag\Desktop\hostel.com\src\main\java\com\spring\model\entity\User.jav
 C:\Users\karag\Desktop\hostel.com\src\main\java\com\spring\model\helpers\roomhelpers\datehelpers\TimestampMaker.java
 C:\Users\karag\Desktop\hostel.com\src\main\java\com\spring\controllers\userControllers\UserController.java
 C:\Users\karag\Desktop\hostel.com\src\main\java\com\spring\model\dao\daoImpl\RoleDaoImpl.java
+C:\Users\karag\Desktop\hostel.com\src\main\java\com\spring\model\service\logic\GenericServiceImpl.java
 C:\Users\karag\Desktop\hostel.com\src\main\java\com\spring\model\dao\daoImpl\ReserveDaoImpl.java
 C:\Users\karag\Desktop\hostel.com\src\main\java\com\spring\model\entity\Reserve.java
+C:\Users\karag\Desktop\hostel.com\src\main\java\com\spring\model\service\exceptions\OrderNotFountException.java
 C:\Users\karag\Desktop\hostel.com\src\main\java\com\spring\model\aspects\MyLogger.java
 C:\Users\karag\Desktop\hostel.com\src\main\java\com\spring\model\service\exceptions\EmailIsExistException.java
 C:\Users\karag\Desktop\hostel.com\src\main\java\com\spring\model\helpers\orderhelpers\OrderCorrectDate.java

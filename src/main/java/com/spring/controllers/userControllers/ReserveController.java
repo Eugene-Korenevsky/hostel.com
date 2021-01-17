@@ -4,6 +4,7 @@ import com.spring.model.entity.Reserve;
 import com.spring.model.service.ReserveService;
 import com.spring.model.service.exceptions.EntityNotFoundException;
 import com.spring.model.service.exceptions.ReserveServiceException;
+import com.spring.model.service.exceptions.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +26,7 @@ public class ReserveController {
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (EntityNotFoundException e) {
             return new ResponseEntity<>("resource not found", HttpStatus.NOT_FOUND);
-        } catch (ReserveServiceException e) {
+        } catch (ServiceException e) {
             return new ResponseEntity<>("something wrong", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

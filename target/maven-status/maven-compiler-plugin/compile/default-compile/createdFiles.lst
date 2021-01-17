@@ -24,6 +24,7 @@ com\spring\model\service\exceptions\EntityNotFoundException.class
 com\spring\model\service\exceptions\RoomWithThisNumberIsExist.class
 ResourceBundle\Global_ru_RU.class
 com\spring\model\entity\Reserve.class
+com\spring\model\service\logic\GenericServiceImpl.class
 com\spring\controllers\adminControllers\RoomController.class
 com\spring\model\dao\daoImpl\GenericDaoImpl.class
 com\spring\model\helpers\roomhelpers\searchhelper\filters\roomfilters\RoomFilterBySits.class
@@ -47,9 +48,11 @@ com\spring\model\service\logic\UserServiceImpl.class
 com\spring\controllers\userControllers\OrderController.class
 com\spring\model\helpers\orderhelpers\IsRoomFreeInDates.class
 com\spring\model\helpers\orderhelpers\OrderCorrectDate.class
+com\spring\model\service\exceptions\ServiceException.class
 com\spring\model\service\OrderService.class
 com\spring\model\helpers\roomhelpers\searchhelper\RoomSearchHelper.class
 com\spring\controllers\adminControllers\OrderController.class
+com\spring\model\service\GenericService.class
 com\spring\model\entity\Order.class
 com\spring\model\service\exceptions\ValidationException.class
 com\spring\controllers\userControllers\UserController.class

@@ -47,9 +47,9 @@ public class OrderController {
         try {
             orderService.delete(id);
             return new ResponseEntity<>(HttpStatus.OK);
-        } catch (OrderNotFountException e) {
+        } catch (EntityNotFoundException e) {
             return new ResponseEntity<>("resource not found", HttpStatus.NOT_FOUND);
-        } catch (OrderServiceException e) {
+        } catch (ServiceException e) {
             return new ResponseEntity<>("something wrong", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -70,19 +70,21 @@ public class OrderController {
                 Timestamp outDate = timestampMaker.getTimestamp(dateOut, defaultOrderTime);
                 try {
                     Room room = roomService.readById(id, false);
-                    double priceDouble = totalPrice.getTotalPrice(room.getPrice(), dateIn,
-                            defaultOrderTime, dateOut, defaultOrderTime);
-                    Order order = new Order();
-                    order.setTotalPrice(priceDouble);
-                    order.setDateIn(inDate);
-                    order.setDateOut(outDate);
-                    order.setRoom(room);
-                    order.setUser(user1);
-                    orderService.create(order);
-                    return new ResponseEntity<>(order, HttpStatus.CREATED);
+                    if (isRoomFreeInDates.isRoomFree(room, inDate, outDate)) {
+                        double priceDouble = totalPrice.getTotalPrice(room.getPrice(), dateIn,
+                                defaultOrderTime, dateOut, defaultOrderTime);
+                        Order order = new Order();
+                        order.setTotalPrice(priceDouble);
+                        order.setDateIn(inDate);
+                        order.setDateOut(outDate);
+                        order.setRoom(room);
+                        order.setUser(user1);
+                        orderService.create(order);
+                        return new ResponseEntity<>(order, HttpStatus.CREATED);
+                    } else return new ResponseEntity<>("room is not free in this dates", HttpStatus.OK);
                 } catch (EntityNotFoundException e) {
                     return new ResponseEntity<>("room not exist", HttpStatus.NOT_FOUND);
-                } catch (RoomServiceException | OrderServiceException e) {
+                } catch (ServiceException | RoomServiceException | ReserveServiceException e) {
                     return new ResponseEntity<>("server error", HttpStatus.INTERNAL_SERVER_ERROR);
                 }
             } catch (UserServiceException e) {

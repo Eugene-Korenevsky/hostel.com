@@ -5,6 +5,8 @@
 <%@ taglib tagdir="/WEB-INF/tags" prefix="u"%>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
+<fmt:setBundle basename = "ResourceBundle.Global" var="rs" scope="application"/>
+
 <!DOCTYPE html>
 <html>
 
@@ -29,14 +31,11 @@
           $(".confirm").on("click",function(){
                var value1 = $(this).attr('href');
                $("#confirmOrder").show();
-               $.getJSON("orders/"+value1,function( order ){
-                   console.log(order);
-                   reserve.id = order.id;
-                   reserve.user = order.user;
-                   reserve.room = order.room;
-                   reserve.totalPrice = order.totalPrice;
-                   reserve.dateIn = order.dateIn;
-                   reserve.dateOut = order.dateOut;
+               $.getJSON("orders/"+value1,function(){
+
+               }).done(function(order){
+                   reserve = order;
+                   console.log(reserve);
                    dates.dateIn = order.dateIn;
                    dates.dateOut = order.dateOut;
                    dates.roomId = order.room.id;
@@ -47,27 +46,44 @@
                    result_json = JSON.stringify(reserve);
                    console.log(result_json);
                    $.post("reserves/isFree",dates,function(data){
-                      console.log(data);
-                      if(data == "notFree"){
-                         $("#message1").show();
+
+                   }).done(function(data){
+                   if(data == "notFree"){
+                       $("#message1").show();
+                   }else{
+                       $("#message").show();
+                       $("#res").show();
+                       $("#res").text(data);
+                   }
+                   }).fail(function(response){
+                      if(response.status === 404){
+                         $("#orderNotExist").show();
+                      }else if(response.status === 500){
+                        $("#error").show();
                       }else{
-                         $("#message").show();
-                         $("#res").show();
-                         $("#res").text(data);
+                        $("#notfound").show();
                       }
                    });
 
+               }).fail(function(response){
+                   console.log(response);
+                   if(response.status === 404){
+                      $("#orderNotExist").show();
+                   }else{
+                     $("#error").show();
+                   }
                });
              return false;
           });
 
-          $("#cancelCO").click(function() {
+          $(".cancelCO").on("click",function(){
             $("#confirmOrder").hide();
             $("#message1").hide();
             $("#message").hide();
             $("#res").hide();
-            return false;
-          });
+            $("#orderNotExist").hide();
+            $("#error").hide();
+           });
 
 
            $("#confirmOrder1").click(function() {
@@ -84,8 +100,14 @@
                                    console.log("done");
                                    document.location.href = "reserves";
                               },
-                              error:  function(){
-                                 alert('Ошибка!');
+                              error:  function(response){
+                                if(response.status === 404){
+                                   $("#orderNotExist").show();
+                                }else if(response.status === 500){
+                                   $("#error").show();
+                                }else{
+                                   $("#valid").show();
+                                }
                               }
                            });
                       return false;
@@ -134,22 +156,22 @@
                 <div class="nine columns">
                     <nav class="nav">
                         <security:authorize access="!isAuthenticated()">
-                             <a href="loginForm">log In</a>
+                             <a href="loginForm"><fmt:message key="login.button" bundle="${rs}" /></a>
                         </security:authorize>
                         <security:authorize access="isAuthenticated()">
-                              <a href="logout">log Out</a>
+                              <a href="../logout"><fmt:message key="logout.button" bundle="${rs}" /></a>
                         </security:authorize>
                         <security:authorize access="!isAuthenticated()">
-                              <a href="registration.html">registratinion</a>
+                              <a href="registration.html"><fmt:message key="registration.button" bundle="${rs}" /></a>
                         </security:authorize>
                         <security:authorize access="isAuthenticated()">
-                               <a class="current-page" href="profile">cabinet</a>
+                               <a class="current-page" href="profile"><fmt:message key="cabinet.button" bundle="${rs}" /></a>
                         </security:authorize>
 
 
-                        <a href="#">About Us</a>
-                        <a href="../rooms">rooms</a>
-                        <a class="home" href="../">Home</a>
+                        <a href="#"><fmt:message key="about" bundle="${rs}" /></a>
+                        <a href="../rooms"><fmt:message key="room.button" bundle="${rs}" /></a>
+                        <a class="home" href="../"><fmt:message key="main.page" bundle="${rs}" /></a>
                     </nav>
                 </div>
             </div>
@@ -161,25 +183,46 @@
            <c:when test="${ not empty error}">
                <div class="row">
                   <div class="twelve columns">
-                      <p class="text" ><fmt:message key="${error}" bundle="${rs}" /></p>
+                      <p class="text" ><c:out value="${ error }"  /></p>
                   </div>
                </div>
+               <div class="row">
+                          <div class="four columns">
+                                       <p class="text" ></p>
+                        </div>
+                          <div class="four columns">
+                            <div> <img src="/com.company-1.0-SNAPSHOT/resources/images/error.jpg"></div>
+                          </div>
+                          <div class="four columns">
+                                       <p class="text" ></p>
+                          </div>
+                        </div>
+                        <div class="row">
+                              <div class="twelve columns">
+                                  <p class="text" ></p>
+                              </div>
+                        </div>
+                        <div class="row">
+                              <div class="twelve columns">
+                                  <p class="text" ></p>
+                              </div>
+                        </div>
            </c:when>
            <c:otherwise>
         <div class="row rooms">
             <div class="four columns">
-                Client
+                <fmt:message key="client" bundle="${rs}" />
             </div>
             <div class="seven columns">
-                Room
+                <fmt:message key="room.number" bundle="${rs}" />
             </div>
             <div class="two columns">
-                total price
+                <fmt:message key="total.price" bundle="${rs}" />
             </div>
         </div>
-            <c:if test="${ not empty datesNotFreeError}">
-			<p><fmt:message key="${message}" bundle="${rs}" /></p>
-			</c:if>
+            <!--<c:if test="${ not empty datesNotFreeError}">
+			<p><fmt:message key="client" bundle="${rs}" /></p>
+			</c:if>-->
 
         <c:forEach var="order" items="${orders}" varStatus="status">
         <div class="row rowdata">
@@ -188,9 +231,9 @@
 
                 </div>
                 <div>
-                    <p> Name : <c:out value="${order.user.name}"/></p>
-                    <p>Surname : <c:out value="${order.user.surname}"/></p>
-                    <p>Email : <c:out value="${order.user.email}"/></p>
+                    <p><fmt:message key="login.form.name" bundle="${rs}" /> : <c:out value="${order.user.name}"/></p>
+                    <p><fmt:message key="login.form.surname" bundle="${rs}" /> : <c:out value="${order.user.surname}"/></p>
+                    <p><fmt:message key="login.form.email" bundle="${rs}" /> : <c:out value="${order.user.email}"/></p>
                 </div>
             </div>
             <div class="seven columns data ">
@@ -198,17 +241,17 @@
                     <img class="img" src="../resources/images/img1/1.jpg" width="250" height="150">
                 </div>
                 <div>
-                    <p class="price">Number : <c:out value="${order.room.number}"/></p>
-                    <p class="sits">Arrive date : <c:out value="${order.dateIn}"/></p>
-                    <p>Leave date : <c:out value="${order.dateOut}"/></p>
+                    <p class="price"><fmt:message key="room.number" bundle="${rs}" /> : <c:out value="${order.room.number}"/></p>
+                    <p class="sits"><fmt:message key="date.arrive" bundle="${rs}" /> : <c:out value="${order.dateIn}"/></p>
+                    <p><fmt:message key="date.leave" bundle="${rs}" />: <c:out value="${order.dateOut}"/></p>
                 </div>
             </div>
             <div class="two columns data ">
                 <div>
                     <p> <c:out value="${order.totalPrice}"/></p>
                 </div>
-                <p class="more"><a class="deleteR" href="${order.id}">Cancel</a></p>
-                <p class="more more1"><a class="confirm" href="${order.id}">Confirm</a></p>
+                <p class="more"><a class="deleteR" href="${order.id}"><fmt:message key="delete" bundle="${rs}" /></a></p>
+                <p class="more more1"><a class="confirm" href="${order.id}"><fmt:message key="confirm" bundle="${rs}" /></a></p>
             </div>
         </div>
         </c:forEach>
@@ -216,28 +259,48 @@
       </c:choose>
     </div>
 
-     <div class=" container chooseDateDialog1" id="delete" title="Chose dates" hidden>
+     <div class="chooseDateDialog1" id="delete" title="Chose dates" hidden>
            <div id="hide" class="row">
-                <p>This dioloq window.You can moove it in the window</p>
-                       delete this reserve?
+                       <fmt:message key="delete.order" bundle="${rs}" />
                        <div>
-                          <a id="cancelD" class="previous" href="#">Previous</a>
-                          <a id="deleteForm" class="makeorder" href="75" >Delete</a>
+                          <a id="cancelD" class="previous" href="#"><fmt:message key="cancel" bundle="${rs}" /></a>
+                          <a id="deleteForm" class="makeorder" href="75" ><fmt:message key="delete" bundle="${rs}" /></a>
                        </div>
            </div>
      </div>
 
      <div class=" container chooseDateDialog1" id="confirmOrder" title="Chose dates" hidden>
                 <div id="hide" class="row">
-                                    <p id="message" hidden>It will be cost for user
-                                    <p id="res" class="desc1" hidden> </p>
-                                    </p>
-                                    <p id="message1" hidden>not free
-                                    </p>
-                            <div>
-                               <a id="cancelCO" class="previous" href="#">Previous</a>
-                               <a id="confirmOrder1" class="makeorder" href="75" >Confirm</a>
-                            </div>
+                <div id="message" hidden>
+                   <p><fmt:message key="message.order.cost" bundle="${rs}" />
+                   <div >
+                      <a class="cancelCO previous" href="#"><fmt:message key="cancel" bundle="${rs}" /></a>
+                      <a id="confirmOrder1" class="makeorder" href="75" ><fmt:message key="confirm" bundle="${rs}" /></a>
+                   </div>
+                </div>
+                   </p>
+                   <p id="res" hidden></p>
+                   <p id="orderNotExist"  hidden>
+                   <fmt:message key="order.is.not.exist" bundle="${rs}" />
+                      <a class="cancelCO previous" href="#"><fmt:message key="cancel" bundle="${rs}" /></a>
+                   </p>
+                   <p id="error"  hidden>
+                         <fmt:message key="error.message" bundle="${rs}" />
+                         <a class="cancelCO previous" href="#"><fmt:message key="cancel" bundle="${rs}" /></a>
+                   </p>
+                   <p id="message1" hidden>
+                       <fmt:message key="message.is.already.reserved" bundle="${rs}" />
+                       <a class="cancelCO previous" href="#"><fmt:message key="cancel" bundle="${rs}" /></a>
+                   </p>
+                   <p id="notfound" hidden>
+                        <fmt:message key="order.room.not.found" bundle="${rs}" />
+                        <a class="cancelCO previous" href="#"><fmt:message key="cancel" bundle="${rs}" /></a>
+                   </p>
+                   <p id="valid" hidden>
+                            <fmt:message key="valid.error" bundle="${rs}" />
+                            <a class="cancelCO previous" href="#"><fmt:message key="cancel" bundle="${rs}" /></a>
+                   </p>
+
                 </div>
      </div>
 

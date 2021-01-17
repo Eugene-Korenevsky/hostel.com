@@ -5,6 +5,8 @@
 <%@ taglib tagdir="/WEB-INF/tags" prefix="u"%>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
+<fmt:setBundle basename = "ResourceBundle.Global" var="rs" scope="application"/>
+
 <!DOCTYPE html>
 <html>
 
@@ -40,22 +42,22 @@
                 <div class="nine columns">
                     <nav class="nav">
                         <security:authorize access="!isAuthenticated()">
-                             <a href="../loginForm">log In</a>
+                             <a href="loginForm"><fmt:message key="login.button" bundle="${rs}" /></a>
                         </security:authorize>
                         <security:authorize access="isAuthenticated()">
-                              <a href="../logout">log Out</a>
+                              <a href="../logout"><fmt:message key="logout.button" bundle="${rs}" /></a>
                         </security:authorize>
                         <security:authorize access="!isAuthenticated()">
-                              <a href="../registration">registratinion</a>
+                              <a href="registration.html"><fmt:message key="registration.button" bundle="${rs}" /></a>
                         </security:authorize>
                         <security:authorize access="isAuthenticated()">
-                               <a class="current-page" href="profile">cabinet</a>
+                               <a class="current-page" href="profile"><fmt:message key="cabinet.button" bundle="${rs}" /></a>
                         </security:authorize>
 
 
-                        <a href="#">About Us</a>
-                        <a  href="../rooms">rooms</a>
-                        <a  class="home" href="../home">Home</a>
+                        <a href="#"><fmt:message key="about" bundle="${rs}" /></a>
+                        <a href="../rooms"><fmt:message key="room.button" bundle="${rs}" /></a>
+                        <a class="home" href="../"><fmt:message key="main.page" bundle="${rs}" /></a>
                     </nav>
                 </div>
             </div>
@@ -69,32 +71,25 @@
             </div>
             <div class="five columns">
                 <div class="data profile1">
-                    <p>Your role : <c:out value="${ user.role.role }"  /></p>
+                    <p><fmt:message key="user.role" bundle="${rs}" /> : <c:out value="${ user.role.role }"  /></p>
                 </div>
                 <div class="data profile1">
-                    <p> Name : <c:out value="${ user.name }"  /></p>
-                    <p class="more"><a href="#">Change</a></p>
+                    <p><fmt:message key="login.form.name" bundle="${rs}" /> : <c:out value="${ user.name }"  /></p>
                 </div>
                 <div class="data profile1">
-                    <p>Surname : <c:out value="${ user.surname }"  /></p>
-                    <p class="more"><a href="#">Change</a></p>
+                    <p><fmt:message key="login.form.surname" bundle="${rs}" /> : <c:out value="${ user.surname }"  /></p>
                 </div>
                 <div class="data profile1">
-                    <p>Email : <c:out value="${ user.email }"  /></p>
-                    <p class="more"><a href="#">Change</a></p>
-                </div>
-                <div class="data profile1">
-                    <p>Here you can change your password</p>
-                    <p class="more"><a href="#">Change</a></p>
+                    <p><fmt:message key="login.form.email" bundle="${rs}" /> : <c:out value="${ user.email }"  /></p>
                 </div>
 
             </div>
             <div class="five columns">
                 <nav class="pagebutton">
-                    <p><a href="rooms">Rooms</a></p>
-                    <p><a href="reserves">Reserves</a></p>
-                    <p><a href="orders">Orders</a></p>
-                    <p><a href="users">Users</a></p>
+                    <p><a href="rooms"><fmt:message key="room.button" bundle="${rs}" /></a></p>
+                    <p><a href="reserves"><fmt:message key="reserves.button" bundle="${rs}" /></a></p>
+                    <p><a href="orders"><fmt:message key="order.button" bundle="${rs}" /></a></p>
+                    <p><a href="users"><fmt:message key="user.button" bundle="${rs}" /></a></p>
                 </nav>
             </div>
         </div>

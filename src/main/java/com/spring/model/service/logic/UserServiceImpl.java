@@ -24,11 +24,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends GenericServiceImpl<User> implements UserService {
 
     private String defaultRole;
     private UserDao userDao;
     private RoleDao roleDao;
+
+    public UserServiceImpl(){
+        super(User.class);
+    }
 
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
@@ -40,127 +44,6 @@ public class UserServiceImpl implements UserService {
 
     public void setDefaultRole(String defaultRole) {
         this.defaultRole = defaultRole;
-    }
-
-    @Override
-    public User findById(long id) throws UserServiceException, EntityNotFoundException {
-        EntityManager entityManager = EntityManagerFactory.getEntityManager();
-        try {
-            entityManager.getTransaction().begin();
-            User user = userDao.findById(id, entityManager);
-            if (user != null) {
-                entityManager.getTransaction().commit();
-                return user;
-            } else throw new EntityNotFoundException("resource not found");
-        } catch (IllegalArgumentException e) {
-            MyLogger.log(MyLogger.Kind.WARNING, this, e.getMessage());
-            if (entityManager.getTransaction().isActive()) entityManager.getTransaction().rollback();
-            throw new UserServiceException(e.getMessage());
-        } finally {
-            entityManager.close();
-        }
-    }
-
-    @Override
-    public List<User> readAll() throws UserServiceException {
-        EntityManager entityManager = EntityManagerFactory.getEntityManager();
-        try {
-            entityManager.getTransaction().begin();
-            List<User> users = userDao.readAll(entityManager);
-            entityManager.getTransaction().commit();
-            return users;
-        } catch (Exception e) {
-            MyLogger.log(MyLogger.Kind.WARNING, this, e.getMessage());
-            if (entityManager.getTransaction().isActive()) entityManager.getTransaction().rollback();
-            throw new UserServiceException(e.getMessage());
-        } finally {
-            entityManager.close();
-        }
-    }
-
-    @Override
-    public User create(User user) throws UserServiceException, ValidationException {
-        if (user != null) {
-            Validator validator = MyValidator.getValidator();
-            Set<ConstraintViolation<User>> violations = validator.validate(user);
-            if (violations.size() < 1) {
-                EntityManager entityManager = EntityManagerFactory.getEntityManager();
-                try {
-                    entityManager.getTransaction().begin();
-                    user = userDao.createEntity(user, entityManager);
-                    entityManager.getTransaction().commit();
-                    return user;
-                } catch (Exception e) {
-                    MyLogger.log(MyLogger.Kind.WARNING, this, e.getMessage());
-                    if (entityManager.getTransaction().isActive()) entityManager.getTransaction().rollback();
-                    throw new UserServiceException(e.getMessage());
-                } finally {
-                    entityManager.close();
-                }
-            } else {
-                ValidError validError = new ValidError();
-                ArrayList<String> errors = new ArrayList<>();
-                for (ConstraintViolation<User> violation : violations) {
-                    errors.add(violation.getMessage());
-                }
-                validError.setErrors(errors);
-                throw new ValidationException("valid error", validError);
-            }
-        }
-        throw new ValidationException("user can't be null");
-    }
-
-    @Override
-    public User update(User user) throws UserServiceException, ValidationException, EntityNotFoundException {
-        if (user != null) {
-            Validator validator = MyValidator.getValidator();
-            Set<ConstraintViolation<User>> violations = validator.validate(user);
-            if (violations.size() < 1) {
-                EntityManager entityManager = EntityManagerFactory.getEntityManager();
-                try {
-                    entityManager.getTransaction().begin();
-                    User old = userDao.findById(user.getId(), entityManager);
-                    if (old != null) {
-                        user = userDao.updateEntity(user, entityManager);
-                        entityManager.getTransaction().commit();
-                        return user;
-                    } else throw new EntityNotFoundException("resource not found");
-                } catch (IllegalArgumentException | TransactionRequiredException e) {
-                    MyLogger.log(MyLogger.Kind.WARNING, this, e.getMessage());
-                    if (entityManager.getTransaction().isActive()) entityManager.getTransaction().rollback();
-                    throw new UserServiceException(e.getMessage());
-                } finally {
-                    entityManager.close();
-                }
-            } else {
-                ValidError validError = new ValidError();
-                ArrayList<String> errors = new ArrayList<>();
-                for (ConstraintViolation<User> violation : violations) {
-                    errors.add(violation.getMessage());
-                }
-                validError.setErrors(errors);
-                throw new ValidationException("valid error", validError);
-            }
-        } else throw new ValidationException("user can't be null");
-    }
-
-    @Override
-    public void delete(long userId) throws UserServiceException, EntityNotFoundException {
-        EntityManager entityManager = EntityManagerFactory.getEntityManager();
-        try {
-            entityManager.getTransaction().begin();
-            User user = userDao.findById(userId, entityManager);
-            if (user != null) {
-                userDao.delete(user, entityManager);
-                entityManager.getTransaction().commit();
-            } else throw new EntityNotFoundException("resource not found");
-        } catch (IllegalArgumentException | TransactionRequiredException e) {
-            MyLogger.log(MyLogger.Kind.WARNING, this, e.getMessage());
-            if (entityManager.getTransaction().isActive()) entityManager.getTransaction().rollback();
-            throw new UserServiceException(e.getMessage());
-        } finally {
-            entityManager.close();
-        }
     }
 
 

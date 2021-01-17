@@ -4,9 +4,7 @@ import com.spring.model.entity.Order;
 import com.spring.model.helpers.orderhelpers.IsRoomFreeInDates;
 import com.spring.model.service.OrderService;
 import com.spring.model.service.ReserveService;
-import com.spring.model.service.exceptions.EntityNotFoundException;
-import com.spring.model.service.exceptions.OrderNotFountException;
-import com.spring.model.service.exceptions.OrderServiceException;
+import com.spring.model.service.exceptions.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,10 +28,10 @@ public class OrderController {
         try {
             orderService.delete(orderId);
             return "redirect:/admin/orders";
-        } catch (OrderServiceException e) {
+        } catch (ServiceException e) {
             model.put("error", "error");
             return "adminOrders";
-        } catch (OrderNotFountException e) {
+        } catch (EntityNotFoundException e) {
             model.put("error", "entity.not.exist");
             return "adminOrders";
         }
@@ -45,7 +43,7 @@ public class OrderController {
             List<Order> orders = orderService.readAll();
             model.put("orders", orders);
             return "adminOrders";
-        } catch (OrderServiceException e) {
+        } catch (ServiceException e) {
             model.put("error", "error");
             return "adminOrders";
         }
@@ -56,9 +54,10 @@ public class OrderController {
         try {
             Order order = orderService.findById(id);
             return new ResponseEntity<>(order, HttpStatus.OK);
-        } catch (OrderNotFountException e) {
+        } catch (EntityNotFoundException e) {
             return new ResponseEntity<>("resource not found", HttpStatus.NOT_FOUND);
-        } catch (OrderServiceException e) {
+        } catch (ServiceException e) {
+            System.out.println(e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

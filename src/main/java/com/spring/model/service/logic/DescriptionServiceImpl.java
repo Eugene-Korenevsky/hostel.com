@@ -19,8 +19,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public class DescriptionServiceImpl implements DescriptionService {
+public class DescriptionServiceImpl extends GenericServiceImpl<Description> implements DescriptionService {
     private DescriptionDao descriptionDao;
+
+    public DescriptionServiceImpl(){
+        super(Description.class);
+    }
 
     public void setDescriptionDao(DescriptionDao descriptionDao) {
         this.descriptionDao = descriptionDao;
@@ -68,57 +72,6 @@ public class DescriptionServiceImpl implements DescriptionService {
         } finally {
             entityManager.close();
         }
-    }
-
-    @Override
-    public void delete(long id) throws DescriptionServiceException, EntityNotFoundException {
-        EntityManager entityManager = EntityManagerFactory.getEntityManager();
-        try {
-            entityManager.getTransaction().begin();
-            Description description = descriptionDao.findById(id, entityManager);
-            if (description != null) {
-                descriptionDao.delete(description, entityManager);
-                entityManager.getTransaction().commit();
-            } else throw new EntityNotFoundException("resource not found");
-        } catch (IllegalArgumentException | TransactionRequiredException e) {
-            MyLogger.log(MyLogger.Kind.WARNING, this, e.getMessage());
-            if (entityManager.getTransaction().isActive()) entityManager.getTransaction().rollback();
-            throw new DescriptionServiceException(e.getMessage());
-        } finally {
-            entityManager.close();
-        }
-    }
-
-    @Override
-    public Description update(Description description) throws DescriptionServiceException, EntityNotFoundException, ValidationException {
-        if (description != null) {
-            Validator validator = MyValidator.getValidator();
-            Set<ConstraintViolation<Description>> violations = validator.validate(description);
-            if (violations.size() < 1) {
-                EntityManager entityManager = EntityManagerFactory.getEntityManager();
-                try {
-                    Description old = descriptionDao.findById(description.getId(), entityManager);
-                    if (old != null) {
-                        entityManager.getTransaction().begin();
-                        description = descriptionDao.updateEntity(description, entityManager);
-                        entityManager.getTransaction().commit();
-                        return description;
-                    } else throw new EntityNotFoundException("resource not found");
-                } catch (IllegalArgumentException | TransactionRequiredException e) {
-                    MyLogger.log(MyLogger.Kind.WARNING, this, e.getMessage());
-                    if (entityManager.getTransaction().isActive()) entityManager.getTransaction().rollback();
-                    throw new DescriptionServiceException(e.getMessage());
-                } finally {
-                    entityManager.close();
-                }
-            } else {
-                ArrayList<String> validationErrors = new ArrayList<>();
-                for (ConstraintViolation<Description> violation : violations) {
-                    validationErrors.add(violation.getMessage());
-                }
-                throw new ValidationException(validationErrors.toString());
-            }
-        } else throw new ValidationException("description can't bu null");
     }
 
     @Override

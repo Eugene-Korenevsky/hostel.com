@@ -39,22 +39,22 @@
                 <div class="nine columns">
                     <nav class="nav">
                         <security:authorize access="!isAuthenticated()">
-                             <a href="loginForm">log In</a>
+                             <a href="loginForm"><fmt:message key="login.button" bundle="${rs}" /></a>
                         </security:authorize>
                         <security:authorize access="isAuthenticated()">
-                              <a href="logout">log Out</a>
+                              <a href="logout"><fmt:message key="logout.button" bundle="${rs}" /></a>
                         </security:authorize>
                         <security:authorize access="!isAuthenticated()">
-                              <a href="registration.html">registratinion</a>
+                              <a href="registration.html"><fmt:message key="register.button" bundle="${rs}" /></a>
                         </security:authorize>
                         <security:authorize access="isAuthenticated()">
-                               <a href="profile">cabinet</a>
+                               <a href="profile"><fmt:message key="cabinet.button" bundle="${rs}" /></a>
                         </security:authorize>
 
 
-                        <a href="#">About Us</a>
-                        <a class="current-page" href="rooms">rooms</a>
-                        <a class="home" href="home">Home</a>
+                        <a href="#"><fmt:message key="about" bundle="${rs}" /></a>
+                        <a class="current-page" href="rooms"><fmt:message key="room.button" bundle="${rs}" /></a>
+                        <a class="home" href="home"><fmt:message key="main.page" bundle="${rs}" /></a>
                     </nav>
                 </div>
             </div>
@@ -83,22 +83,22 @@
         </div>
         <div class="row rooms">
             <div class="four columns">
-                Photo
+                <fmt:message key="room.photo" bundle="${rs}" />
             </div>
             <div class="one columns">
-                Number
+                <fmt:message key="room.number" bundle="${rs}" />
             </div>
             <div class="one columns">
-                Sits
+                <fmt:message key="room.sits" bundle="${rs}" />
             </div>
             <div class="one columns">
-                class
+                <fmt:message key="room.class" bundle="${rs}" />
             </div>
             <div class="two columns">
-                price
+                <fmt:message key="room.price" bundle="${rs}" />
             </div>
             <div class="three columns">
-                descriptions
+                <fmt:message key="create.room.parameters" bundle="${rs}" />
             </div>
 
         </div>
@@ -111,19 +111,19 @@
                 <img class="img" src="resources/images/img1/1.jpg" width="250" height="150">
             </div>
             <div class="one columns data">
-                <p class="preinfo">Number : </p>
+                <p class="preinfo"><fmt:message key="room.number" bundle="${rs}" /> : </p>
                 <p class="info"><c:out value="${ elem.number }"  /></p>
             </div>
             <div class="one columns data">
-                <p class="preinfo">Sits : </p>
+                <p class="preinfo"><fmt:message key="room.sits" bundle="${rs}" /> : </p>
                 <p class="info"><c:out value="${ elem.sits }" /></p>
             </div>
             <div class="one columns data">
-                <p class="preinfo">Class : </p>
+                <p class="preinfo"><fmt:message key="room.class.message" bundle="${rs}" /> : </p>
                 <p class="info"><c:out value="${ elem.roomClass }" /></p>
             </div>
             <div class="two columns data">
-                <p class="preinfo">Price : </p>
+                <p class="preinfo"><fmt:message key="room.price" bundle="${rs}" /> : </p>
                 <p class="info"><c:out value="${ elem.price }" /> $</p>
             </div>
 
@@ -133,7 +133,7 @@
                 <c:forEach var="desc" items="${elem.descriptions}" varStatus="status">
                 <p class="desc"><c:out value="${ desc.description }"  /></p>
                 </c:forEach>
-                <p class="more"><a href="rooms/${elem.id}">More</a></p>
+                <p class="more"><a href="rooms/${elem.id}"><fmt:message key="more.button" bundle="${rs}" /></a></p>
             </div>
 
 

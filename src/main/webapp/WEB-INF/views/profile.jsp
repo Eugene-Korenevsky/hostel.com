@@ -101,22 +101,22 @@
                 <div class="nine columns">
                     <nav class="nav">
                         <security:authorize access="!isAuthenticated()">
-                             <a href="loginForm">log In</a>
+                             <a href="loginForm"><fmt:message key="login.button" bundle="${rs}" /></a>
                         </security:authorize>
                         <security:authorize access="isAuthenticated()">
-                              <a href="logout">log Out</a>
+                              <a href="logout"><fmt:message key="logout.button" bundle="${rs}" /></a>
                         </security:authorize>
                         <security:authorize access="!isAuthenticated()">
-                              <a href="registration">registratinion</a>
+                              <a href="registration"><fmt:message key="register.button" bundle="${rs}" /></a>
                         </security:authorize>
                         <security:authorize access="isAuthenticated()">
-                               <a class="current-page" href="profile">cabinet</a>
+                               <a class="current-page" href="profile"><fmt:message key="cabinet.button" bundle="${rs}" /></a>
                         </security:authorize>
 
 
-                        <a href="#">About Us</a>
-                        <a href="rooms">rooms</a>
-                        <a class = "home"  href="home">Home</a>
+                        <a href="#"><fmt:message key="about" bundle="${rs}" /></a>
+                        <a href="rooms"><fmt:message key="room.button" bundle="${rs}" /></a>
+                        <a class = "home"  href="home"><fmt:message key="main.page" bundle="${rs}" /></a>
                     </nav>
                 </div>
             </div>
@@ -130,19 +130,15 @@
             </div>
             <div class="five columns">
                 <div class="data profile1">
-                    <p> Name : <c:out value="${ user.name }"  /></p>
+                    <p><fmt:message key="login.form.name" bundle="${rs}" /> : <c:out value="${ user.name }"  /></p>
                     <p class="more"><a href="#">Change</a></p>
                 </div>
                 <div class="data profile1">
-                    <p>Surname : <c:out value="${ user.surname }"  /></p>
+                    <p><fmt:message key="login.form.surname" bundle="${rs}" /> : <c:out value="${ user.surname }"  /></p>
                     <p class="more"><a href="#">Change</a></p>
                 </div>
                 <div class="data profile1">
-                    <p>Email : <c:out value="${ user.email }"  /></p>
-                    <p class="more"><a href="#">Change</a></p>
-                </div>
-                <div class="data profile1">
-                    <p>Here you can change your password</p>
+                    <p><fmt:message key="login.form.email" bundle="${rs}" /> : <c:out value="${ user.email }"  /></p>
                     <p class="more"><a href="#">Change</a></p>
                 </div>
 
@@ -150,48 +146,48 @@
             <div class="five columns">
 
                 <div id="reserves2" class="data profile1">
-                    <p>Your reserves</p>
+                    <p><fmt:message key="my.reserve.button" bundle="${rs}" /></p>
                     <a id="showReserves" class="prof" href="#"><img src="resources/images/img/show_1_25X25.png"></a>
                 </div>
 
 
                 <div id="reserves1" class="data profile1">
-                    <p>Your reserves</p>
+                    <p><fmt:message key="my.reserve.button" bundle="${rs}" /></p>
                     <a id="hideReserves" class="prof" href="#"><img src="resources/images/img/hide_1_25X25.png"></a>
                     <div id="reserves">
                         <c:forEach var="reserve" items="${reserves}" varStatus="status">
                         <div>
                             <img class="img" src="resources/images/img1/2.jpg" width="250" height="150">
                         </div>
-                        <p class="data">Number : <c:out value="${ reserve.room.number }"  /></p>
-                        <p class="data">Price : <c:out value="${ reserve.totalPrice }"  /> $</p>
-                        <p class="data">arrive date : <c:out value="${ reserve.dateIn }"  /></p>
-                        <p class="data">leave date : <c:out value="${ reserve.dateOut }"  /></p>
+                        <p class="data"><fmt:message key="room.number" bundle="${rs}" /> : <c:out value="${ reserve.room.number }"  /></p>
+                        <p class="data"><fmt:message key="room.price" bundle="${rs}" /> : <c:out value="${ reserve.totalPrice }"  /> $</p>
+                        <p class="data"><fmt:message key="date.arrive" bundle="${rs}" /> : <c:out value="${ reserve.dateIn }"  /></p>
+                        <p class="data"><fmt:message key="date.leave" bundle="${rs}" /> : <c:out value="${ reserve.dateOut }"  /></p>
                         </c:forEach>
                     </div>
                 </div>
 
 
                 <div id="orders2" class="data profile1">
-                    <p>Your orders</p>
+                    <p><fmt:message key="my.orders.button" bundle="${rs}" /></p>
                     <a id="showOrders" class="prof" href="#"><img src="resources/images/img/show_1_25X25.png"></a>
                 </div>
 
 
 
                 <div id="orders1" class="data profile1">
-                    <p>Your orders</p>
+                    <p><fmt:message key="my.orders.button" bundle="${rs}" /></p>
                     <a id="hideOrders" class="prof" href="#"><img src="resources/images/img/hide_1_25X25.png"></a>
                     <div id="orders">
                         <c:forEach var="order" items="${orders}" varStatus="status">
                         <div>
                             <img class="img" src="resources/images/img1/2.jpg" width="250" height="150">
                         </div>
-                        <p class="data">Number : <c:out value="${ order.room.number }"  /></p>
-                        <p class="data">Price : <c:out value="${ order.totalPrice }"  /> $</p>
-                        <p class="data">arrive date : <c:out value="${ order.dateIn }"  /></p>
-                        <p class="data">leave date : <c:out value="${ order.dateOut }"  /></p>
-                        <p class="more"><a class="deleteR" href="${order.id}">Cancel</a></p>
+                        <p class="data"><fmt:message key="room.number" bundle="${rs}" /> : <c:out value="${ order.room.number }"  /></p>
+                        <p class="data"><fmt:message key="room.price" bundle="${rs}" /> : <c:out value="${ order.totalPrice }"  /> $</p>
+                        <p class="data"><fmt:message key="date.arrive" bundle="${rs}" /> : <c:out value="${ order.dateIn }"  /></p>
+                        <p class="data"><fmt:message key="date.leave" bundle="${rs}" /> : <c:out value="${ order.dateOut }"  /></p>
+                        <p class="more"><a class="deleteR" href="${order.id}"><fmt:message key="cancel" bundle="${rs}" /></a></p>
                         </c:forEach>
 
                     </div>
@@ -203,13 +199,12 @@
     </div>
       <div class=" container chooseDateDialog1" id="delete" title="Chose dates" hidden>
                         <div id="hide" class="row">
-                            <p>This dioloq window.You can moove it in the window</p>
 
-                            delete this reserve?
+                            <fmt:message key="delete.order" bundle="${rs}" />
 
                             <div>
-                               <a id="cancelD" class="previous" href="#">Previous</a>
-                               <a id="deleteForm" class="makeorder" href="75" data-method="delete">Delete</a>
+                               <a id="cancelD" class="previous" href="#"><fmt:message key="cancel" bundle="${rs}" /></a>
+                               <a id="deleteForm" class="makeorder" href="75" data-method="delete"><fmt:message key="delete" bundle="${rs}" /></a>
                             </div>
                         </div>
          </div>

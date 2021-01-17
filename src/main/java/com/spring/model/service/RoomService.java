@@ -12,15 +12,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public interface RoomService {
+public interface RoomService extends GenericService<Room> {
 
     public Room readById(long id, boolean withDesc) throws RoomServiceException, EntityNotFoundException;
 
     public List<Room> readAll(boolean withDesc) throws RoomServiceException;
 
     public Room createRoom(RoomForm roomForm) throws RoomServiceException, ValidationException, RoomWithThisNumberIsExist;
-
-    public void delete(long id) throws RoomServiceException,EntityNotFoundException;
 
     public Room update(RoomForm roomForm,long roomId) throws RoomServiceException,EntityNotFoundException,ValidationException;
 }

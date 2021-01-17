@@ -34,7 +34,11 @@
             $("#shouldLogin").hide();
              $("#confirm1").click(function(evt) {
              $.post("../orders",dates,function(data){
+
+             }).done(function(response){
                 document.location.href = "../profile";
+             }).fail(function(response){
+
              });
 
                  return false;
@@ -49,28 +53,50 @@
 
 
                 $.post("../orders/isFree",dates,function(data){
-                  if(data == "notFree"){
-                     $("#res").hide();
-                     $("#message1").hide();
-                     $("#message").hide();
-                     $("#message2").show();
-                  }else if(data == "wrongDates"){
-                     $("#message").hide();
-                     $("#message2").hide();
-                     $("#res").hide();
-                     $("#message1").show();
-                  }else{
-                  $("#message").show();
-                  $("#message1").hide();
-                  $("#message2").hide();
-                  $("#res").show();
-                  $("#res").text(data);
-                  }
-                });
-                $("#hide").hide();
-                $("#hide1").show();
 
-            });
+                }).done(function(data){
+                       if(data == "notFree"){
+                          // $("#res").hide();
+                           //$("#message1").hide();
+                           //$("#message").hide();
+                           $("#make").hide();
+                           $("#message2").show();
+                       }else if(data == "wrongDates"){
+                           //$("#message").hide();
+                           //$("#message2").hide();
+                           //$("#res").hide();
+                           $("#make").hide();
+                           $("#message1").show();
+                       }else{
+                           $("#message").show();
+                          // $("#message1").hide();
+                          // $("#message2").hide();
+                           $("#res").show();
+                           $("#res").text(data);
+                       }
+                }).fail(function(response){
+                    console.log(response);
+                       if(response.status === 500){
+                          // $("#message").hide();
+                          // $("#message2").hide();
+                           //$("#res").hide();
+                           $("#message3").show();
+                       }else if(response.status === 400){
+                           //$("#message").hide();
+                           //$("#message2").hide();
+                           //$("#res").hide();
+                           $("#message1").show();
+                       }else{
+                           $("#message4").show();
+                           //$("#message1").hide();
+                           //$("#message2").hide();
+                           //$("#res").show();
+                           //$("#res").text(data);
+                       }
+                });
+                    $("#hide").hide();
+                    $("#hide1").show();
+                });
             $("#makeOrder").click(function(evt) {
                 $("#hello").show();
                 $("#hide1").hide();
@@ -80,8 +106,12 @@
             });
 
             $("#cancel1").click(function(evt) {
+                $("#message2").hide();
+                $("#message1").hide();
                 $("#hide").show();
                 $("#hello").hide();
+                $("#message4").hide();
+                $("#message3").hide();
             });
         });
     </script>
@@ -104,21 +134,21 @@
                 <div class="nine columns">
                     <nav class="nav">
                         <security:authorize access="!isAuthenticated()">
-                             <a href="../loginForm">log In</a>
+                             <a href="../loginForm"><fmt:message key="login.button" bundle="${rs}" /></a>
                         </security:authorize>
                         <security:authorize access="isAuthenticated()">
-                              <a href="../logout">log Out</a>
+                              <a href="../logout"><fmt:message key="logout.button" bundle="${rs}" /></a>
                         </security:authorize>
                         <security:authorize access="!isAuthenticated()">
-                              <a href="../registration">registratinion</a>
+                              <a href="../registration"><fmt:message key="register.button" bundle="${rs}" /></a>
                         </security:authorize>
                         <security:authorize access="isAuthenticated()">
-                               <a href="../profile">cabinet</a>
+                               <a href="../profile"><fmt:message key="cabinet.button" bundle="${rs}" /></a>
                         </security:authorize>
 
-                        <a href="#">About Us</a>
-                        <a class="current-page" href="../rooms">rooms</a>
-                        <a class="home" href="../">Home</a>
+                        <a href="#"><fmt:message key="about" bundle="${rs}" /></a>
+                        <a class="current-page" href="../rooms"><fmt:message key="room.button" bundle="${rs}" /></a>
+                        <a class="home" href="../"><fmt:message key="main.page" bundle="${rs}" /></a>
                     </nav>
                 </div>
             </div>
@@ -177,27 +207,27 @@
                       </div>
                       <div class="six columns rowdesc">
                           <div class="data">
-                              <p>Number : <c:out value="${ room.number }"  /></p>
+                              <p><fmt:message key="room.number" bundle="${rs}" /> : <c:out value="${ room.number }"  /></p>
                           </div>
                           <div class="data">
-                              <p>Sits : <c:out value="${ room.sits }"  /></p>
+                              <p><fmt:message key="room.sits" bundle="${rs}" /> : <c:out value="${ room.sits }"  /></p>
                           </div>
                           <div class="data">
-                              <p>Class : <c:out value="${ room.roomClass }"  /></p>
+                              <p><fmt:message key="room.class.message" bundle="${rs}" /> : <c:out value="${ room.roomClass }"  /></p>
                           </div>
                           <div class="data">
-                              <p>Price : <c:out value="${ room.price }"  /> $</p>
+                              <p><fmt:message key="room.price" bundle="${rs}" /> : <c:out value="${ room.price }"  /> $</p>
                           </div>
                           <div class="data1">
-                              <p>Descriptions :
+                              <p><fmt:message key="create.room.parameters" bundle="${rs}" /> :
                                   <c:forEach var="desc" items="${room.descriptions}" varStatus="status">
                                   <p class="desc1"><c:out value="${ desc.description }"  /></p>
                                   </c:forEach>
                               </p>
                           </div>
                           <div>
-                              <a class="previous" href="../rooms">Previous</a>
-                              <a id="makeOrder" class="makeorder" href="#">Make Order</a>
+                              <a class="previous" href="../rooms"><fmt:message key="cancel" bundle="${rs}" /></a>
+                              <a id="makeOrder" class="makeorder" href="#"><fmt:message key="make.order" bundle="${rs}" /></a>
                           </div>
                       </div>
 
@@ -213,31 +243,39 @@
 
         <div class="container chooseDateDialog" id="hello" title="Chose dates">
             <div id="hide" class="row">
-                <p>This dioloq window.You can moove it in the window</p>
-                <label class="label date" for="dateIn">Date In </label>
+                <label class="label date" for="dateIn"><fmt:message key="date.arrive" bundle="${rs}" /></label>
                 <input id="dateIn" name="dateIn" type="date">
-                <label class="label date" for="dateOut">Date Out </label>
+                <label class="label date" for="dateOut"><fmt:message key="date.leave" bundle="${rs}" /></label>
                 <input id="dateOut" name="dateOut" type="date">
                 <input id="roomId" value="<c:out value="${ room.id }"  />" type="hidden">
-                <a id="confirm" class="makeorder dialog" href="#">Make Order</a>
-                <a id="cancel" class="previous dialog" href="#">Previous</a>
+                <a id="confirm" class="makeorder dialog" href="#"><fmt:message key="make.order" bundle="${rs}" /></a>
+                <a id="cancel" class="previous dialog" href="#"><fmt:message key="cancel" bundle="${rs}" /></a>
             </div>
 
             <div id="hide1" class="row">
-                <p id="message">It will be cost for you
+                <p id="message" hidden><fmt:message key="total.price" bundle="${rs}" />
                 <p id="res" class="desc1"> </p>
                 </p>
-                <p id="message1">Wrong dates
+                <p id="message1" hidden><fmt:message key="message.un.correct.dates" bundle="${rs}" />
                 </p>
-                <p id="message2">not free</p>
+
+                <p id="message3" hidden><fmt:message key="error.message" bundle="${rs}" />
+                </p>
+                <p id="message4" hidden><fmt:message key="entity.not.exist" bundle="${rs}" />
+                </p>
+
+
+
+                <p id="message2" hidden><fmt:message key="message.is.already.reserved" bundle="${rs}" /></p>
                 <security:authorize access="!isAuthenticated()">
-                   <p>You should login</p>
+                   <p><fmt:message key="login.first" bundle="${rs}" /></p>
                 </security:authorize>
 
-                <security:authorize access="hasRole('user')">
-                <a id="confirm1" class="makeorder dialog" href="orderMaker">Make Order</a>
+                <div id="make"><security:authorize access="hasRole('user')">
+                <a id="confirm1" class="makeorder dialog" href="orderMaker" hidden><fmt:message key="make.order" bundle="${rs}" /></a>
                 </security:authorize>
-                <a id="cancel1" class="previous dialog" href="#">Previous</a>
+                </div>
+                <a id="cancel1" class="previous dialog" href="#"><fmt:message key="cancel" bundle="${rs}" /></a>
             </div>
 
         </div>

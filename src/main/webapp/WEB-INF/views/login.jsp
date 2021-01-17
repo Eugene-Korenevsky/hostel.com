@@ -72,22 +72,22 @@
                 <div class="nine columns">
                     <nav class="nav">
                         <security:authorize access="!isAuthenticated()">
-                             <a class="current-page" href="loginForm">log In</a>
+                             <a class="current-page" href="loginForm"><fmt:message key="login.button" bundle="${rs}" /></a>
                         </security:authorize>
                         <security:authorize access="isAuthenticated()">
-                              <a class="current-page" href="logout">log Out</a>
+                              <a class="current-page" href="logout"><fmt:message key="logout.button" bundle="${rs}" /></a>
                         </security:authorize>
                         <security:authorize access="!isAuthenticated()">
-                              <a href="registration.html">registratinion</a>
+                              <a href="registration.html"><fmt:message key="register.button" bundle="${rs}" /></a>
                         </security:authorize>
                         <security:authorize access="isAuthenticated()">
-                               <a href="profile">cabinet</a>
+                               <a href="profile"><fmt:message key="cabinet.button" bundle="${rs}" /></a>
                         </security:authorize>
 
 
-                        <a href="#">About Us</a>
-                        <a  href="rooms">rooms</a>
-                        <a class="home" href="home">Home</a>
+                        <a href="#"><fmt:message key="about" bundle="${rs}" /></a>
+                        <a  href="rooms"><fmt:message key="room.button" bundle="${rs}" /></a>
+                        <a class="home" href="home"><fmt:message key="main.page" bundle="${rs}" /></a>
                     </nav>
                 </div>
             </div>
@@ -107,19 +107,19 @@
 
                 <form id="form" class="form" name="f" method="POST" action="/com.company-1.0-SNAPSHOT/j_spring_security_check">
                     <p>
-                        <label class="label" for="j_username">Email : </label>
+                        <label class="label" for="j_username"><fmt:message key="login.form.email" bundle="${rs}" /> : </label>
                         <input type="email" name="j_username" required />
                         <label for="j_username" class="error"></label>
                     </p>
                     <p>
-                        <label class="label" for="j_password"> Password : </label>
+                        <label class="label" for="j_password"><fmt:message key="login.form.password" bundle="${rs}" /> : </label>
                         <input type="password" name="j_password" required minlength="3" />
                         <label for="j_password" class="error"></label>
                     </p>
                     <p><input id="submit" class="submit" name="submit" type="submit" value="submit" /></p>
                 </form>
                 <div class="registration">
-                    <a class="button" href="registration">Registration</a>
+                    <a class="button" href="registration"><fmt:message key="register.button" bundle="${rs}" /></a>
                 </div>
             </div>
         </div>
