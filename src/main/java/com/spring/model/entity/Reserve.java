@@ -2,6 +2,7 @@ package com.spring.model.entity;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -21,6 +22,7 @@ public class Reserve implements Serializable {
 
     @NotNull
     @Column(name = "TOTAL_PRICE")
+    @Min(value = 0, message = "min price can not be less then 0")
     private double totalPrice;
 
     public double getTotalPrice() {
