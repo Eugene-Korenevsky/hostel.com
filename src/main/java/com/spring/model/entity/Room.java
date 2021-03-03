@@ -26,7 +26,7 @@ public class Room implements Serializable {
 
     @NotNull
     @Column(name = "NUMBER")
-    @Min(value = 1,message = "min value is 1")
+    @Min(value = 1, message = "min value is 1")
     private int number;
 
     public void setNumber(int number) {
@@ -52,7 +52,7 @@ public class Room implements Serializable {
 
     @NotNull
     @Column(name = "SITS")
-    @Min(value = 1,message = "min value is 1")
+    @Min(value = 1, message = "min value is 1")
     private int sits;
 
     public int getSits() {
@@ -65,7 +65,7 @@ public class Room implements Serializable {
 
     @NotNull
     @Column(name = "PRICE")
-    @Min(value = 0,message = "min price is 0")
+    @Min(value = 0, message = "min price is 0")
     private double price;
 
     public double getPrice() {
@@ -88,7 +88,9 @@ public class Room implements Serializable {
     }
 
     public void setDescriptions(Set<Description> descriptions) {
-        this.descriptions = descriptions;
+        synchronized (descriptions) {
+            this.descriptions = descriptions;
+        }
     }
 
     public void addDescription(Description description) {
@@ -96,7 +98,9 @@ public class Room implements Serializable {
     }
 
     public void removeDescription(Description description) {
-        descriptions.remove(description);
+        synchronized (descriptions) {
+            descriptions.remove(description);
+        }
     }
 
     @Override
